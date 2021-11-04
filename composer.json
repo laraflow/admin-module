@@ -1,0 +1,59 @@
+{
+    "name": "hafijul233/admin-module",
+    "type" : "laravel-module",
+    "description": "",
+    "support": {
+        "issues": "https://github.com/hafijul233/admin-module/issues",
+        "wiki": "https://github.com/hafijul233/admin-module/wiki",
+        "source": "https://github.com/hafijul233/admin-module",
+        "docs": "http://hafijulislam.me/projects/admin-module"
+    },
+    "keywords": [
+        "framework",
+        "laravel",
+        "boilerplate",
+        "modules",
+        "admin"
+    ],
+    "license" : "MIT",
+    "authors": [
+        {
+            "name": "Hafijul Islam",
+            "email": "hafijul233@gmail.com",
+            "homepage": "http://www.hafijulislam.me",
+            "role": "Maintainer"
+        }
+    ],
+    "config": {
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "nwidart/laravel-modules": "^8.2",
+        "joshbrw/laravel-module-installer": "^2.0",
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Admin\\Providers\\AdminServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Admin\\": ""
+        },
+        "exclude-from-classmap": [
+            "**/Tests/*",
+            "**/test/*",
+            "**/tests/*"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Admin\\Tests\\": "Tests/"
+        }
+    }
+}
