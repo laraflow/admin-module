@@ -119,5 +119,4 @@ class AdminServiceProvider extends ServiceProvider
         $this->publishes([module_path($this->moduleName, 'Resources/plugins') => public_path('modules/' . $this->moduleNameLower . '/plugins'),
         ], $this->moduleNameLower . '-module-plugins');
     }
-
 }
