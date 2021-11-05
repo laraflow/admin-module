@@ -2,8 +2,8 @@
 
 namespace Modules\Admin\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\ServiceProvider;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -24,8 +24,9 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerTranslations();
         $this->registerConfig();
+        $this->registerPublicAssets();
+        $this->registerTranslations();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
     }
@@ -109,4 +110,14 @@ class AdminServiceProvider extends ServiceProvider
         }
         return $paths;
     }
+
+    public function registerPublicAssets()
+    {
+        $this->publishes([module_path($this->moduleName, 'Resources/assets') => public_path('modules/' . $this->moduleNameLower . '/assets'),
+        ], $this->moduleNameLower . '-assets');
+
+        $this->publishes([module_path($this->moduleName, 'Resources/plugins') => public_path('modules/' . $this->moduleNameLower . '/plugins'),
+        ], $this->moduleNameLower . '-plugins');
+    }
+
 }
