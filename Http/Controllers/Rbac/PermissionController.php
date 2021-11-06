@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Modules\Admin\Http\Requests\Rbac\PermissionRequest;
 use Modules\Admin\Services\Rbac\PermissionService;
 use Modules\Core\Services\Auth\AuthenticatedSessionService;
 
@@ -70,14 +71,13 @@ class PermissionController extends Controller
      */
     public function store(PermissionRequest $request): RedirectResponse
     {
-        $inputs = $request->except('_token');
-
-        if ($this->permissionService->storePermission($inputs)) {
-            toastr('New Permission Created', 'success', 'Notification');
-            return redirect()->route('permissions.index');
+        $confirm = $this->permissionService->storePermission($request->except('_token'));
+        if ($confirm['status'] == true) {
+            notify($confirm['message'], $confirm['level'], $confirm['title']);
+            return redirect()->route('admin.permissions.index');
         }
 
-        toastr('Permission Creation Failed', 'error', 'Alert');
+        notify($confirm['message'], $confirm['level'], $confirm['title']);
         return redirect()->back()->withInput();
     }
 
@@ -136,11 +136,11 @@ class PermissionController extends Controller
         $inputs = $request->except('_token', 'submit', '_method');
 
         if ($this->permissionService->updatePermission($inputs, $id)) {
-            toastr('Permission Information Updated', 'success', 'Notification');
+            notify($confirm['message'], $confirm['level'], $confirm['title']);
             return redirect()->route('permissions.index');
         }
 
-        toastr('Permission Information Update Failed', 'error', 'Alert');
+        notify($confirm['message'], $confirm['level'], $confirm['title']);
         return redirect()->back()->withInput();
     }
 
@@ -157,9 +157,9 @@ class PermissionController extends Controller
         if ($this->authenticatedSessionService->verifyUser($request)) {
 
             if ($this->permissionService->destroyPermission($id)) {
-                toastr('Permission Deleted', 'success', 'Notification');
+                notify($confirm['message'], $confirm['level'], $confirm['title']);
             } else {
-                toastr('Permission Removal Failed', 'error', 'Alert');
+                notify($confirm['message'], $confirm['level'], $confirm['title']);
             }
             return redirect()->route('permissions.index');
         }

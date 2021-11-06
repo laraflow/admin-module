@@ -91,7 +91,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="exclude-search">No data to display</td>
+                                <td colspan="6" class="exclude-search text-center">No data to display</td>
                             </tr>
                         @endforelse
                         </tbody>

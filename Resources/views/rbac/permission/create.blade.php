@@ -31,26 +31,26 @@
 @section('breadcrumbs', \Breadcrumbs::render(Route::getCurrentRoute()->getName()))
 
 @section('actions')
-    {!! \Html::backButton('permissions.index') !!}
+    {!! \Html::backButton('admin.permissions.index') !!}
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                {!! \Form::open(['route' => 'permissions.store', 'id' => 'permission-form']) !!}
-                @include('backend::permission.form')
+                {!! \Form::open(['route' => 'admin.permissions.store', 'id' => 'permission-form']) !!}
+                @include('admin::rbac.permission.form')
                 {!! \Form::close() !!}
             </div>
         </div>
     </div>
-    @endsection
+@endsection
 
 
-    @push('plugin-script')
+@push('plugin-script')
 
-    @endpush
+@endpush
 
-    @push('page-script')
+@push('page-script')
 
-    @endpush
+@endpush

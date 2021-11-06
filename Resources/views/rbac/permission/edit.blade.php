@@ -39,7 +39,7 @@
         <div class="col-lg-12">
             <div class="card">
                 {!! \Form::open(['route' => ['permissions.update', $permission->id], 'method' => 'put', 'id' => 'permission-form']) !!}
-                @include('backend::permission.form')
+                @include('admin::rbac.permission.form')
                 {!! \Form::close() !!}
             </div>
         </div>

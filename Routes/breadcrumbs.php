@@ -18,16 +18,16 @@ Breadcrumbs::for('admin.permissions.index', function (BreadcrumbTrail $trail) {
 });
 
 Breadcrumbs::for('admin.permissions.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('permissions.index');
+    $trail->parent('admin.permissions.index');
     $trail->push('Add Permission', route('admin.permissions.create'));
 });
 
 Breadcrumbs::for('admin.permissions.show', function (BreadcrumbTrail $trail, Permission $permission) {
-    $trail->parent('permissions.index');
+    $trail->parent('admin.permissions.index');
     $trail->push($permission->display_name, route('admin.permissions.show', $permission->id));
 });
 
 Breadcrumbs::for('admin.permissions.edit', function (BreadcrumbTrail $trail, Permission $permission) {
-    $trail->parent('permissions.index');
+    $trail->parent('admin.permissions.index');
     $trail->push('Edit Permission', route('admin.permissions.edit', $permission->id));
 });

@@ -3,10 +3,13 @@
 namespace Modules\Admin\Services\Rbac;
 
 
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Admin\Models\Rbac\Permission;
 use Modules\Admin\Repositories\Eloquent\Rbac\PermissionRepository;
+use Modules\Core\Supports\Constant;
+use Throwable;
 
 
 class PermissionService
@@ -38,7 +41,7 @@ class PermissionService
      * @param array $filters
      * @param array $eagerRelations
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function permissionPaginate(array $filters = [], array $eagerRelations = [])
     {
@@ -49,7 +52,7 @@ class PermissionService
      * @param int $id
      * @param bool $purge
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPermissionById(int $id, bool $purge = false)
     {
@@ -58,26 +61,26 @@ class PermissionService
 
     /**
      * @param array $inputs
-     * @return bool
-     * @throws \Exception
-     * @throws \Throwable
+     * @return array
+     * @throws Exception
+     * @throws Throwable
      */
-    public function storePermission(array $inputs): bool
+    public function storePermission(array $inputs): array
     {
         \DB::beginTransaction();
         try {
             $newPermission = $this->permissionRepository->create($inputs);
             if ($newPermission instanceof Permission) {
                 \DB::commit();
-                return true;
+                return ['status' => true, 'message' => __('New Permission Created'), 'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
             } else {
                 \DB::rollBack();
-                return false;
+                return ['status' => false, 'message' => __('New Permission Creation Failed'), 'level' => Constant::MSG_TOASTR_ERROR, 'title' => 'Alert!'];
             }
-        } catch (\Exception $exception) {
-            \Log::error($exception->getMessage());
+        } catch (Exception $exception) {
+            $this->permissionRepository->handleException($exception);
             \DB::rollBack();
-            return false;
+            return ['status' => false, 'message' => $exception->getMessage(), 'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
         }
     }
 
@@ -85,7 +88,7 @@ class PermissionService
      * @param array $inputs
      * @param $id
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function updatePermission(array $inputs, $id)
     {
@@ -99,7 +102,7 @@ class PermissionService
                 \DB::rollBack();
                 return false;
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             \Log::error($exception->getMessage());
             \DB::rollBack();
             return false;
@@ -110,7 +113,7 @@ class PermissionService
     /**
      * @param $id
      * @return bool
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function destroyPermission($id): bool
     {
@@ -123,7 +126,7 @@ class PermissionService
                 \DB::rollBack();
                 return false;
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             \Log::error($exception->getMessage());
             \DB::rollBack();
             return false;
