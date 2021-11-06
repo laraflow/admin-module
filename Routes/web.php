@@ -16,9 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 use Modules\Admin\Http\Controllers\AdminController;
 use Modules\Admin\Http\Controllers\Rbac\PermissionController;
+use Modules\Backend\Http\Controllers\Authorization\RoleController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index']);
     Route::resource('permissions', PermissionController::class);
-
+    Route::resource('roles', RoleController::class);
 });
