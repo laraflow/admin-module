@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +13,9 @@
 |
 */
 
-Route::prefix('admin')->group(function() {
-    Route::get('/', 'AdminController@index');
+
+use Modules\Admin\Http\Controllers\AdminController;
+
+Route::prefix('admin')->group(function () {
+    Route::get('/', [AdminController::class, 'index']);
 });
