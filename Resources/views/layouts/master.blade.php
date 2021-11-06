@@ -32,9 +32,11 @@
         <!-- Content Header (Page header) -->
     @include('admin::partials.content-header')
     <!-- Main content -->
-        <div class="content">
+        <section class="content">
             @yield('content')
-        </div>
+
+            @include('core::partials.delete-modal')
+        </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
@@ -53,7 +55,8 @@
 @include('admin::layouts.includes.plugin-script')
 <!-- AdminLTE App -->
 <script src="{{ asset('modules/admin/assets/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('modules/admin/assets/js/utility.min.js') }}"></script>
 <!-- inline js -->
-@include('admin::layouts.includes.head-script')
+@include('admin::layouts.includes.page-script')
 </body>
 </html>
