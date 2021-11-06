@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\Rbac\PermissionRequest;
 use Modules\Admin\Services\Rbac\PermissionService;
 use Modules\Core\Services\Auth\AuthenticatedSessionService;
+use Modules\Core\Supports\Constant;
 
 class PermissionController extends Controller
 {
@@ -92,7 +93,7 @@ class PermissionController extends Controller
     {
         $withTrashed = false;
 
-        if (\request()->has('with') && \request()->get('with') == \Constant::PURGE_MODEL_QSA) {
+        if (\request()->has('with') && \request()->get('with') == Constant::PURGE_MODEL_QSA) {
             $withTrashed = true;
         }
 
@@ -114,7 +115,13 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        if ($permission = $this->permissionService->getPermissionById($id)) {
+        $withTrashed = false;
+
+        if (\request()->has('with') && \request()->get('with') == Constant::PURGE_MODEL_QSA) {
+            $withTrashed = true;
+        }
+
+        if ($permission = $this->permissionService->getPermissionById($id, $withTrashed)) {
             return view('admin::rbac.permission.edit', [
                 'permission' => $permission
             ]);
@@ -133,11 +140,11 @@ class PermissionController extends Controller
      */
     public function update(PermissionRequest $request, $id): RedirectResponse
     {
-        $inputs = $request->except('_token', 'submit', '_method');
+        $confirm = $this->permissionService->updatePermission($request->except('_token', 'submit', '_method'), $id);
 
-        if ($this->permissionService->updatePermission($inputs, $id)) {
+        if ($confirm['status'] == true) {
             notify($confirm['message'], $confirm['level'], $confirm['title']);
-            return redirect()->route('permissions.index');
+            return redirect()->route('admin.permissions.index');
         }
 
         notify($confirm['message'], $confirm['level'], $confirm['title']);

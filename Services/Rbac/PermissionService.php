@@ -87,27 +87,30 @@ class PermissionService
     /**
      * @param array $inputs
      * @param $id
-     * @return mixed
+     * @return array
      * @throws Throwable
      */
-    public function updatePermission(array $inputs, $id)
+    public function updatePermission(array $inputs, $id): array
     {
         \DB::beginTransaction();
         try {
-            $permission = $this->permissionRepository->update($inputs, $id);
+            $permission = $this->permissionRepository->show($id);
             if ($permission instanceof Permission) {
-                \DB::commit();
-                return true;
+                if ($this->permissionRepository->update($inputs, $id)) {
+                    //\DB::commit();
+                    return ['status' => true, 'message' => __('Permission Info Updated'), 'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
+                } else {
+                    \DB::rollBack();
+                    return ['status' => false, 'message' => __('Permission Info Update Failed'), 'level' => Constant::MSG_TOASTR_ERROR, 'title' => 'Alert!'];
+                }
             } else {
-                \DB::rollBack();
-                return false;
+                return ['status' => false, 'message' => __('Permission Model Not Found'), 'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Alert!'];
             }
         } catch (Exception $exception) {
-            \Log::error($exception->getMessage());
+            $this->permissionRepository->handleException($exception);
             \DB::rollBack();
-            return false;
+            return ['status' => false, 'message' => $exception->getMessage(), 'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
         }
-
     }
 
     /**

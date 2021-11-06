@@ -31,14 +31,14 @@
 @section('breadcrumbs', \Breadcrumbs::render(Route::getCurrentRoute()->getName(), $permission))
 
 @section('actions')
-    {!! \Html::backButton('permissions.index') !!}
+    {!! \Html::backButton('admin.permissions.index') !!}
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                {!! \Form::open(['route' => ['permissions.update', $permission->id], 'method' => 'put', 'id' => 'permission-form']) !!}
+                {!! \Form::open(['route' => ['admin.permissions.update', $permission->id], 'method' => 'put', 'id' => 'permission-form']) !!}
                 @include('admin::rbac.permission.form')
                 {!! \Form::close() !!}
             </div>
