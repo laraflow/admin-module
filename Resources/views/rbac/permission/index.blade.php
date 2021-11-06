@@ -112,5 +112,9 @@
 @endpush
 
 @push('page-script')
-
+    <script>
+        $(function () {
+            highLightQueryString('search', 'permission-table');
+        });
+    </script>
 @endpush
