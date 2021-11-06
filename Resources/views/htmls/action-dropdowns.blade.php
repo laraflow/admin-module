@@ -1,5 +1,5 @@
-@canany([$resourceRouteName . '.show', $resourceRouteName . '.edit',
-        $resourceRouteName . '.destroy', $resourceRouteName . '.restore'])
+{{--@canany([$resourceRouteName . '.show', $resourceRouteName . '.edit',
+        $resourceRouteName . '.destroy', $resourceRouteName . '.restore'])--}}
     <div class="d-flex justify-content-center">
         <a id="actions1Invoker"
            class="link-muted" href="#!"
@@ -33,14 +33,14 @@
                 @endif
 
                 @if(in_array('delete', $options) && Route::has($resourceRouteName . '.destroy'))
-                    @can($resourceRouteName . '.destroy')
+                    {{--@can($resourceRouteName . '.destroy')--}}
                         <li>
-                            <a href="{{ route($resourceRouteName . '.destroy', $id) }}" title="Show"
-                               class="d-flex align-items-center link-muted py-2 px-3">
-                                <i class="mdi mdi-close-thick fw-bold"></i> Delete
+                            <a href="{{ route('core.common.delete', [$resourceRouteName, $id]) }}" title="Show"
+                               class="d-flex align-items-center link-muted py-2 px-3 delete-btn">
+                                <i class="mdi mdi-close-thick fw-bold mr-1"></i> Delete
                             </a>
                         </li>
-                    @endcan
+                    {{--@endcan--}}
                 @endif
 
                 @if(in_array('delete', $options) && Route::has($resourceRouteName . '.restore'))
@@ -48,7 +48,7 @@
                         <li>
                             <a href="{{ route($resourceRouteName . '.restore', $id) }}" title="Show"
                                class="d-flex align-items-center link-muted py-2 px-3">
-                                <i class="mdi mdi-delete-restore fw-bold"></i> Restore
+                                <i class="mdi mdi-delete-restore fw-bold mr-1"></i> Restore
                             </a>
                         </li>
                     @endcan
@@ -56,4 +56,4 @@
             </ul>
         </div>
     </div>
-@endcanany
+{{--@endcanany--}}

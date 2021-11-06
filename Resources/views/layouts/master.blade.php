@@ -32,9 +32,11 @@
         <!-- Content Header (Page header) -->
     @include('admin::partials.content-header')
     <!-- Main content -->
-        <div class="content">
+        <section class="content">
             @yield('content')
-        </div>
+
+            @include('core::partials.delete-modal')
+        </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
