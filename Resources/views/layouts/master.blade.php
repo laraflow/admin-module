@@ -20,7 +20,7 @@
 <body class="hold-transition @yield('body-class')">
 <div class="wrapper">
     <!-- Preloader -->
-@include('admin::partials.preloader')
+@include('admin::layouts.includes.preloader')
 <!-- Navbar -->
 @include('admin::partials.navbar')
 
