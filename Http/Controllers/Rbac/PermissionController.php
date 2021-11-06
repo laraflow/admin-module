@@ -159,7 +159,7 @@ class PermissionController extends Controller
      * @return RedirectResponse
      * @throws \Throwable
      */
-    public function destroy($id, Request $request)
+    public function destroy($id, Request $request): RedirectResponse
     {
         if ($this->authenticatedSessionService->verifyUser($request)) {
 
@@ -170,7 +170,7 @@ class PermissionController extends Controller
             } else {
                 notify($confirm['message'], $confirm['level'], $confirm['title']);
             }
-            return redirect()->route('permissions.index');
+            return redirect()->route('admin.permissions.index');
         }
         abort(403, 'Wrong user credentials');
     }
