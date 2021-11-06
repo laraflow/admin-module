@@ -1,115 +1,123 @@
 @extends('admin::layouts.master')
 
-@section('title', 'Roles')
+@section('title', 'Permissions')
 
-@section('keywords', 'Register, sing up')
-
-@section('description', 'user tries to login in to system')
-
-@push('component-styles')
+@push('meta')
 
 @endpush
 
-@push('page-styles')
+@push('webfont')
 
 @endpush
 
-@section('breadcrumbs', Breadcrumbs::render(Route::getCurrentRoute()->getName()))
+@push('icon')
 
-@section('options')
-    {!! \Html::linkButton('Add Role', 'roles.create', [], 'mdi mdi-plus', 'success') !!}
+@endpush
+
+@push('plugin-style')
+
+@endpush
+
+@push('inline-style')
+@endpush
+
+@push('head-script')
+
+@endpush
+
+@section('body-class', 'sidebar-mini')
+
+@section('breadcrumbs', \Breadcrumbs::render())
+
+@section('actions')
+    {!! \Html::linkButton('Add Permission', 'admin.permissions.create', [], 'mdi mdi-plus', 'success') !!}
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                {!! Html::cardHeader('Roles',
-                        'mdi mdi-account-check-outline',
-                         'DataTables has most features enabled by default.') !!}
-                <div class="card-body">
-
-                    {!! \Form::open(['route' => 'roles.index', 'method' => 'get']) !!}
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="input-group mb-3">
-                                {!! \Form::search('search', old('search', (request()->get('search') ?? null)),
-                                    ['class' => 'form-control', 'placeholder' =>'Search Role Name, Guard, Enabled.. etc',
-                                     'aria-label' => 'Search Role Name, Guard, Enabled.. etc',
-                                      'aria-describedby' => 'Search Role Name, Guard, Enabled.. etc',
-                                     'id' => 'search']) !!}
-                                <div class="input-group-append">
-                                    {!! \Form::submit('Search', ['class' => 'btn btn-primary input-group-right-btn']) !!}
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-body p-0">
+                {!! \Html::cardSearch('search', 'admin.roles.index', 'Search Role Name, Code, Guard, Status, etc.') !!}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0" id="permission-table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" type="checkbox" id="customCheckbox1"
+                                           value="option1">
+                                    <label for="customCheckbox1" class="custom-control-label"></label>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    {!! \Form::close() !!}
-
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-display" id="role-table">
-                            <thead>
+                            </th>
+                            <th>@sortablelink('name', 'Name')</th>
+                            <th>@sortablelink('guard_name', 'Guard')</th>
+                            <th>@sortablelink('permissions', 'Permissions')</th>
+                            <th>@sortablelink('users', 'Users')</th>
+                            <th class="text-center">@sortablelink('enabled', 'Enabled')</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse($roles as $index => $role)
                             <tr>
-                                <th>#</th>
-                                <th>@sortablelink('name', 'Name')</th>
-                                <th>@sortablelink('guard_name', 'Guard')</th>
-                                <th>@sortablelink('permissions', 'Permissions')</th>
-                                <th class="text-center">@sortablelink('enabled', 'Enabled')</th>
-                                <th class="text-center">@sortablelink('remarks', 'Remarks')</th>
-                                <th class="text-center">Actions</th>
+                                <td class="exclude-search">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="customCheckbox1"
+                                               value="option1">
+                                        <label for="customCheckbox1" class="custom-control-label"></label>
+                                    </div>
+                                </td>
+                                <td class="text-left">
+                                    <a href="{{ route('admin.roles.show', $role->id) }}">
+                                        {{ $role->name }}
+                                    </a>
+                                </td>
+                                <td class="text-center">{{ $role->guard_name }}</td>
+                                <td class="text-center">{{ $role->total_permissions }}</td>
+                                <td class="text-center">{{ $role->total_users }}</td>
+
+                                <td class="text-center exclude-search">
+                                    <input type="checkbox" data-toggle="toggle" data-size="small"
+                                           data-onstyle="{{ $on ?? 'success' }}"
+                                           data-offstyle="{{ $off ?? 'danger' }}"
+                                           data-model=""
+                                           data-field="enabled"
+                                           data-id="{{$role->id}}"
+                                           data-on="<i class='mdi mdi-check-bold fw-bolder'></i> Yes"
+                                           data-off="<i class='mdi mdi-close fw-bolder'></i> No"
+                                           @if($role->enabled == 'yes') checked @endif>
+
+                                </td>
+                                <td class="exclude-search pr-3 text-center">
+                                    {!! \Html::actionDropdown('admin.roles', $role->id, ['show', 'edit', 'delete']) !!}
+                                </td>
                             </tr>
-                            </thead>
-                            <tbody>
-                            @forelse($roles as $index => $role)
-                                <tr>
-                                    <td>{{ $roles->firstItem() + $loop->index }}</td>
-                                    <td>{{ $role->name }}</td>
-                                    <td>{{ $role->guard_name }}</td>
-                                    <td class="text-right">{{ $role->total_permissions }}</td>
-
-                                    <td class="text-center">
-                                        <input type="checkbox" data-toggle="toggle" data-size="small"
-                                               data-onstyle="{{ $on ?? 'success' }}"
-                                               data-offstyle="{{ $off ?? 'danger' }}"
-                                               data-model=""
-                                               data-field="enabled"
-                                               data-id="{{$role->id}}"
-                                               data-on="<i class='mdi mdi-check-bold fw-bolder'></i> Yes"
-                                               data-off="<i class='mdi mdi-close fw-bolder'></i> No"
-                                               @if($role->enabled == 'yes') checked @endif>
-
-                                        {{--{!! \CHTML::flagChangeButton($role, 'enabled', ['yes', 'no']) !!}--}}
-                                    </td>
-                                    <td>{{ $role->remarks }}</td>
-                                    <td>
-                                        {!! \Html::actionButton('roles', $role->id, ['show', 'edit', 'delete']) !!}
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6">No data to display</td>
-                                </tr>
-                            @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                    {!! $roles->onEachSide(2)->appends(request()->query())->links() !!}
+                        @empty
+                            <tr>
+                                <td colspan="7" class="exclude-search text-center">No data to display</td>
+                            </tr>
+                        @endforelse
+                        </tbody>
+                    </table>
                 </div>
+            </div>
+            <div class="card-footer bg-transparent pb-0">
+                {!! \Modules\Admin\Supports\CHTML::pagination($roles) !!}
             </div>
         </div>
     </div>
+    <!-- /.container-fluid -->
 @endsection
 
-@push('component-scripts')
+
+@push('plugin-script')
 
 @endpush
 
-
-@push('page-scripts')
+@push('page-script')
     <script>
         $(function () {
-            highLightQueryString("search", "role-table");
+            highLightQueryString('search', 'role-table');
         });
     </script>
 @endpush

@@ -1,13 +1,13 @@
 <?php
 
 
-namespace Modules\Backend\Services\Authorization;
+namespace Modules\Admin\Services\Rbac;
 
 
-use Modules\Rbac\Models\Role;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Rbac\Repositories\Eloquent\RoleRepository;
+use Modules\Admin\Models\Rbac\Role;
+use Modules\Admin\Repositories\Eloquent\Rbac\RoleRepository;
 
 class RoleService
 {

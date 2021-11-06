@@ -1,19 +1,19 @@
 <?php
 
-namespace Modules\Backend\Http\Controllers\Authorization;
+namespace Modules\Admin\Http\Controllers\Rbac;
 
 use App\Http\Controllers\Controller;
-use App\Services\Auth\AuthenticatedSessionService;
-use Modules\Backend\Services\Authorization\PermissionService;
-use Modules\Backend\Services\Authorization\RoleService;
-use Modules\Backend\Services\Authorization\UserService;
+use Modules\Admin\Http\Requests\Rbac\RoleRequest;
+use Modules\Admin\Services\Rbac\PermissionService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Modules\Rbac\Http\Requests\RoleRequest;
+use Modules\Admin\Services\Rbac\RoleService;
+use Modules\Core\Services\Auth\AuthenticatedSessionService;
+use Modules\Core\Supports\Constant;
 use Throwable;
 
 class RoleController extends Controller
@@ -59,7 +59,7 @@ class RoleController extends Controller
         $filters = $request->except('_token');
         $roles = $this->roleService->rolePaginate($filters);
 
-        return view('backend::role.index', [
+        return view('admin::rbac.role.index', [
             'roles' => $roles
         ]);
     }
@@ -73,7 +73,7 @@ class RoleController extends Controller
     {
         $permissions = $this->permissionService->getAllPermissions();
 
-        return view('backend::role.create', [
+        return view('admin::rbac.role.create', [
             'permissions' => $permissions
         ]);
     }
@@ -90,11 +90,11 @@ class RoleController extends Controller
         $inputs = $request->except('_token');
 
         if ($this->roleService->storeRole($inputs)) {
-            toastr('New Role Created', 'success', 'Notification');
+            notify($confirm['message'], $confirm['level'], $confirm['title']);
             return redirect()->route('roles.index');
         }
 
-        toastr('Role Creation Failed', 'error', 'Alert');
+        notify($confirm['message'], $confirm['level'], $confirm['title']);
         return redirect()->back()->withInput();
     }
 
@@ -109,12 +109,12 @@ class RoleController extends Controller
     {
         $withTrashed = false;
 
-        if (\request()->has('with') && \request()->get('with') == \Constant::PURGE_MODEL_QSA) {
+        if (request()->has('with') && request()->get('with') == Constant::PURGE_MODEL_QSA) {
             $withTrashed = true;
         }
 
         if ($role = $this->roleService->getRoleById($id, $withTrashed)) {
-            return view('backend::role.show', [
+            return view('admin::rbac.role.show', [
                 'role' => $role
             ]);
         }
@@ -136,7 +136,7 @@ class RoleController extends Controller
             $permissions = $this->permissionService->getAllPermissions();
             $role_permissions = $role->permissions()->pluck('id')->toArray() ?? [];
 
-            return view('backend::role.edit', [
+            return view('admin::rbac.role.edit', [
                 'role' => $role,
                 'permissions' => $permissions,
                 'role_permissions' => $role_permissions
@@ -159,11 +159,11 @@ class RoleController extends Controller
         $inputs = $request->except('_token', 'submit', '_method');
 
         if ($this->roleService->updateRole($inputs, $id)) {
-            toastr('Role Information Updated', 'success', 'Notification');
+            notify($confirm['message'], $confirm['level'], $confirm['title']);
             return redirect()->route('roles.index');
         }
 
-        toastr('Role Information Update Failed', 'error', 'Alert');
+        notify($confirm['message'], $confirm['level'], $confirm['title']);
         return redirect()->back()->withInput();
     }
 
@@ -180,9 +180,9 @@ class RoleController extends Controller
         if ($this->authenticatedSessionService->verifyUser($request)) {
 
             if ($this->roleService->destroyRole($id)) {
-                toastr('Role Deleted', 'success', 'Notification');
+                notify($confirm['message'], $confirm['level'], $confirm['title']);
             } else {
-                toastr('Role Removal Failed', 'error', 'Alert');
+                notify($confirm['message'], $confirm['level'], $confirm['title']);
             }
             return redirect()->route('roles.index');
         }
