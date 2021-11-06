@@ -20,18 +20,18 @@
 <body class="hold-transition @yield('body-class')">
 <div class="wrapper">
     <!-- Preloader -->
-@include('admin::partials.preloader')
-<!-- Navbar -->
-@include('admin::partials.navbar')
+    @include('admin::layouts.includes.preloader')
+    <!-- Navbar -->
+    @include('admin::partials.navbar')
 
 <!-- Main Sidebar Container -->
-@include('admin::partials.menu-sidebar')
+    @include('admin::partials.menu-sidebar')
 
-<!-- Content Wrapper. Contains page content -->
+    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-    @include('admin::partials.content-header')
-    <!-- Main content -->
+        @include('admin::partials.content-header')
+        <!-- Main content -->
         <div class="content">
             @yield('content')
         </div>
@@ -40,8 +40,8 @@
     <!-- /.content-wrapper -->
 
     <!-- Control Sidebar -->
-@include('admin::partials.control-sidebar')
-<!-- Main Footer -->
+    @include('admin::partials.control-sidebar')
+    <!-- Main Footer -->
     @include('admin::partials.main-footer')
 </div>
 <!-- ./wrapper -->
