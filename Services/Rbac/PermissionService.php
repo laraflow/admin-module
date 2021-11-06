@@ -97,7 +97,7 @@ class PermissionService
             $permission = $this->permissionRepository->show($id);
             if ($permission instanceof Permission) {
                 if ($this->permissionRepository->update($inputs, $id)) {
-                    //\DB::commit();
+                    \DB::commit();
                     return ['status' => true, 'message' => __('Permission Info Updated'), 'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
                 } else {
                     \DB::rollBack();
@@ -124,15 +124,16 @@ class PermissionService
         try {
             if ($this->permissionRepository->delete($id)) {
                 \DB::commit();
-                return true;
+                return ['status' => true, 'message' => __('Permission is Trashed'), 'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
+
             } else {
                 \DB::rollBack();
-                return false;
+                return ['status' => false, 'message' => __('Permission is Delete Failed'), 'level' => Constant::MSG_TOASTR_ERROR, 'title' => 'Alert!'];
             }
         } catch (Exception $exception) {
-            \Log::error($exception->getMessage());
+            $this->permissionRepository->handleException($exception);
             \DB::rollBack();
-            return false;
+            return ['status' => false, 'message' => $exception->getMessage(), 'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
         }
     }
 }
