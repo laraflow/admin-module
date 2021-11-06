@@ -27,7 +27,7 @@
 
 @section('body-class', 'sidebar-mini')
 
-{{--@section('breadcrumbs', \Breadcrumbs::render())--}}
+@section('breadcrumbs', \Breadcrumbs::render())
 
 @section('actions')
     {!! \Html::linkButton('Add Permission', 'admin.permissions.create', [], 'mdi mdi-plus', 'success') !!}
@@ -67,7 +67,7 @@
                                     </div>
                                 </td>
                                 <td class="text-left">
-                                    <a href="{{ route('permissions.show', $permission->id) }}">
+                                    <a href="{{ route('admin.permissions.show', $permission->id) }}">
                                         {{ $permission->display_name }}
                                     </a>
                                 </td>
@@ -86,27 +86,7 @@
 
                                 </td>
                                 <td class="exclude-search pr-3 text-center">
-
-												<a id="actions1Invoker" class="link-muted" href="#!" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
-													<i class="fa fa-sliders-h"></i>
-												</a>
-
-												<div class="dropdown-menu dropdown-menu-right dropdown" style="width: 150px; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(898px, 169px, 0px);" aria-labelledby="actions1Invoker" x-placement="bottom-end">
-													<ul class="list-unstyled mb-0">
-														<li>
-															<a class="d-flex align-items-center link-muted py-2 px-3" href="#!">
-																<i class="fa fa-plus mr-2"></i> Add
-															</a>
-														</li>
-														<li>
-															<a class="d-flex align-items-center link-muted py-2 px-3" href="#!">
-																<i class="fa fa-minus mr-2"></i> Remove
-															</a>
-														</li>
-													</ul>
-												</div>
-
-                                    {!! \Html::actionButton('permissions', $permission->id, ['show', 'edit', 'delete']) !!}
+                                    {!! \Html::actionDropdown('admin.permissions', $permission->id, ['show', 'edit', 'delete']) !!}
                                 </td>
                             </tr>
                         @empty
@@ -119,7 +99,7 @@
                 </div>
             </div>
             <div class="card-footer bg-transparent pb-0">
-                {!! \Modules\Core\Supports\CHTML::pagination($permissions) !!}
+                {!! \Modules\Admin\Supports\CHTML::pagination($permissions) !!}
             </div>
         </div>
     </div>
