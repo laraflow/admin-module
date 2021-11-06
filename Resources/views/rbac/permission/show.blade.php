@@ -28,11 +28,11 @@
 
 @section('body-class', 'sidebar-mini')
 
-@section('breadcrumbs', \Breadcrumbs::render(Route::getCurrentRoute()->getName(), $permission))
+@section('breadcrumbs', Breadcrumbs::render(Route::getCurrentRoute()->getName(), $permission))
 
 @section('actions')
-    {!! \Html::backButton('permissions.index') !!}
-    {!! \Html::editButton('permissions.edit', $permission->id) !!}
+    {!! \Html::backButton('admin.permissions.index') !!}
+    {!! \Html::editButton('admin.permissions.edit', $permission->id) !!}
 @endsection
 
 @section('content')
@@ -56,7 +56,7 @@
                     </div>
                     <div class="col-md-6">
                         <label class="d-block">Enabled</label>
-                        <p class="fw-bolder">{{ \Modules\Backend\Supports\Constant::ENABLED_OPTIONS[$permission->enabled] }}</p>
+                        <p class="fw-bolder">{{ \Modules\Core\Supports\Constant::ENABLED_OPTIONS[$permission->enabled] }}</p>
                     </div>
                 </div>
                 <div class="row">
