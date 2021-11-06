@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Backend\Models\Authorization;
+namespace Modules\Admin\Models\Rbac;
 
 use Modules\Backend\Models\Authentication\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

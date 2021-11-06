@@ -3,6 +3,7 @@
 namespace Modules\Admin\Http\Requests\Rbac;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Modules\Core\Supports\Constant;
 
 class PermissionRequest extends FormRequest
 {
@@ -14,8 +15,8 @@ class PermissionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-/*        return request()->user()->can('permissions.store') ||
-            request()->user()->can('permissions.update');*/
+        /*        return request()->user()->can('permissions.store') ||
+                    request()->user()->can('permissions.update');*/
         return true;
     }
 
@@ -28,7 +29,7 @@ class PermissionRequest extends FormRequest
     {
         return [
             'display_name' => 'required|string|min:3|max:255',
-            'name' => 'required|string|min:3|max:255',
+            'name' => 'required|string|min:3|max:255|regex:/^([a-zA-Z0-9\.\-_]+)$/',
             'guard_name' => 'nullable|string|min:3|max:255',
             'enabled' => 'required|string|min:2|max:3',
             'remarks' => 'nullable|string|min:3|max:255',
@@ -46,6 +47,13 @@ class PermissionRequest extends FormRequest
         return [
             'guard_name' => 'Guard',
             'name' => 'Permission Code'
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.regex' => 'This :attribute field may only alphanumeric, hyphen(-), underscope(_) & fullstops(.)'
         ];
     }
 
