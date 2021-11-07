@@ -1,6 +1,6 @@
 @extends('admin::layouts.master')
 
-@section('title', 'Permissions')
+@section('title', 'Roles')
 
 @push('meta')
 
@@ -30,7 +30,7 @@
 @section('breadcrumbs', \Breadcrumbs::render())
 
 @section('actions')
-    {!! \Html::linkButton('Add Permission', 'admin.permissions.create', [], 'mdi mdi-plus', 'success') !!}
+    {!! \Html::linkButton('Add Role', 'admin.roles.create', [], 'mdi mdi-plus', 'success') !!}
 @endsection
 
 @section('content')
@@ -39,7 +39,7 @@
             <div class="card-body p-0">
                 {!! \Html::cardSearch('search', 'admin.roles.index', 'Search Role Name, Code, Guard, Status, etc.') !!}
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0" id="permission-table">
+                    <table class="table table-hover mb-0" id="role-table">
                         <thead class="thead-light">
                         <tr>
                             <th>

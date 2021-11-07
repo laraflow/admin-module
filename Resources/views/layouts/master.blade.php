@@ -47,6 +47,8 @@
     @include('admin::partials.main-footer')
 </div>
 <!-- ./wrapper -->
+<!-- JS Constants -->
+@include('admin::layouts.includes.js-constants')
 <!-- jQuery -->
 <script src="{{ asset('modules/admin/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->

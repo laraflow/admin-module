@@ -13,7 +13,7 @@ Breadcrumbs::for('admin', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Admin', route('admin.'));
 });
-
+/****************************************** Permission ******************************************/
 Breadcrumbs::for('admin.permissions.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
     $trail->push('Permissions', route('admin.permissions.index'));
@@ -34,6 +34,7 @@ Breadcrumbs::for('admin.permissions.edit', function (BreadcrumbTrail $trail, Per
     $trail->push('Edit Permission', route('admin.permissions.edit', $permission->id));
 });
 
+/****************************************** Role ******************************************/
 Breadcrumbs::for('admin.roles.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
     $trail->push('Roles', route('admin.roles.index'));

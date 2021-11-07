@@ -19,7 +19,7 @@ class CHTML
      * @param array $states
      * @return HtmlString
      */
-    public static function flagChangeButton(Model $model, string $field, array $options, $current_value = null, array $states = []): HtmlString
+    public static function flagChangeButton(Model $model, string $field, array $options = [], $current_value = null, array $states = []): HtmlString
     { //Get Model information
         $model_id_field = $model->getKeyName();
         $model_id = $model->$model_id_field;
@@ -49,9 +49,9 @@ class CHTML
      */
     public static function pagination($collection, string $type = 'default')
     {
-        return $collection->onEachSide(2)
-            ->appends(request()->query())
+        return $collection->onEachSide(2)->appends(request()->query())
             ->links('admin::layouts.' . $type . '-paginate');
     }
+
 }
 
