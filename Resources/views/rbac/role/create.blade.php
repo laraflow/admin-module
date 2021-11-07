@@ -17,18 +17,15 @@
 @section('breadcrumbs', Breadcrumbs::render(Route::getCurrentRoute()->getName()))
 
 @section('options')
-    {!! \Html::backButton('roles.index') !!}
+    {!! \Html::backButton('admin.roles.index') !!}
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                {!! Html::cardHeader('Add Role',
-                        'mdi mdi-account-check-outline',
-                         'DataTables has most features enabled by default.') !!}
-                {!! \Form::open(['route' => 'roles.store', 'id' => 'role-form']) !!}
-                @include('backend.preference.role.form')
+                {!! \Form::open(['route' => 'admin.roles.store', 'id' => 'role-form']) !!}
+                @include('admin::rbac.role.form')
                 {!! \Form::close() !!}
             </div>
         </div>

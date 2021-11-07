@@ -50,9 +50,9 @@
                                 </div>
                             </th>
                             <th>@sortablelink('name', 'Name')</th>
-                            <th>@sortablelink('guard_name', 'Guard')</th>
-                            <th>@sortablelink('permissions', 'Permissions')</th>
-                            <th>@sortablelink('users', 'Users')</th>
+                            <th class="text-center">@sortablelink('guard_name', 'Guard')</th>
+                            <th class="text-center">@sortablelink('permissions', 'Permissions')</th>
+                            <th class="text-center">@sortablelink('users', 'Users')</th>
                             <th class="text-center">@sortablelink('enabled', 'Enabled')</th>
                             <th class="text-center">Actions</th>
                         </tr>
