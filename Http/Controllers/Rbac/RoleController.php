@@ -3,14 +3,14 @@
 namespace Modules\Admin\Http\Controllers\Rbac;
 
 use App\Http\Controllers\Controller;
-use Modules\Admin\Http\Requests\Rbac\RoleRequest;
-use Modules\Admin\Services\Rbac\PermissionService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Modules\Admin\Http\Requests\Rbac\RoleRequest;
+use Modules\Admin\Services\Rbac\PermissionService;
 use Modules\Admin\Services\Rbac\RoleService;
 use Modules\Core\Services\Auth\AuthenticatedSessionService;
 use Modules\Core\Supports\Constant;
@@ -87,11 +87,11 @@ class RoleController extends Controller
      */
     public function store(RoleRequest $request): RedirectResponse
     {
-        $inputs = $request->except('_token');
+        $confirm = $this->roleService->storeRole($request->except('_token'));
 
-        if ($this->roleService->storeRole($inputs)) {
+        if ($confirm['status'] == true) {
             notify($confirm['message'], $confirm['level'], $confirm['title']);
-            return redirect()->route('roles.index');
+            return redirect()->route('admin.roles.index');
         }
 
         notify($confirm['message'], $confirm['level'], $confirm['title']);
@@ -156,9 +156,9 @@ class RoleController extends Controller
      */
     public function update(RoleRequest $request, $id): RedirectResponse
     {
-        $inputs = $request->except('_token', 'submit', '_method');
+        $confirm = $this->roleService->updateRole($request->except('_token', 'submit', '_method'), $id);
 
-        if ($this->roleService->updateRole($inputs, $id)) {
+        if ($confirm['status'] == true) {
             notify($confirm['message'], $confirm['level'], $confirm['title']);
             return redirect()->route('roles.index');
         }

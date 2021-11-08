@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Admin\Models\Rbac\Role;
 use Modules\Admin\Repositories\Eloquent\Rbac\RoleRepository;
+use Modules\Core\Supports\Constant;
 
 class RoleService
 {
@@ -58,27 +59,29 @@ class RoleService
 
     /**
      * @param array $inputs
-     * @return bool
+     * @return array
      * @throws \Exception|\Throwable
      */
-    public function storeRole(array $inputs): bool
+    public function storeRole(array $inputs): array
     {
         \DB::beginTransaction();
+
         try {
             $newRole = $this->roleRepository->create($inputs);
             if ($newRole instanceof Role) {
-                //attach permissions
-                $this->roleRepository->attachPermissions($inputs['permissions'], $newRole->id);
                 \DB::commit();
-                return true;
+                return ['status' => true, 'message' => __('New Role Created'),
+                    'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
             } else {
                 \DB::rollBack();
-                return false;
+                return ['status' => false, 'message' => __('New Permission Creation Failed'),
+                    'level' => Constant::MSG_TOASTR_ERROR, 'title' => 'Alert!'];
             }
         } catch (\Exception $exception) {
-            \Log::error($exception->getMessage());
+            $this->roleRepository->handleException($exception);
             \DB::rollBack();
-            return false;
+            return ['status' => false, 'message' => $exception->getMessage(),
+                'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
         }
     }
 
