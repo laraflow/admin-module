@@ -1,9 +1,58 @@
 @extends('admin::layouts.master')
 
-@section('content')
-    <h1>Hello World</h1>
+@section('title', 'Admin Panel')
 
-    <p>
-        This view is loaded from module: {!! config('admin.name') !!}
-    </p>
+@push('meta')
+
+@endpush
+
+@push('webfont')
+
+@endpush
+
+@push('icon')
+
+@endpush
+
+@push('plugin-style')
+
+@endpush
+
+@push('inline-style')
+@endpush
+
+@push('head-script')
+
+@endpush
+
+@section('body-class', 'sidebar-mini')
+
+@section('breadcrumbs', \Breadcrumbs::render())
+
+@section('actions')
+{{--    {!! \Html::linkButton('Add Permission', 'admin.permissions.create', [], 'mdi mdi-plus', 'success') !!}--}}
 @endsection
+
+@section('content')
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-body p-0 min-vh-100">
+
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+@endsection
+
+
+@push('plugin-script')
+
+@endpush
+
+@push('page-script')
+    <script>
+        $(function () {
+            highLightQueryString('search', 'permission-table');
+        });
+    </script>
+@endpush

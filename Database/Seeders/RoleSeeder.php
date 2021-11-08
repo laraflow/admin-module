@@ -4,7 +4,7 @@ namespace Modules\Admin\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Admin\Models\Authorization\Role;
+use Modules\Admin\Models\Rbac\Role;
 
 class RoleSeeder extends Seeder
 {

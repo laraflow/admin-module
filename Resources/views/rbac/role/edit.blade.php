@@ -1,6 +1,6 @@
 @extends('admin::layouts.master')
 
-@section('title', 'Edit Role')
+@section('title', 'Add Role')
 
 @section('keywords', 'Register, sing up')
 
@@ -13,24 +13,19 @@
 @push('page-styles')
 
 @endpush
-{{--
 
-@section('breadcrumbs', Breadcrumbs::render(Route::getCurrentRoute()->getName(), $permission))
---}}
+@section('breadcrumbs', Breadcrumbs::render(Route::getCurrentRoute()->getName(), $role))
 
-@section('options')
-    {!! \Html::backButton('roles.index') !!}
+@section('actions')
+    {!! \Html::backButton('admin.roles.index') !!}
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                {!! Html::cardHeader('Edit Roles',
-                        'mdi mdi-account-check-outline',
-                         'DataTables has most features enabled by default.') !!}
-                {!! \Form::open(['route' => ['roles.update', $role->id], 'method' => 'put', 'id' => 'role-form']) !!}
-               @include('backend.preference.role.form')
+                {!! \Form::open(['route' => ['admin.roles.update', $role->id], 'method' => 'put', 'id' => 'role-form']) !!}
+               @include('admin::rbac.role.form')
                 {!! \Form::close() !!}
             </div>
         </div>

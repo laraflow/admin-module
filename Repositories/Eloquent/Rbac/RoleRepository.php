@@ -1,15 +1,15 @@
 <?php
 
 
-namespace Modules\Backend\Repositories\Eloquent\Authorization;
+namespace Modules\Admin\Repositories\Eloquent\Rbac;
 
 
-use Modules\Rbac\Models\Role;
-use App\Repositories\EloquentRepository;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\Admin\Models\Rbac\Role;
+use Modules\Core\Repositories\EloquentRepository;
 
 class RoleRepository extends EloquentRepository
 {

@@ -2,12 +2,12 @@
 
 namespace Modules\Admin\Models\Rbac;
 
-use Modules\Backend\Models\Authentication\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
+use Modules\Core\Models\User;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Permission\Models\Role as SpatieRole;
@@ -96,11 +96,17 @@ class Role extends SpatieRole implements Auditable
      */
     public function getTotalPermissionsAttribute(): int
     {
-        return $this->belongsToMany(
-            config('permission.models.permission'),
-            config('permission.table_names.role_has_permissions'),
-            'role_id',
-            'permission_id'
-        )->count();
+        return $this->permissions->count();
     }
+
+    /**
+     * Count Total User Assigned to this role
+     *
+     * @return int
+     */
+    public function getTotalUsersAttribute(): int
+    {
+        return $this->users->count();
+    }
+
 }
