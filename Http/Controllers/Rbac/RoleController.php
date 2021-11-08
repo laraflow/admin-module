@@ -10,7 +10,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\Rbac\RoleRequest;
-use Modules\Admin\Services\Rbac\PermissionService;
 use Modules\Admin\Services\Rbac\RoleService;
 use Modules\Core\Services\Auth\AuthenticatedSessionService;
 use Modules\Core\Supports\Constant;
@@ -164,18 +163,17 @@ class RoleController extends Controller
      * @return RedirectResponse
      * @throws Throwable
      */
-    public function destroy($id, Request $request): RedirectResponse
+    public function destroy($id, Request $request)
     {
         if ($this->authenticatedSessionService->verifyUser($request)) {
-
-            if ($this->roleService->destroyRole($id)) {
+            $confirm = $this->roleService->destroyRole($id);
+            if ($confirm['status'] == true) {
                 notify($confirm['message'], $confirm['level'], $confirm['title']);
             } else {
                 notify($confirm['message'], $confirm['level'], $confirm['title']);
             }
-            return redirect()->route('roles.index');
+            return redirect()->route('admin.roles.index');
         }
-
         abort(403, 'Wrong user credentials');
     }
 }

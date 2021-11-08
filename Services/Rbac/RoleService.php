@@ -96,8 +96,6 @@ class RoleService
         \DB::beginTransaction();
         try {
             if ($this->roleRepository->update($inputs, $id)) {
-                //attach permissions
-                $this->roleRepository->syncPermissions($inputs['permissions'], $id);
                 \DB::commit();
                 return ['status' => true, 'message' => __('Role Info Updated'),
                     'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];

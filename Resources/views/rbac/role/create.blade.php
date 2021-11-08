@@ -16,7 +16,7 @@
 
 @section('breadcrumbs', Breadcrumbs::render(Route::getCurrentRoute()->getName()))
 
-@section('options')
+@section('actions')
     {!! \Html::backButton('admin.roles.index') !!}
 @endsection
 
@@ -38,4 +38,5 @@
 
 
 @push('page-scripts')
+
 @endpush
