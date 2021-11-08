@@ -1,34 +1,46 @@
 @extends('admin::layouts.master')
 
-@section('title', $role->name)
+@section('title', $role->name ?? 'Details')
 
-@section('keywords', 'Register, sing up')
-
-@section('description', 'user tries to login in to system')
-
-@push('component-styles')
+@push('meta')
 
 @endpush
 
-@push('page-styles')
+@push('webfont')
 
 @endpush
 
-@section('breadcrumbs', \Breadcrumbs::render(\Route::getCurrentRoute()->getName(), $role))
+@push('icon')
 
-@section('options')
-    {!! \Html::backButton('roles.index') !!}
-    {!! \Html::editButton('roles.edit', $role->id) !!}
+@endpush
+
+@push('plugin-style')
+
+@endpush
+
+@push('inline-style')
+
+@endpush
+
+@push('head-script')
+
+@endpush
+
+@section('body-class', 'sidebar-mini')
+
+@section('breadcrumbs', Breadcrumbs::render(Route::getCurrentRoute()->getName(), $role))
+
+
+@section('actions')
+    {!! \Html::backButton('admin.roles.index') !!}
+    {!! \Html::editButton('admin.roles.edit', $role->id) !!}
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                {!! Html::cardHeader('Role Details',
-                        'mdi mdi-account-check-outline',
-                         'DataTables has most features enabled by default.') !!}
-                <div class="card-body min-vh-100">
+                <div class="card-body">
                     <div class="row">
                         <div class="col-md-4">
                             <label class="d-block">Name</label>
@@ -40,7 +52,7 @@
                         </div>
                         <div class="col-md-4">
                             <label class="d-block">Enabled</label>
-                            <p class="fw-bolder">{{ \Constant::ENABLED_OPTIONS[$role->enabled] ?? null }}</p>
+                            <p class="fw-bolder">{{ \Modules\Core\Supports\Constant::ENABLED_OPTIONS[$role->enabled] ?? null }}</p>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -49,18 +61,15 @@
                             <p class="fw-bolder">{{ $role->remarks ?? null }}</p>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="border-bottom my-3">
-                            <div class="card-title d-flex justify-content-between">
-                                <h4 class="mb-0">
-                                    <i class="mdi mdi-account-details-outline"></i>
-                                    Permissions
-                                </h4>
-                            </div>
-                            <p class="card-title-desc mb-3">
-                                Permission /Privilege assigned to this Role.
-                            </p>
+                    <div class="row border-bottom">
+                        <div class="card-title my-3">
+                            <h4 class="mb-0">
+                                <i class="mdi mdi-account-details-outline"></i>
+                                Permissions
+                            </h4>
                         </div>
+                    </div>
+                    <div class="row mt-2">
                         @forelse($role->permissions as $permission)
                             <div class="col-md-3">
                                 <p class="text-dark fw-bold" title="{{ $permission->name }}">

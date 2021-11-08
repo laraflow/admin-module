@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "@mdi/font": "^6.4.95",
-        "admin-lte": "^3.1.0"
+        "admin-lte": "^3.1.0",
+        "bootstrap4-toggle": "^3.6.1"
     }
 }

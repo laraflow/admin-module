@@ -50,5 +50,8 @@ class HtmlServiceProvider extends ServiceProvider
 
         //Dropdown
         Html::component('actionDropdown', 'admin::htmls.action-dropdowns', ['resourceRouteName', 'id', 'options' => []]);
+
+        //Selection
+        Html::component('selection', 'admin::htmls.selection', ['target']);
     }
 }

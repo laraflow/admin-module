@@ -53,13 +53,13 @@
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Users</p>
                             </a>
-                        </li>
+                        </li>--}}
                         <li class="nav-item">
-                            <a href="{{ route('roles.index') }}" class="nav-link">
+                            <a href="{{ route('admin.roles.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Roles</p>
                             </a>
-                        </li> --}}
+                        </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.permissions.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
