@@ -24,10 +24,6 @@ class RoleController extends Controller
     private $roleService;
 
     /**
-     * @var PermissionService
-     */
-    private $permissionService;
-    /**
      * @var AuthenticatedSessionService
      */
     private $authenticatedSessionService;
@@ -37,14 +33,11 @@ class RoleController extends Controller
      *
      * @param AuthenticatedSessionService $authenticatedSessionService
      * @param RoleService $roleService
-     * @param PermissionService $permissionService
      */
     public function __construct(AuthenticatedSessionService $authenticatedSessionService,
-                                RoleService                 $roleService,
-                                PermissionService           $permissionService)
+                                RoleService                 $roleService)
     {
         $this->roleService = $roleService;
-        $this->permissionService = $permissionService;
         $this->authenticatedSessionService = $authenticatedSessionService;
     }
 
@@ -71,11 +64,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permissions = $this->permissionService->getAllPermissions();
 
-        return view('admin::rbac.role.create', [
-            'permissions' => $permissions
-        ]);
+        return view('admin::rbac.role.create');
     }
 
     /**
@@ -131,16 +121,15 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        if ($role = $this->roleService->getRoleById($id)) {
+        $withTrashed = false;
 
-            $permissions = $this->permissionService->getAllPermissions();
-            $role_permissions = $role->permissions()->pluck('id')->toArray() ?? [];
+        if (request()->has('with') && request()->get('with') == Constant::PURGE_MODEL_QSA) {
+            $withTrashed = true;
+        }
 
-            return view('admin::rbac.role.edit', [
-                'role' => $role,
-                'permissions' => $permissions,
-                'role_permissions' => $role_permissions
-            ]);
+        if ($role = $this->roleService->getRoleById($id, $withTrashed)) {
+
+            return view('admin::rbac.role.edit', ['role' => $role]);
         }
 
         abort(404);
@@ -160,7 +149,7 @@ class RoleController extends Controller
 
         if ($confirm['status'] == true) {
             notify($confirm['message'], $confirm['level'], $confirm['title']);
-            return redirect()->route('roles.index');
+            return redirect()->route('admin.roles.index');
         }
 
         notify($confirm['message'], $confirm['level'], $confirm['title']);
