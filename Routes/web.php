@@ -22,4 +22,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index']);
     Route::resource('permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);
+    Route::resource('users', RoleController::class);
+
 });

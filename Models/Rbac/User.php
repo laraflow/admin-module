@@ -17,7 +17,7 @@ class User extends CoreUser
      * Set Custom Factory Location
      *
      */
-    protected static function newFactory()
+    protected static function newFactory() : UserFactory
     {
         return UserFactory::new();
     }
