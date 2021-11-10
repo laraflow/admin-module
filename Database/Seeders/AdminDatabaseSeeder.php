@@ -18,6 +18,8 @@ class AdminDatabaseSeeder extends Seeder
 
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
+        $this->call(UserSeeder::class);
         $this->call(RolePermissionSeeder::class);
+
     }
 }
