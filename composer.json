@@ -49,6 +49,9 @@
             "**/Tests/*",
             "**/test/*",
             "**/tests/*"
+        ],
+        "files": [
+            "helpers.php"
         ]
     },
     "autoload-dev": {
