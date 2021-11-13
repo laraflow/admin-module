@@ -39,6 +39,7 @@ class AdminServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(EventServiceProvider::class);
+        $this->app->register(FormServiceProvider::class);
         $this->app->register(HtmlServiceProvider::class);
         $this->app->register(ObserverServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);

@@ -13,16 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use Modules\Core\Http\Controllers\Auth\AuthenticatedSessionController;
-use Modules\Core\Http\Controllers\Auth\ConfirmablePasswordController;
-use Modules\Core\Http\Controllers\Auth\EmailVerificationNotificationController;
-use Modules\Core\Http\Controllers\Auth\EmailVerificationPromptController;
-use Modules\Core\Http\Controllers\Auth\NewPasswordController;
-use Modules\Core\Http\Controllers\Auth\PasswordResetLinkController;
-use Modules\Core\Http\Controllers\Auth\RegisteredUserController;
-use Modules\Core\Http\Controllers\Auth\VerifyEmailController;
-use Modules\Core\Http\Controllers\Common\ModelEnabledController;
-use Modules\Core\Http\Controllers\Common\ModelSoftDeleteController;
+use Modules\Admin\Http\Controllers\Auth\AuthenticatedSessionController;
+use Modules\Admin\Http\Controllers\Auth\ConfirmablePasswordController;
+use Modules\Admin\Http\Controllers\Auth\EmailVerificationNotificationController;
+use Modules\Admin\Http\Controllers\Auth\EmailVerificationPromptController;
+use Modules\Admin\Http\Controllers\Auth\NewPasswordController;
+use Modules\Admin\Http\Controllers\Auth\PasswordResetLinkController;
+use Modules\Admin\Http\Controllers\Auth\RegisteredUserController;
+use Modules\Admin\Http\Controllers\Auth\VerifyEmailController;
+use Modules\Admin\Http\Controllers\Common\ModelEnabledController;
+use Modules\Admin\Http\Controllers\Common\ModelSoftDeleteController;
 use Modules\Admin\Http\Controllers\AdminController;
 use Modules\Admin\Http\Controllers\Rbac\PermissionController;
 use Modules\Admin\Http\Controllers\Rbac\RoleController;
@@ -89,7 +89,7 @@ Route::prefix(config('auth.admin_auth_prefix'))
 Route::view('/privacy-terms', 'core::terms')->name('core.terms');
 Route::prefix('core')
     ->name('core.')->group(function () {
-        Route::get('/', 'CoreController@index');
+        Route::get('/', 'AdminController@index');
 
         //Common Operations
         Route::prefix('common')->name('common.')->group(function () {

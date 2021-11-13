@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Admin\Database\Seeders;
+namespace Modules\Admin\Database\Seeders\Rbac;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;

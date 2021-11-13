@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Core\Providers\Components;
+namespace Modules\Admin\Providers\Components;
 
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -9,7 +9,7 @@ use Collective\Html\HtmlFacade as Html;
 
 /**
  * Class LabelServiceProvider
- * @package Modules\Core\Providers\Components
+ * @package Modules\Admin\Providers\Components
  */
 class LabelServiceProvider extends ServiceProvider
 {

@@ -3,9 +3,6 @@
 namespace Modules\Admin\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
-use App\Models\Auth\User;
-use App\Services\Common\NotificationService;
-use Modules\Rbac\Services\UserService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,6 +10,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Modules\Admin\Models\User;
+use Modules\Admin\Services\Common\NotificationService;
 
 class NotificationController extends Controller
 {

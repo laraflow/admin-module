@@ -1,17 +1,17 @@
 <?php
 
-namespace Modules\Core\Providers;
+namespace Modules\Admin\Providers;
 
-use Modules\Core\Providers\Components\GroupFieldServiceProvider;
-use Modules\Core\Providers\Components\HorizontalFieldServiceProvider;
-use Modules\Core\Providers\Components\InlineFieldServiceProvider;
-use Modules\Core\Providers\Components\LabelServiceProvider;
-use Modules\Core\Providers\Components\NormalFieldServiceProvider;
+use Modules\Admin\Providers\Components\GroupFieldServiceProvider;
+use Modules\Admin\Providers\Components\HorizontalFieldServiceProvider;
+use Modules\Admin\Providers\Components\InlineFieldServiceProvider;
+use Modules\Admin\Providers\Components\LabelServiceProvider;
+use Modules\Admin\Providers\Components\NormalFieldServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 /**
  * Class FormServiceProvider
- * @package Modules\Core\Providers
+ * @package Modules\Admin\Providers
  */
 class FormServiceProvider extends ServiceProvider
 {

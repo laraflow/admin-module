@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Core\Rules;
+namespace Modules\Admin\Rules;
 
 use App\Services\Auth\VerifyService;
 use Illuminate\Contracts\Validation\Rule;

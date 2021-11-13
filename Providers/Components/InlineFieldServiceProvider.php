@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Core\Providers\Components;
+namespace Modules\Admin\Providers\Components;
 
 use Illuminate\Support\ServiceProvider;
 use Collective\Html\FormFacade as Form;
 
 /**
  * Class InlineFieldServiceProvider
- * @package Modules\Core\Providers\Components
+ * @package Modules\Admin\Providers\Components
  */
 class InlineFieldServiceProvider extends ServiceProvider
 {
@@ -49,7 +49,7 @@ class InlineFieldServiceProvider extends ServiceProvider
          * @parem bool $required
          * @parem array $attributes
          */
-        Form::component('iText', 'core::forms.inline.text', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+        Form::component('iText', 'admin::forms.inline.text', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
         /**
          * @parem string $name
          * @parem string $label
@@ -57,7 +57,7 @@ class InlineFieldServiceProvider extends ServiceProvider
          * @parem bool $required
          * @parem array $attributes
          */
-        Form::component('iEmail', 'core::forms.inline.email', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+        Form::component('iEmail', 'admin::forms.inline.email', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
 
         /**
          * @parem string $name
@@ -65,7 +65,7 @@ class InlineFieldServiceProvider extends ServiceProvider
          * @parem bool $required
          * @parem array $attributes
          */
-        Form::component('iPassword', 'core::forms.inline.password', ['name', 'label', 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+        Form::component('iPassword', 'admin::forms.inline.password', ['name', 'label', 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
 
         /**
          * @parem string $name
@@ -73,32 +73,7 @@ class InlineFieldServiceProvider extends ServiceProvider
          * @parem bool $required
          * @parem array $attributes
          */
-        Form::component('iRange', 'core::forms.inline.range', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
-
-
-        /**
-         * @parem string $name
-         * @parem string $label
-         * @parem bool $required
-         * @parem array $attributes
-         */
-        Form::component('iSearch', 'core::forms.inline.search', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
-
-        /**
-         * @parem string $name
-         * @parem string $label
-         * @parem bool $required
-         * @parem array $attributes
-         */
-        Form::component('iTel', 'core::forms.inline.tel', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
-
-        /**
-         * @parem string $name
-         * @parem string $label
-         * @parem bool $required
-         * @parem array $attributes
-         */
-        Form::component('iNumber', 'core::forms.inline.number', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+        Form::component('iRange', 'admin::forms.inline.range', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
 
 
         /**
@@ -107,7 +82,23 @@ class InlineFieldServiceProvider extends ServiceProvider
          * @parem bool $required
          * @parem array $attributes
          */
-        Form::component('iDate', 'core::forms.inline.date', ['name', 'label', 'default' => date('Y-m-d'), 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+        Form::component('iSearch', 'admin::forms.inline.search', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+
+        /**
+         * @parem string $name
+         * @parem string $label
+         * @parem bool $required
+         * @parem array $attributes
+         */
+        Form::component('iTel', 'admin::forms.inline.tel', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+
+        /**
+         * @parem string $name
+         * @parem string $label
+         * @parem bool $required
+         * @parem array $attributes
+         */
+        Form::component('iNumber', 'admin::forms.inline.number', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
 
 
         /**
@@ -116,15 +107,7 @@ class InlineFieldServiceProvider extends ServiceProvider
          * @parem bool $required
          * @parem array $attributes
          */
-        Form::component('iUrl', 'core::forms.inline.url', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
-
-        /**
-         * @parem string $name
-         * @parem string $label
-         * @parem bool $required
-         * @parem array $attributes
-         */
-        Form::component('iFile', 'core::forms.inline.file', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+        Form::component('iDate', 'admin::forms.inline.date', ['name', 'label', 'default' => date('Y-m-d'), 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
 
 
         /**
@@ -133,7 +116,24 @@ class InlineFieldServiceProvider extends ServiceProvider
          * @parem bool $required
          * @parem array $attributes
          */
-        Form::component('iTextarea', 'core::forms.inline.textarea', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+        Form::component('iUrl', 'admin::forms.inline.url', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+
+        /**
+         * @parem string $name
+         * @parem string $label
+         * @parem bool $required
+         * @parem array $attributes
+         */
+        Form::component('iFile', 'admin::forms.inline.file', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+
+
+        /**
+         * @parem string $name
+         * @parem string $label
+         * @parem bool $required
+         * @parem array $attributes
+         */
+        Form::component('iTextarea', 'admin::forms.inline.textarea', ['name', 'label', 'default' => null, 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
 
 
 
@@ -147,7 +147,7 @@ class InlineFieldServiceProvider extends ServiceProvider
          * @param  array  $optionsAttributes
          * @param  array  $optgroupsAttributes
          */
-        Form::component('iSelect', 'core::forms.inline.select', ['name', 'label', 'data', 'selected', 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+        Form::component('iSelect', 'admin::forms.inline.select', ['name', 'label', 'data', 'selected', 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
 
         /**
          * Create a select range field.
@@ -160,7 +160,7 @@ class InlineFieldServiceProvider extends ServiceProvider
          *
          * @return \Illuminate\Support\HtmlString
          */
-        Form::component('iSelectRange', 'core::forms.inline.selectrange', ['name', 'label', 'begin', 'end', 'selected', 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+        Form::component('iSelectRange', 'admin::forms.inline.selectrange', ['name', 'label', 'begin', 'end', 'selected', 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
 
 
         /**
@@ -174,7 +174,7 @@ class InlineFieldServiceProvider extends ServiceProvider
          *
          * @return mixed
          */
-        Form::component('iSelectYear', 'core::forms.inline.selectyear', ['name', 'label', 'begin', 'end', 'selected' => date('Y'), 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+        Form::component('iSelectYear', 'admin::forms.inline.selectyear', ['name', 'label', 'begin', 'end', 'selected' => date('Y'), 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
 
 
         /**
@@ -187,7 +187,7 @@ class InlineFieldServiceProvider extends ServiceProvider
          *
          * @return \Illuminate\Support\HtmlString
          */
-        Form::component('iSelectMonth', 'core::forms.inline.selectmonth', ['name', 'label', 'selected' => date('m'), 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+        Form::component('iSelectMonth', 'admin::forms.inline.selectmonth', ['name', 'label', 'selected' => date('m'), 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
 
 
         /**
@@ -200,7 +200,7 @@ class InlineFieldServiceProvider extends ServiceProvider
          *
          * @return \Illuminate\Support\HtmlString
          */
-        Form::component('iCheckbox', 'core::forms.inline.checkbox', ['name', 'label', 'checked', 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+        Form::component('iCheckbox', 'admin::forms.inline.checkbox', ['name', 'label', 'checked', 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
 
 
 
@@ -214,7 +214,7 @@ class InlineFieldServiceProvider extends ServiceProvider
          *
          * @return \Illuminate\Support\HtmlString
          */
-        Form::component('iRadio', 'core::forms.inline.radio', ['name', 'label', 'checked', 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
+        Form::component('iRadio', 'admin::forms.inline.radio', ['name', 'label', 'checked', 'required' => false, 'icon' => null, 'position' => 'before', 'attributes' => []]);
 
     }
 }
