@@ -52,7 +52,7 @@
                         </div>
                         <div class="col-md-4">
                             <label class="d-block">Enabled</label>
-                            <p class="fw-bolder">{{ \Modules\Core\Supports\Constant::ENABLED_OPTIONS[$role->enabled] ?? null }}</p>
+                            <p class="fw-bolder">{{ \Modules\Admin\Supports\Constant::ENABLED_OPTIONS[$role->enabled] ?? null }}</p>
                         </div>
                     </div>
                     <div class="row mt-2">

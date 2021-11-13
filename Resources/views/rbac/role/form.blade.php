@@ -4,11 +4,11 @@
             {!! \Form::nText('name', 'Name', old('name', $role->name ?? null), true) !!}
         </div>
         <div class="col-md-4">
-            {!! \Form::nText('guard_name', 'Guard(s)', old('guard_name', $role->guard_name ?? \Modules\Core\Supports\DefaultValue::PERMISSION_GUARD)) !!}
+            {!! \Form::nText('guard_name', 'Guard(s)', old('guard_name', $role->guard_name ?? \Modules\Admin\Supports\DefaultValue::PERMISSION_GUARD)) !!}
         </div>
         <div class="col-md-4">
-            {!! \Form::nSelect('enabled', 'Enabled', \Modules\Core\Supports\Constant::ENABLED_OPTIONS,
-                old('enabled', ($role->enabled ?? \Modules\Core\Supports\DefaultValue::ENABLED_OPTION))) !!}
+            {!! \Form::nSelect('enabled', 'Enabled', \Modules\Admin\Supports\Constant::ENABLED_OPTIONS,
+                old('enabled', ($role->enabled ?? \Modules\Admin\Supports\DefaultValue::ENABLED_OPTION))) !!}
         </div>
     </div>
     <div class="row">

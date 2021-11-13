@@ -32,7 +32,53 @@
 
 @section('actions')
     {!! \Html::backButton('admin.permissions.index') !!}
-    {!! \Html::editButton('admin.permissions.edit', $permission->id) !!}
+    @canany(['admin.permissions.show', 'admin.permissions.edit', 'admin.permissions.destroy', 'admin.permissions.restore'])
+        <div class="d-flex justify-content-center">
+            <a id="actions1Invoker"
+               class="link-muted bg-warning" href="#!"
+               aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
+                <i class="fa fa-sliders-h"></i> Actions
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown"
+                 style="width: 150px; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(898px, 169px, 0px);"
+                 aria-labelledby="actions1Invoker" x-placement="bottom-end">
+                <ul class="list-unstyled mb-0">
+                    @if(Route::has('admin.permissions.edit'))
+                        @can('admin.permissions.edit')
+                            <li>
+                                <a href="{{ route('admin.permissions.edit', $permission->id) }}" title="Show"
+                                   class="d-flex align-items-center link-muted py-2 px-3">
+                                    <i class="mdi mdi-square-edit fw-bold"></i> Edit
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+
+                    @if(Route::has('admin.permissions.destroy'))
+                        @can('admin.permissions.destroy')
+                            <li>
+                                <a href="{{ route('admin.common.delete', ['admin.permissions', $permission->id]) }}" title="Show"
+                                   class="d-flex align-items-center link-muted py-2 px-3 delete-btn">
+                                    <i class="mdi mdi-close-thick fw-bold mr-1"></i> Delete
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+
+                    @if(Route::has('admin.permissions.restore'))
+                        @can('admin.permissions.restore')
+                            <li>
+                                <a href="{{ route('admin.permissions.restore', $permission->id) }}" title="Show"
+                                   class="d-flex align-items-center link-muted py-2 px-3">
+                                    <i class="mdi mdi-delete-restore fw-bold mr-1"></i> Restore
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+                </ul>
+            </div>
+        </div>
+    @endcanany
 @endsection
 
 @section('content')
@@ -56,7 +102,7 @@
                     </div>
                     <div class="col-md-6">
                         <label class="d-block">Enabled</label>
-                        <p class="fw-bolder">{{ \Modules\Core\Supports\Constant::ENABLED_OPTIONS[$permission->enabled] }}</p>
+                        <p class="fw-bolder">{{ \Modules\Admin\Supports\Constant::ENABLED_OPTIONS[$permission->enabled] }}</p>
                     </div>
                 </div>
                 <div class="row">
