@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Modules\Admin\Repositories\Eloquent\Auth;
+namespace Modules\Admin\Repositories\Eloquent;
 
 
 use Illuminate\Support\Collection;
@@ -27,7 +27,7 @@ class UserRepository extends EloquentRepository
      * @param User|null $user
      * @return Collection
      */
-    public function getAssignedRoles(User $user = null): Collection
+    public function getAssignedRoles(User $user = null): ?Collection
     {
         if (is_null($user))
             return $this->model->roles;
@@ -44,7 +44,13 @@ class UserRepository extends EloquentRepository
     public function manageRoles(array $roles = [], bool $detachOldRoles = false): bool
     {
 
-        $alreadyAssignedRoles = $this->getAssignedRoles()->pluck('id')->toArray();
+        $alreadyAssignedRoles = [];
+
+        $roleCollection = $this->getAssignedRoles();
+
+        if ($roleCollection != null):
+            $alreadyAssignedRoles = $roleCollection->pluck('id')->toArray();
+        endif;
 
         $roleIds = ($detachOldRoles) ? $roles : array_unique(array_merge($alreadyAssignedRoles, $roles));
 

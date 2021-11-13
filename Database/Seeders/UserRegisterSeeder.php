@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Modules\Admin\Models\Rbac\Role;
 use Modules\Admin\Models\User;
-use Modules\Admin\Repositories\Eloquent\Auth\UserRepository;
+use Modules\Admin\Repositories\Eloquent\UserRepository;
 use Modules\Admin\Services\Common\FileUploadService;
 use Modules\Admin\Supports\DefaultValue;
 use Modules\Admin\Supports\Utility;

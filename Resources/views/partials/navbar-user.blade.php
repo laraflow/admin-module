@@ -1,18 +1,18 @@
 <li class="nav-item dropdown user-menu">
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-        <img src="{{ asset('modules/admin/assets/img/user2-160x160.jpg') }}"
-             class="user-image img-circle elevation-2" alt="User Image">
+        <img src="{{ $authUser->getFirstMediaUrl('avatars') }}"
+             class="user-image img-circle" alt="User Image">
         <span class="d-none d-md-inline">Alexander Pierce</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         <!-- User image -->
         <li class="user-header bg-primary">
-            <img src="{{ asset('modules/admin/assets/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
-                 alt="User Image">
+            <img src="{{ $authUser->getFirstMediaUrl('avatars') }}"
+                 class="img-circle elevation-2" alt="{{ $authUser->name }}">
 
             <p>
-                Alexander Pierce - Web Developer
-                <small>Member since Nov. 2012</small>
+                {{ $authUser->name }} - Web Developer
+                <small>Member since {{ $authUser->created_at->format('d M, Y') }}</small>
             </p>
         </li>
         <!-- Menu Body -->
@@ -33,7 +33,7 @@
         <!-- Menu Footer-->
         <li class="user-footer">
             <a href="#" class="btn btn-default btn-flat">Profile</a>
-            <a href="#" class="btn btn-default btn-flat float-right">Sign out</a>
+            <a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-default btn-flat float-right">Sign out</a>
         </li>
     </ul>
 </li>

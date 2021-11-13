@@ -9,7 +9,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notification;
 use Modules\Admin\Models\User;
-use Modules\Admin\Repositories\Eloquent\Auth\UserRepository;
+use Modules\Admin\Repositories\Eloquent\UserRepository;
 
 class NotificationService
 {

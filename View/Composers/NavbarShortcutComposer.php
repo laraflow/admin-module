@@ -3,7 +3,7 @@
 namespace Modules\Admin\View\Composers;
 
 use Illuminate\View\View;
-use Modules\Admin\Repositories\Eloquent\Auth\UserRepository;
+use Modules\Admin\Repositories\Eloquent\UserRepository;
 
 class NavbarShortcutComposer
 {

@@ -3,7 +3,7 @@
 namespace Modules\Admin\Repositories\Eloquent\Rbac;
 
 use Modules\Admin\Models\User;
-use Modules\Admin\Repositories\Eloquent\Auth\UserRepository as AdminUserRepository;
+use Modules\Admin\Repositories\Eloquent\UserRepository as AdminUserRepository;
 
 class UserRepository extends AdminUserRepository
 {
