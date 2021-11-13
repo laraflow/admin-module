@@ -38,27 +38,26 @@ class RegisteredUserService
     }
 
     /**
-     * @param RegisterRequest $registerRequest
+     * @param array $registerFormInputs
      * @return array
      * @throws Exception
      */
-    public function attemptRegistration(RegisterRequest $registerRequest): ?array
+    public function attemptRegistration(array $registerFormInputs): ?array
     {
         \DB::beginTransaction();
         //format request object
-        $inputs = $this->formatRegistrationInfo($registerRequest);
+        $inputs = $this->formatRegistrationInfo($registerFormInputs);
         try {
             //create new user
             $newUser = $this->userRepository->create($inputs);
             //add profile image
-            $profileImagePath = $this->fileUploadService->createAvatarImageFromText(($registerRequest->name ?? 'Guest User'));
+            $profileImagePath = $this->fileUploadService->createAvatarImageFromText(($registerFormInputs['name'] ?? 'Guest User'));
             if ($newUser instanceof User && is_string($profileImagePath)) {
                 $newUser->addMedia($profileImagePath)->toMediaCollection('avatars');
                 $newUser->save();
                 //$this->userRepository->manageRoles([DefaultValue::GUEST_ROLE_ID]);
                 \DB::commit();
                 $newUser->refresh();
-
                 event(new Registered($newUser));
                 Auth::login($newUser);
 
@@ -73,23 +72,21 @@ class RegisteredUserService
     }
 
     /**
-     * @param RegisterRequest $request
+     * @param array $request
      * @return array
      * @throws Exception
      */
-    private function formatRegistrationInfo(RegisterRequest $request): array
+    private function formatRegistrationInfo(array $request): array
     {
         //Hash password
-        $inputs = [
-            'name' => $request->name,
-            'password' => Utility::hashPassword(($request->password ?? DefaultValue::PASSWORD)),
-            'username' => ($inputs['username'] ?? Utility::generateUsername($request->name)),
-            'mobile' => ($request->mobile ?? null),
-            'email' => ($request->email ?? null),
+        return [
+            'name' => $request['name'],
+            'password' => Utility::hashPassword(($request['password'] ?? DefaultValue::PASSWORD)),
+            'username' => ($request['username'] ?? Utility::generateUsername($request['name'])),
+            'mobile' => ($request['mobile'] ?? null),
+            'email' => ($request['email'] ?? null),
             'remarks' => 'self-registered',
             'enabled' => DefaultValue::ENABLED_OPTION
         ];
-
-        return $inputs;
     }
 }

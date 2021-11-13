@@ -45,7 +45,8 @@ class RegisteredUserController extends Controller
      */
     public function store(RegisterRequest $request): RedirectResponse
     {
-        $confirm = $this->registeredUserService->attemptRegistration($request);
+        $inputs = $request->all();
+        $confirm = $this->registeredUserService->attemptRegistration($inputs);
 
         if ($confirm['status'] == true) {
             notify($confirm['message'], $confirm['level'], $confirm['title']);

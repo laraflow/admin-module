@@ -35,7 +35,7 @@
         <section class="content">
             @yield('content')
 
-            @include('core::partials.delete-modal')
+            @include('admin::partials.delete-modal')
         </section>
         <!-- /.content -->
     </div>
