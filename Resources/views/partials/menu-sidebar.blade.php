@@ -48,12 +48,12 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('users.index') }}" class="nav-link">
+                         <li class="nav-item">
+                            <a href="{{ route('admin.users.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Users</p>
                             </a>
-                        </li>--}}
+                        </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.roles.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
