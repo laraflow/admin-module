@@ -14,6 +14,7 @@ use Modules\Admin\Http\Controllers\Common\ModelEnabledController;
 use Modules\Admin\Http\Controllers\Common\ModelSoftDeleteController;
 use Modules\Admin\Http\Controllers\Rbac\PermissionController;
 use Modules\Admin\Http\Controllers\Rbac\RoleController;
+use Modules\Admin\Http\Controllers\Rbac\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,5 +100,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);
-    Route::resource('users', RoleController::class);
+    Route::resource('users', UserController::class);
 });

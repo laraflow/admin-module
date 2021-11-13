@@ -1,6 +1,6 @@
 @extends('admin::layouts.master')
 
-@section('title', 'Roles')
+@section('title', 'Users')
 
 @push('meta')
 
@@ -19,7 +19,6 @@
 @endpush
 
 @push('inline-style')
-
 @endpush
 
 @push('head-script')
@@ -31,14 +30,14 @@
 @section('breadcrumbs', \Breadcrumbs::render())
 
 @section('actions')
-    {!! \Html::linkButton('Add Role', 'admin.roles.create', [], 'mdi mdi-plus', 'success') !!}
+    {!! \Html::linkButton('Add User', 'admin.users.create', [], 'mdi mdi-plus', 'success') !!}
 @endsection
 
 @section('content')
     <div class="container-fluid">
         <div class="card card-default">
             <div class="card-body p-0">
-                {!! \Html::cardSearch('search', 'admin.roles.index', 'Search Role Name, Code, Guard, Status, etc.') !!}
+                {!! \Html::cardSearch('search', 'admin.users.index', 'Search User Name, Code, Guard, Status, etc.') !!}
                 <div class="table-responsive">
                     <table class="table table-hover mb-0" id="role-table">
                         <thead class="thead-light">
@@ -59,7 +58,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse($roles as $index => $role)
+                        @forelse($users as $index => $user)
                             <tr>
                                 <td class="exclude-search">
                                     <div class="custom-control custom-checkbox">
@@ -69,13 +68,24 @@
                                     </div>
                                 </td>
                                 <td class="text-left">
-                                    <a href="{{ route('admin.roles.show', $role->id) }}">
-                                        {{ $role->name }}
-                                    </a>
+                                    <div class="media">
+                                        <img class="align-self-center mr-3 img-circle direct-chat-img"
+                                             src="{{ $user->getFirstMediaUrl('avatars') }}" alt="{{ $user->name }}">
+                                        <div class="media-body">
+                                            <p class="my-0">
+                                                <a href="{{ route('admin.users.show', $user->id) }}">
+                                                    {{ $user->name }}
+                                                </a>
+                                            </p>
+                                            <p class="mb-0 small">{{ $user->username }}</p>
+                                        </div>
+                                    </div>
+
+
                                 </td>
-                                <td class="text-center">{{ $role->guard_name }}</td>
-                                <td class="text-center">{{ $role->total_permissions }}</td>
-                                <td class="text-center">{{ $role->total_users }}</td>
+                                <td class="text-center">{{ $user->guard_name ?? '' }}</td>
+                                <td class="text-center">{{ $user->total_permissions ?? '' }}</td>
+                                <td class="text-center">{{ $user->total_users ?? '' }}</td>
 
                                 <td class="text-center exclude-search">
                                     <input type="checkbox" data-toggle="toggle" data-size="small"
@@ -83,14 +93,14 @@
                                            data-offstyle="{{ $off ?? 'danger' }}"
                                            data-model=""
                                            data-field="enabled"
-                                           data-id="{{$role->id}}"
+                                           data-id="{{$user->id}}"
                                            data-on="<i class='mdi mdi-check-bold fw-bolder'></i> Yes"
                                            data-off="<i class='mdi mdi-close fw-bolder'></i> No"
-                                           @if($role->enabled == 'yes') checked @endif>
+                                           @if($user->enabled == 'yes') checked @endif>
 
                                 </td>
                                 <td class="exclude-search pr-3 text-center">
-                                    {!! \Html::actionDropdown('admin.roles', $role->id, ['show', 'edit', 'delete']) !!}
+                                    {!! \Html::actionDropdown('admin.users', $user->id, ['show', 'edit', 'delete']) !!}
                                 </td>
                             </tr>
                         @empty
@@ -103,7 +113,7 @@
                 </div>
             </div>
             <div class="card-footer bg-transparent pb-0">
-                {!! \Modules\Admin\Supports\CHTML::pagination($roles) !!}
+                {!! \Modules\Admin\Supports\CHTML::pagination($users) !!}
             </div>
         </div>
     </div>
