@@ -30,7 +30,7 @@ use Modules\Admin\Http\Controllers\Rbac\RoleController;
  * Authentication Route
  */
 Route::prefix(config('auth.admin_auth_prefix'))
-    ->name('admin.')->prefix('auth')->group(function () {
+    ->name('admin.')->group(function () {
         Route::get('/register', [RegisteredUserController::class, 'create'])
             ->middleware('guest')
             ->name('register');
@@ -85,7 +85,7 @@ Route::prefix(config('auth.admin_auth_prefix'))
             ->name('logout');
     });
 
-Route::view('/privacy-terms', 'core::terms')->name('core.terms');
+Route::view('/privacy-terms', 'core::terms')->name('admin.terms');
 
 Route::prefix('admin')->name('admin.')->group(function () {
 

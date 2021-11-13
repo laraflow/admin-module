@@ -2,17 +2,17 @@
 
 namespace Modules\Admin\View\Composers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use Modules\Admin\Repositories\Eloquent\UserRepository;
+use Modules\Admin\Models\User;
 
-class NavbarShortcutComposer
+class UserDropDownComposer
 {
+
     /**
-     * The user repository implementation.
-     *
-     * @var UserRepository
+     * @var User $user
      */
-    protected $users;
+    public $user;
 
     /**
      * Create a new profile composer.
@@ -21,6 +21,7 @@ class NavbarShortcutComposer
      */
     public function __construct()
     {
+        $this->user = Auth::user();
 
     }
 
@@ -32,6 +33,6 @@ class NavbarShortcutComposer
      */
     public function compose(View $view)
     {
-
+        $view->with('authUser', $this->user);
     }
 }

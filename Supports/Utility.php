@@ -4,7 +4,7 @@
 namespace Modules\Admin\Supports;
 
 use Illuminate\Support\Facades\Hash;
-use Modules\Admin\Repositories\Eloquent\Auth\UserRepository;
+use Modules\Admin\Repositories\Eloquent\UserRepository;
 
 /***
  * Class Utility

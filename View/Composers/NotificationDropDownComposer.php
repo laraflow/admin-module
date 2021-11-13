@@ -5,7 +5,7 @@ namespace Modules\Admin\View\Composers;
 use Illuminate\View\View;
 use Modules\Admin\Repositories\Eloquent\UserRepository;
 
-class NavbarShortcutComposer
+class NotificationDropDownComposer
 {
     /**
      * The user repository implementation.
