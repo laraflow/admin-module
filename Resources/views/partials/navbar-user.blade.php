@@ -2,7 +2,7 @@
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
         <img src="{{ $authUser->getFirstMediaUrl('avatars') }}"
              class="user-image img-circle" alt="User Image">
-        <span class="d-none d-md-inline">Alexander Pierce</span>
+        <span class="d-none d-md-inline text-capitalize">{{ $authUser->name }}</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         <!-- User image -->
@@ -10,7 +10,7 @@
             <img src="{{ $authUser->getFirstMediaUrl('avatars') }}"
                  class="img-circle elevation-2" alt="{{ $authUser->name }}">
 
-            <p>
+            <p class="text-capitalize">
                 {{ $authUser->name }} - Web Developer
                 <small>Member since {{ $authUser->created_at->format('d M, Y') }}</small>
             </p>
