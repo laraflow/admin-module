@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Admin\Models\Rbac\Permission;
 use Modules\Admin\Repositories\Eloquent\Rbac\PermissionRepository;
-use Modules\Core\Supports\Constant;
+use Modules\Admin\Supports\Constant;
 use Throwable;
 
 

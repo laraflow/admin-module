@@ -1,12 +1,12 @@
 <?php
 
 
-namespace Modules\Core\Repositories\Eloquent\Auth;
+namespace Modules\Admin\Repositories\Eloquent\Auth;
 
 
 use Illuminate\Support\Collection;
-use Modules\Core\Models\User;
-use Modules\Core\Repositories\EloquentRepository;
+use Modules\Admin\Models\User;
+use Modules\Admin\Repositories\EloquentRepository;
 
 class UserRepository extends EloquentRepository
 {

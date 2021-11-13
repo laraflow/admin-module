@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Admin\Models\Rbac\Role;
 use Modules\Admin\Repositories\Eloquent\Rbac\RoleRepository;
-use Modules\Core\Supports\Constant;
+use Modules\Admin\Supports\Constant;
 
 class RoleService
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\Core\Http\Controllers\Auth;
+namespace Modules\Admin\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Modules\Core\Http\Requests\Auth\LoginRequest;
-use Modules\Core\Services\Auth\AuthenticatedSessionService;
+use Modules\Admin\Http\Requests\Auth\LoginRequest;
+use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +12,7 @@ use Illuminate\View\View;
 
 /**
  * @class AuthenticatedSessionController
- * @package Modules\Core\Http\Controllers\Auth
+ * @package Modules\Admin\Http\Controllers\Auth
  */
 class AuthenticatedSessionController extends Controller
 {

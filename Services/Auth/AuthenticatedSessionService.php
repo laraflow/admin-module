@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Core\Services\Auth;
+namespace Modules\Admin\Services\Auth;
 
 
 use Illuminate\Auth\Events\Lockout;
@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
-use Modules\Core\Http\Requests\Auth\LoginRequest;
-use Modules\Core\Supports\Constant;
+use Modules\Admin\Http\Requests\Auth\LoginRequest;
+use Modules\Admin\Supports\Constant;
 
 /**
  * Class AuthenticatedSessionService
- * @package Modules\Core\Services\Auth
+ * @package Modules\Admin\Services\Auth
  */
 class AuthenticatedSessionService
 {

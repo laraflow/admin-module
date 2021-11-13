@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Core\Http\Controllers\Common;
+namespace Modules\Admin\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Modules\Core\Http\Requests\Common\ModelSoftDeleteRequest;
+use Modules\Admin\Http\Requests\Common\ModelSoftDeleteRequest;
 
 class ModelSoftDeleteController extends Controller
 {

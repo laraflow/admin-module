@@ -11,8 +11,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\Rbac\PermissionRequest;
 use Modules\Admin\Services\Rbac\PermissionService;
-use Modules\Core\Services\Auth\AuthenticatedSessionService;
-use Modules\Core\Supports\Constant;
+use Modules\Admin\Services\Auth\AuthenticatedSessionService;
+use Modules\Admin\Supports\Constant;
 
 class PermissionController extends Controller
 {

@@ -2,10 +2,10 @@
 
 namespace Modules\Admin\Repositories\Eloquent\Rbac;
 
-use Modules\Core\Models\User;
-use Modules\Core\Repositories\Eloquent\Auth\UserRepository as CoreUserRepository;
+use Modules\Admin\Models\User;
+use Modules\Admin\Repositories\Eloquent\Auth\UserRepository as AdminUserRepository;
 
-class UserRepository extends CoreUserRepository
+class UserRepository extends AdminUserRepository
 {
 
     /**

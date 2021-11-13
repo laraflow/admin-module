@@ -9,7 +9,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Admin\Models\Rbac\Permission;
-use Modules\Core\Repositories\EloquentRepository;
+use Modules\Admin\Repositories\EloquentRepository;
 
 class PermissionRepository extends EloquentRepository
 {

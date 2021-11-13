@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Core\Http\Controllers;
+namespace Modules\Admin\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class CoreController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.

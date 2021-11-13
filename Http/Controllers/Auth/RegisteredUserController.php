@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\Core\Http\Controllers\Auth;
+namespace Modules\Admin\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Modules\Core\Http\Requests\Auth\RegisterRequest;
-use Modules\Core\Services\Auth\RegisteredUserService;
+use Modules\Admin\Http\Requests\Auth\RegisterRequest;
+use Modules\Admin\Services\Auth\RegisteredUserService;
 
 class RegisteredUserController extends Controller
 {

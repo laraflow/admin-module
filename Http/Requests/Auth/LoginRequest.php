@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Core\Http\Requests\Auth;
+namespace Modules\Admin\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Modules\Core\Rules\MaxLength;
-use Modules\Core\Rules\MinLength;
-use Modules\Core\Rules\PhoneNumber;
-use Modules\Core\Rules\Username;
-use Modules\Core\Supports\Constant;
+use Modules\Admin\Rules\MaxLength;
+use Modules\Admin\Rules\MinLength;
+use Modules\Admin\Rules\PhoneNumber;
+use Modules\Admin\Rules\Username;
+use Modules\Admin\Supports\Constant;
 
 class LoginRequest extends FormRequest
 {

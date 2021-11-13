@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Modules\Core\Supports;
+namespace Modules\Admin\Supports;
 
 /**
  * Class Constant
- * @package Modules\Core\Supports
+ * @package Modules\Admin\Supports
  */
 class Constant
 {

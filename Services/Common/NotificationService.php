@@ -1,15 +1,15 @@
 <?php
 
 
-namespace Modules\Core\Services\Common;
+namespace Modules\Admin\Services\Common;
 
 
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notification;
-use Modules\Core\Models\User;
-use Modules\Core\Repositories\Eloquent\Auth\UserRepository;
+use Modules\Admin\Models\User;
+use Modules\Admin\Repositories\Eloquent\Auth\UserRepository;
 
 class NotificationService
 {

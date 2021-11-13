@@ -11,8 +11,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\Rbac\RoleRequest;
 use Modules\Admin\Services\Rbac\RoleService;
-use Modules\Core\Services\Auth\AuthenticatedSessionService;
-use Modules\Core\Supports\Constant;
+use Modules\Admin\Services\Auth\AuthenticatedSessionService;
+use Modules\Admin\Supports\Constant;
 use Throwable;
 
 class RoleController extends Controller

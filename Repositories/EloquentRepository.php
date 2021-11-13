@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Modules\Core\Repositories;
+namespace Modules\Admin\Repositories;
 
 
 use Exception;

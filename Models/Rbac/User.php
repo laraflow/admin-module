@@ -4,9 +4,9 @@ namespace Modules\Admin\Models\Rbac;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Admin\Database\Factories\Rbac\UserFactory;
-use Modules\Core\Models\User as CoreUser;
+use Modules\Admin\Models\User as AdminUser;
 
-class User extends CoreUser
+class User extends AdminUser
 {
     use HasFactory;
 

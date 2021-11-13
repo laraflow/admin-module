@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Route;
 use Modules\Admin\Models\Rbac\Permission;
-use Modules\Core\Supports\Helper;
+use Modules\Admin\Supports\Helper;
 
 class PermissionSeeder extends Seeder
 {

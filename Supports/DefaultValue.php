@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Modules\Core\Supports;
+namespace Modules\Admin\Supports;
 
 /**
  * Class DefaultValue
- * @package Modules\Core\Supports
+ * @package Modules\Admin\Supports
  */
 class DefaultValue
 {

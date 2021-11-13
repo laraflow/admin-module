@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Modules\Core\Supports;
+namespace Modules\Admin\Supports;
 
 use Illuminate\Support\Facades\Hash;
-use Modules\Core\Repositories\Eloquent\Auth\UserRepository;
+use Modules\Admin\Repositories\Eloquent\Auth\UserRepository;
 
 /***
  * Class Utility
- * @package Modules\Core\Supports
+ * @package Modules\Admin\Supports
  */
 class Utility
 {

@@ -1,17 +1,17 @@
 <?php
 
-namespace Modules\Core\Services\Auth;
+namespace Modules\Admin\Services\Auth;
 
 use Exception;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
-use Modules\Core\Http\Requests\Auth\RegisterRequest;
-use Modules\Core\Models\User;
-use Modules\Core\Repositories\Eloquent\Auth\UserRepository;
-use Modules\Core\Services\Common\FileUploadService;
-use Modules\Core\Supports\Constant;
-use Modules\Core\Supports\DefaultValue;
-use Modules\Core\Supports\Utility;
+use Modules\Admin\Http\Requests\Auth\RegisterRequest;
+use Modules\Admin\Models\User;
+use Modules\Admin\Repositories\Eloquent\Auth\UserRepository;
+use Modules\Admin\Services\Common\FileUploadService;
+use Modules\Admin\Supports\Constant;
+use Modules\Admin\Supports\DefaultValue;
+use Modules\Admin\Supports\Utility;
 
 class RegisteredUserService
 {

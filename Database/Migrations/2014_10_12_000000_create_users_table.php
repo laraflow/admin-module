@@ -4,8 +4,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Modules\Core\Supports\Constant;
-use Modules\Core\Supports\DefaultValue;
+use Modules\Admin\Supports\Constant;
+use Modules\Admin\Supports\DefaultValue;
 
 class CreateUsersTable extends Migration
 {

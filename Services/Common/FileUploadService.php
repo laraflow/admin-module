@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Modules\Core\Services\Common;
+namespace Modules\Admin\Services\Common;
 
 
 use Exception;

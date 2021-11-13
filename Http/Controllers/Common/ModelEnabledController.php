@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Core\Http\Controllers\Common;
+namespace Modules\Admin\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Modules\Core\Http\Requests\Common\ModelEnabledRequest;
-use Modules\Core\Supports\Constant;
-use Modules\Core\Supports\DefaultValue;
+use Modules\Admin\Http\Requests\Common\ModelEnabledRequest;
+use Modules\Admin\Supports\Constant;
+use Modules\Admin\Supports\DefaultValue;
 
 class ModelEnabledController extends Controller
 {

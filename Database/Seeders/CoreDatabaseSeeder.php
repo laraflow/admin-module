@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Core\Database\Seeders;
+namespace Modules\Admin\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Core\Models\User;
+use Modules\Admin\Models\User;
 
-class CoreDatabaseSeeder extends Seeder
+class AdminDatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.

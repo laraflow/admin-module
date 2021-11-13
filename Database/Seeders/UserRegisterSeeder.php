@@ -1,16 +1,16 @@
 <?php
 
-namespace Modules\Core\Database\Seeders;
+namespace Modules\Admin\Database\Seeders;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Modules\Admin\Models\Rbac\Role;
-use Modules\Core\Models\User;
-use Modules\Core\Repositories\Eloquent\Auth\UserRepository;
-use Modules\Core\Services\Common\FileUploadService;
-use Modules\Core\Supports\DefaultValue;
-use Modules\Core\Supports\Utility;
+use Modules\Admin\Models\User;
+use Modules\Admin\Repositories\Eloquent\Auth\UserRepository;
+use Modules\Admin\Services\Common\FileUploadService;
+use Modules\Admin\Supports\DefaultValue;
+use Modules\Admin\Supports\Utility;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 use Throwable;
