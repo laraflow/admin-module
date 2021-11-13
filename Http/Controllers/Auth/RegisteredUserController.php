@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('core::auth.register');
+        return view('admin::auth.register');
     }
 
     /**

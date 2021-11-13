@@ -1,6 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Admin\Http\Controllers\AdminController;
+use Modules\Admin\Http\Controllers\Auth\AuthenticatedSessionController;
+use Modules\Admin\Http\Controllers\Auth\ConfirmablePasswordController;
+use Modules\Admin\Http\Controllers\Auth\EmailVerificationNotificationController;
+use Modules\Admin\Http\Controllers\Auth\EmailVerificationPromptController;
+use Modules\Admin\Http\Controllers\Auth\NewPasswordController;
+use Modules\Admin\Http\Controllers\Auth\PasswordResetLinkController;
+use Modules\Admin\Http\Controllers\Auth\RegisteredUserController;
+use Modules\Admin\Http\Controllers\Auth\VerifyEmailController;
+use Modules\Admin\Http\Controllers\Common\ModelEnabledController;
+use Modules\Admin\Http\Controllers\Common\ModelSoftDeleteController;
+use Modules\Admin\Http\Controllers\Rbac\PermissionController;
+use Modules\Admin\Http\Controllers\Rbac\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,25 +26,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use Modules\Admin\Http\Controllers\Auth\AuthenticatedSessionController;
-use Modules\Admin\Http\Controllers\Auth\ConfirmablePasswordController;
-use Modules\Admin\Http\Controllers\Auth\EmailVerificationNotificationController;
-use Modules\Admin\Http\Controllers\Auth\EmailVerificationPromptController;
-use Modules\Admin\Http\Controllers\Auth\NewPasswordController;
-use Modules\Admin\Http\Controllers\Auth\PasswordResetLinkController;
-use Modules\Admin\Http\Controllers\Auth\RegisteredUserController;
-use Modules\Admin\Http\Controllers\Auth\VerifyEmailController;
-use Modules\Admin\Http\Controllers\Common\ModelEnabledController;
-use Modules\Admin\Http\Controllers\Common\ModelSoftDeleteController;
-use Modules\Admin\Http\Controllers\AdminController;
-use Modules\Admin\Http\Controllers\Rbac\PermissionController;
-use Modules\Admin\Http\Controllers\Rbac\RoleController;
-
 /**
  * Authentication Route
  */
 Route::prefix(config('auth.admin_auth_prefix'))
-    ->name('core.')->group(function () {
+    ->name('admin.')->prefix('auth')->group(function () {
         Route::get('/register', [RegisteredUserController::class, 'create'])
             ->middleware('guest')
             ->name('register');
@@ -87,21 +86,18 @@ Route::prefix(config('auth.admin_auth_prefix'))
     });
 
 Route::view('/privacy-terms', 'core::terms')->name('core.terms');
-Route::prefix('core')
-    ->name('core.')->group(function () {
-        Route::get('/', 'AdminController@index');
-
-        //Common Operations
-        Route::prefix('common')->name('common.')->group(function () {
-            Route::get('delete/{route}/{id}', ModelSoftDeleteController::class)->name('delete');
-            Route::get('enabled', ModelEnabledController::class)->name('enabled');
-        });
-    });
 
 Route::prefix('admin')->name('admin.')->group(function () {
+
     Route::get('/', [AdminController::class, 'index']);
+
+    //Common Operations
+    Route::prefix('common')->name('common.')->group(function () {
+        Route::get('delete/{route}/{id}', ModelSoftDeleteController::class)->name('delete');
+        Route::get('enabled', ModelEnabledController::class)->name('enabled');
+    });
+
     Route::resource('permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('users', RoleController::class);
-
 });
