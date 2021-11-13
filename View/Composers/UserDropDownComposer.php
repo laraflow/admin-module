@@ -33,8 +33,6 @@ class UserDropDownComposer
      */
     public function compose(View $view)
     {
-        $roles = $this->user->roles;
-
         $view->with('authUser', $this->user);
     }
 }
