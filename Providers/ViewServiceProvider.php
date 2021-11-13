@@ -41,6 +41,6 @@ class ViewServiceProvider extends ServiceProvider
         View::composer('admin::partials.navbar-message', MessageDropDownComposer::class);
         View::composer('admin::partials.navbar-shortcut', NavbarShortcutComposer::class);
         View::composer('admin::partials.navbar-notification', NotificationDropDownComposer::class);
-        View::composer('admin::partials.navbar-user', UserDropDownComposer::class);
+        View::composer(['admin::partials.navbar-user', 'admin::partials.menu-sidebar'], UserDropDownComposer::class);
     }
 }
