@@ -1,6 +1,6 @@
 @extends('admin::layouts.master')
 
-@section('title', 'Add Role')
+@section('title', 'Add User')
 
 @section('keywords', 'Register, sing up')
 
@@ -24,8 +24,8 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                {!! \Form::open(['route' => 'admin.users.store', 'id' => 'role-form']) !!}
-                @include('admin::rbac.role.form')
+                {!! \Form::open(['route' => 'admin.users.store', 'id' => 'user-form']) !!}
+                @include('admin::rbac.user.form')
                 {!! \Form::close() !!}
             </div>
         </div>

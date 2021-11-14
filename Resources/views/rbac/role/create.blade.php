@@ -2,19 +2,33 @@
 
 @section('title', 'Add Role')
 
-@section('keywords', 'Register, sing up')
-
-@section('description', 'user tries to login in to system')
-
-@push('component-styles')
+@push('meta')
 
 @endpush
 
-@push('page-styles')
+@push('webfont')
 
 @endpush
 
-@section('breadcrumbs', Breadcrumbs::render(Route::getCurrentRoute()->getName()))
+@push('icon')
+
+@endpush
+
+@push('plugin-style')
+
+@endpush
+
+@push('inline-style')
+
+@endpush
+
+@push('head-script')
+
+@endpush
+
+@section('body-class', 'sidebar-mini')
+
+@section('breadcrumbs', \Breadcrumbs::render(Route::getCurrentRoute()->getName()))
 
 @section('actions')
     {!! \Html::backButton('admin.roles.index') !!}
