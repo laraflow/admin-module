@@ -53,6 +53,7 @@
                             <th>@sortablelink('name', 'Name')</th>
                             <th>@sortablelink('guard_name', 'Guard')</th>
                             <th class="text-center">@sortablelink('enabled', 'Enabled')</th>
+                            <th class="text-center">@sortablelink('created_at', 'Created')</th>
                             <th class="text-center">Actions</th>
                         </tr>
                         </thead>
@@ -85,6 +86,7 @@
                                            @if($permission->enabled == 'yes') checked @endif>
 
                                 </td>
+                                <td class="text-center">{{ $permission->created_at->format(config('app.datetime')) ?? '' }}</td>
                                 <td class="exclude-search pr-3 text-center">
                                     {!! \Html::actionDropdown('admin.permissions', $permission->id, ['show', 'edit', 'delete']) !!}
                                 </td>
