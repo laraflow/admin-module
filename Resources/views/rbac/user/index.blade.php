@@ -50,10 +50,11 @@
                                 </div>
                             </th>
                             <th>@sortablelink('name', 'Name')</th>
-                            <th class="text-center">@sortablelink('guard_name', 'Guard')</th>
-                            <th class="text-center">@sortablelink('permissions', 'Permissions')</th>
-                            <th class="text-center">@sortablelink('users', 'Users')</th>
+                            <th class="text-center">@sortablelink('email', 'Email')</th>
+                            <th class="text-center">@sortablelink('mobile', 'Mobile')</th>
+                            <th class="text-center">@sortablelink('roles', 'Role(s)')</th>
                             <th class="text-center">@sortablelink('enabled', 'Enabled')</th>
+                            <th class="text-center">@sortablelink('created_at', 'Created')</th>
                             <th class="text-center">Actions</th>
                         </tr>
                         </thead>
@@ -83,8 +84,8 @@
 
 
                                 </td>
-                                <td class="text-center">{{ $user->guard_name ?? '' }}</td>
-                                <td class="text-center">{{ $user->total_permissions ?? '' }}</td>
+                                <td class="text-left">{{ $user->email ?? '-' }}</td>
+                                <td class="text-center">{{ $user->mobile ?? '-' }}</td>
                                 <td class="text-center">{{ $user->total_users ?? '' }}</td>
 
                                 <td class="text-center exclude-search">
@@ -99,6 +100,7 @@
                                            @if($user->enabled == 'yes') checked @endif>
 
                                 </td>
+                                <td class="text-center">{{ $user->created_at->format(config('app.datetime')) ?? '' }}</td>
                                 <td class="exclude-search pr-3 text-center">
                                     {!! \Html::actionDropdown('admin.users', $user->id, ['show', 'edit', 'delete']) !!}
                                 </td>

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Kyslik\ColumnSortable\Sortable;
 use Modules\Admin\Supports\DefaultValue;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -17,7 +18,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable implements HasMedia
 {
-    use HasFactory, Notifiable, InteractsWithMedia, HasRoles;
+    use HasFactory, Notifiable, InteractsWithMedia, HasRoles, Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -57,6 +58,23 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * The model's public sortable columns
+     *
+     * @var array
+     */
+    public $sortable = [
+        'name',
+        'email',
+        'username',
+        'mobile',
+        'password',
+        'remarks',
+        'enabled'
+    ];
+
+    /************************ Audit Relations ************************/
 
     /**
      * @return BelongsTo

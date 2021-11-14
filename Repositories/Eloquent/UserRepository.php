@@ -4,6 +4,9 @@
 namespace Modules\Admin\Repositories\Eloquent;
 
 
+use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Modules\Admin\Models\User;
 use Modules\Admin\Repositories\EloquentRepository;
@@ -79,5 +82,70 @@ class UserRepository extends EloquentRepository
         }
         return true;
     }
+
+    /**
+     * Search Function for Permissions
+     *
+     * @param array $filters
+     * @param bool $is_sortable
+     * @return Builder
+     */
+    private function filterData(array $filters = [], bool $is_sortable = false): Builder
+    {
+        $query = $this->getQueryBuilder();
+
+        if (!empty($filters['search'])) :
+            $query->where('name', 'like', "%{$filters['search']}%")
+                ->orWhere('username', 'like', "%{$filters['search']}%")
+                ->orWhere('email', '=', "%{$filters['search']}%")
+                ->orWhere('mobile', '=', "%{$filters['search']}%")
+                ->orWhere('enabled', '=', "%{$filters['search']}%");
+        endif;
+
+        if ($is_sortable == true)
+            $query->sortable();
+
+        return $query;
+    }
+
+    /**
+     * Pagination Generator
+     * @param array $filters
+     * @param array $eagerRelations
+     * @param bool $is_sortable
+     * @return LengthAwarePaginator
+     * @throws Exception
+     */
+    public function paginateWith(array $filters = [], array $eagerRelations = [], bool $is_sortable = false): LengthAwarePaginator
+    {
+        $query = $this->getQueryBuilder();
+        try {
+            $query = $this->filterData($filters, $is_sortable);
+        } catch (Exception $exception) {
+            $this->handleException($exception);
+        } finally {
+            return $query->with($eagerRelations)->paginate($this->itemsPerPage);
+        }
+    }
+
+    /**
+     * @param array $filters
+     * @param array $eagerRelations
+     * @param bool $is_sortable
+     * @return Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @throws Exception
+     */
+    public function getAllUserWith(array $filters = [], array $eagerRelations = [], bool $is_sortable = false)
+    {
+        $query = $this->getQueryBuilder();
+        try {
+            $query = $this->filterData($filters, $is_sortable);
+        } catch (Exception $exception) {
+            $this->handleException($exception);
+        } finally {
+            return $query->with($eagerRelations)->get();
+        }
+    }
+
 
 }
