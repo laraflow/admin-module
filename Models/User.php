@@ -2,12 +2,11 @@
 
 namespace Modules\Admin\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Modules\Admin\Database\Factories\UserFactory;
+use Modules\Admin\Supports\DefaultValue;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
@@ -89,7 +88,9 @@ class User extends Authenticatable implements HasMedia
      */
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('avatars')->useDisk('avatar');
+        $this->addMediaCollection('avatars')
+            ->useDisk('avatar')
+            ->useFallbackUrl(DefaultValue::USER_PROFILE_IMAGE);
     }
 
     /**
@@ -101,6 +102,7 @@ class User extends Authenticatable implements HasMedia
     {
         return (bool)$this->hasRole('Super Administrator');
     }
+
 
 
 }

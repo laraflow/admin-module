@@ -44,4 +44,8 @@ class DefaultValue
      */
     const PASSWORD = '123456789';
 
+    /**
+     * Default profile display image is user image is missing
+     */
+    const USER_PROFILE_IMAGE = '/modules/admin/assets/img/AdminLTELogo.png';
 }
