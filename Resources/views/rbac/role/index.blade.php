@@ -55,6 +55,7 @@
                             <th class="text-center">@sortablelink('permissions', 'Permissions')</th>
                             <th class="text-center">@sortablelink('users', 'Users')</th>
                             <th class="text-center">@sortablelink('enabled', 'Enabled')</th>
+                            <th class="text-center">@sortablelink('created_at', 'Created')</th>
                             <th class="text-center">Actions</th>
                         </tr>
                         </thead>
@@ -89,6 +90,7 @@
                                            @if($role->enabled == 'yes') checked @endif>
 
                                 </td>
+                                <td class="text-center">{{ $role->created_at->format(config('app.datetime')) ?? '' }}</td>
                                 <td class="exclude-search pr-3 text-center">
                                     {!! \Html::actionDropdown('admin.roles', $role->id, ['show', 'edit', 'delete']) !!}
                                 </td>

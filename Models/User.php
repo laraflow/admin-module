@@ -59,21 +59,6 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The model's public sortable columns
-     *
-     * @var array
-     */
-    public $sortable = [
-        'name',
-        'email',
-        'username',
-        'mobile',
-        'password',
-        'remarks',
-        'enabled'
-    ];
-
     /************************ Audit Relations ************************/
 
     /**

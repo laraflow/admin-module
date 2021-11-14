@@ -39,7 +39,7 @@
             <div class="card-body p-0">
                 {!! \Html::cardSearch('search', 'admin.users.index', 'Search User Name, Code, Guard, Status, etc.') !!}
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0" id="role-table">
+                    <table class="table table-hover mb-0" id="user-table">
                         <thead class="thead-light">
                         <tr>
                             <th>
@@ -49,10 +49,9 @@
                                     <label for="customCheckbox1" class="custom-control-label"></label>
                                 </div>
                             </th>
-                            <th>@sortablelink('name', 'Name')</th>
+                            <th class="pl-0">@sortablelink('name', 'Name')</th>
                             <th class="text-center">@sortablelink('email', 'Email')</th>
                             <th class="text-center">@sortablelink('mobile', 'Mobile')</th>
-                            <th class="text-center">@sortablelink('roles', 'Role(s)')</th>
                             <th class="text-center">@sortablelink('enabled', 'Enabled')</th>
                             <th class="text-center">@sortablelink('created_at', 'Created')</th>
                             <th class="text-center">Actions</th>
@@ -68,9 +67,9 @@
                                         <label for="customCheckbox1" class="custom-control-label"></label>
                                     </div>
                                 </td>
-                                <td class="text-left">
+                                <td class="text-left pl-0">
                                     <div class="media">
-                                        <img class="align-self-center mr-3 img-circle direct-chat-img"
+                                        <img class="align-self-center mr-1 img-circle direct-chat-img"
                                              src="{{ $user->getFirstMediaUrl('avatars') }}" alt="{{ $user->name }}">
                                         <div class="media-body">
                                             <p class="my-0">
@@ -86,8 +85,6 @@
                                 </td>
                                 <td class="text-left">{{ $user->email ?? '-' }}</td>
                                 <td class="text-center">{{ $user->mobile ?? '-' }}</td>
-                                <td class="text-center">{{ $user->total_users ?? '' }}</td>
-
                                 <td class="text-center exclude-search">
                                     <input type="checkbox" data-toggle="toggle" data-size="small"
                                            data-onstyle="{{ $on ?? 'success' }}"
@@ -130,7 +127,7 @@
 @push('page-script')
     <script>
         $(function () {
-            highLightQueryString('search', 'role-table');
+            highLightQueryString('search', 'user-table');
         });
     </script>
 @endpush

@@ -60,21 +60,6 @@ class Permission extends SpatiePermission implements Auditable
         'enabled' => 'yes'
     ];
 
-    /**
-     * The model's public sortable columns
-     *
-     * @var array
-     */
-    public $sortable = [
-        'id',
-        'display_name',
-        'name',
-        'guard_name',
-        'remarks',
-        'enabled'
-    ];
-
-
     /************************ Audit Relations ************************/
 
 
