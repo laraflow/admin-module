@@ -74,9 +74,6 @@ class FileUploadService
                     if ($imageObject->resize(256, null, function ($constraint) {
                         $constraint->aspectRatio();
                     })->crop(256, 256, 0, 0)
-                        ->circle(256, 128, 128, function ($draw) {
-                            $draw->border(1, '#ffffff');
-                        })
                         ->save($tmpPath . $fileName, 80, $extension))
                         return $tmpPath . $fileName;
                     else
