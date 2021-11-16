@@ -85,12 +85,17 @@ class UserController extends Controller
      */
     public function store(UserRequest $request): RedirectResponse
     {
-        if ($this->userService->storeUser($request)) {
-            notify('New User Created', 'success', 'Notification');
-            return redirect()->route('users.index');
+        $inputs = $request->except(['_token', 'password_confirmation']);
+
+        $photo = $request->file('photo');
+
+        $confirm = $this->userService->storeUser($inputs, $photo);
+        if ($confirm['status'] == true) {
+            notify($confirm['message'], $confirm['level'], $confirm['title']);
+            return redirect()->route('admin.users.index');
         }
 
-        notify('User Creation Failed', 'error', 'Alert');
+        notify($confirm['message'], $confirm['level'], $confirm['title']);
         return redirect()->back()->withInput();
     }
 

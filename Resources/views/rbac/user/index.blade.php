@@ -69,7 +69,7 @@
                                 </td>
                                 <td class="text-left pl-0">
                                     <div class="media">
-                                        <img class="align-self-center mr-1 img-circle direct-chat-img"
+                                        <img class="align-self-center mr-1 img-circle direct-chat-img elevation-1"
                                              src="{{ $user->getFirstMediaUrl('avatars') }}" alt="{{ $user->name }}">
                                         <div class="media-body">
                                             <p class="my-0">

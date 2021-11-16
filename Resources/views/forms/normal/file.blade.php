@@ -1,16 +1,18 @@
 <div class="form-group">
-    {!! Form::nLabel($name, $label, $required, ['class' => 'custom-file-label']) !!}
+    {!! Form::nLabel($name, $label, $required) !!}
     @php
-        $options = ['class' => 'form-control' . ($errors->has($name) ? ' is-invalid' : NULL )];
+        $options = ['class' => 'form-control custom-file-input ' . ($errors->has($name) ? ' is-invalid' : NULL )];
 
         $msg = $errors->first($name) ?? null;
 
         if(isset($required) && $required == true)
         $options['required'] = 'required';
     @endphp
-
-    {!! Form::file($name, array_merge($options, $attributes)) !!}
-    {!! Form::nError($name, $msg) !!}
+    <div class="custom-file">
+        {!! Form::nLabel('Choose file...', $label, $required, ['class' => 'custom-file-label', 'id' => $name .'_file_label']) !!}
+        {!! Form::file($name, array_merge($options, $attributes)) !!}
+        {!! Form::nError($name, $msg) !!}
+    </div>
 
     @if(($preview[0] ?? false))
         <div class="img-thumbnail mt-2 text-center">
@@ -31,4 +33,14 @@
             });
         </script>
     @endif
+    <script>
+        document.getElementById('{{$name}}').addEventListener('change', function () {
+
+            var fileName = this.value.split("\\").pop();
+
+            var field = document.getElementById('{{$name .'_file_label'}}');
+            field.classList.add("selected");
+            field.innerHTML = fileName;
+        });
+    </script>
 </div>

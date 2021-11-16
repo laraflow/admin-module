@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Modules\Admin\Repositories\Eloquent;
+namespace Modules\Admin\Repositories\Eloquent\Rbac;
 
 
 use Exception;

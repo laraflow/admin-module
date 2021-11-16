@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                {!! \Form::open(['route' => 'admin.users.store', 'id' => 'user-form']) !!}
+                {!! \Form::open(['route' => 'admin.users.store', 'files' => true, 'id' => 'user-form']) !!}
                 @include('admin::rbac.user.form')
                 {!! \Form::close() !!}
             </div>

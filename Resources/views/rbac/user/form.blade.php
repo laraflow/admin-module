@@ -11,25 +11,34 @@
             {!! \Form::nText('name', 'Name', old('name', $user->name ?? null), true) !!}
         </div>
         <div class="col-md-6">
-            {!! \Form::nText('username', 'Username', old('username', $user->username ?? null)) !!}
+            {!! \Form::nText('username', 'Username', old('username', $user->username ?? null),
+                (config('auth.credential_field') == \Modules\Admin\Supports\Constant::LOGIN_USERNAME)) !!}
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            {!! \Form::nEmail('email', 'Email Address', old('email', $user->email ?? null), true) !!}
+            {!! \Form::nEmail('email', 'Email Address', old('email', $user->email ?? null),
+                (config('auth.credential_field') == \Modules\Admin\Supports\Constant::LOGIN_EMAIL
+                || (config('auth.credential_field') == \Modules\Admin\Supports\Constant::LOGIN_OTP
+                    && config('auth.credential_otp_field') == \Modules\Admin\Supports\Constant::OTP_EMAIL))) !!}
         </div>
         <div class="col-md-6">
-            {!! \Form::nTel('mobile', 'Mobile', old('mobile', $user->mobile ?? null), true) !!}
+            {!! \Form::nTel('mobile', 'Mobile', old('mobile', $user->mobile ?? null),
+                (config('auth.credential_field') == \Modules\Admin\Supports\Constant::LOGIN_MOBILE
+                || (config('auth.credential_field') == \Modules\Admin\Supports\Constant::LOGIN_OTP
+                    && config('auth.credential_otp_field') == \Modules\Admin\Supports\Constant::OTP_MOBILE))) !!}
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            {!! \Form::nPassword('password', 'Password', null, empty($user->password)) !!}
+    @if(config('auth.credential_field') != \Modules\Admin\Supports\Constant::LOGIN_OTP)
+        <div class="row">
+            <div class="col-md-6">
+                {!! \Form::nPassword('password', 'Password', null, empty($user->password)) !!}
+            </div>
+            <div class="col-md-6">
+                {!! \Form::nPassword('password_confirmation', 'Retype Password', null, empty($user->password)) !!}
+            </div>
         </div>
-        <div class="col-md-6">
-            {!! \Form::nPassword('password_confirmation', 'Retype Password', null, empty($user->password)) !!}
-        </div>
-    </div>
+    @endif
     <div class="row">
         <div class="col-md-6">
             {!! \Form::nSelect('role_id[]', 'Role', $roles,
@@ -106,7 +115,6 @@
                         maxlength: 255,
                         equalTo: "#password"
                     }
-
                 }
             });
 
