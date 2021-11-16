@@ -1,6 +1,6 @@
 @extends('admin::layouts.master')
 
-@section('title', 'Add Role')
+@section('title', 'Edit User')
 
 @section('keywords', 'Register, sing up')
 
@@ -14,7 +14,7 @@
 
 @endpush
 
-@section('breadcrumbs', Breadcrumbs::render(Route::getCurrentRoute()->getName(), $role))
+@section('breadcrumbs', Breadcrumbs::render(Route::getCurrentRoute()->getName(), $user))
 
 @section('actions')
     {!! \Html::backButton('admin.users.index') !!}
@@ -24,18 +24,19 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                {!! \Form::open(['route' => ['admin.users.update', $role->id], 'method' => 'put', 'id' => 'role-form']) !!}
-               @include('admin::rbac.role.form')
+                {!! \Form::open(['route' => ['admin.users.update', $user->id], 'files' => true, 'id' => 'user-form', 'method' => 'put']) !!}
+                @include('admin::rbac.user.form')
                 {!! \Form::close() !!}
             </div>
         </div>
     </div>
 @endsection
 
-@push('component-scripts')
+@push('component-script')
 
 @endpush
 
 
-@push('page-scripts')
+@push('page-script')
+
 @endpush

@@ -166,7 +166,7 @@ class UserController extends Controller
     {
         if ($this->userService->updateUser($request, $id)) {
             notify('User Information Updated', 'success', 'Notification');
-            return redirect()->route('users.index');
+            return redirect()->route('admin.users.index');
         }
 
         notify('User Information Update Failed', 'error', 'Alert');
@@ -189,7 +189,7 @@ class UserController extends Controller
             } else {
                 notify('User Removal Failed', 'error', 'Alert');
             }
-            return redirect()->route('users.index');
+            return redirect()->route('admin.users.index');
         }
 
         abort(403, 'Wrong user credentials');
