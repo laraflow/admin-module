@@ -32,7 +32,7 @@
         </li>
         <!-- Menu Footer-->
         <li class="user-footer">
-            <a href="#" class="btn btn-default btn-flat">Profile</a>
+            <a href="{{ route('admin.users.show', $authUser->id) }}" class="btn btn-default btn-flat">Profile</a>
             <a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-default btn-flat float-right">Sign out</a>
         </li>
     </ul>

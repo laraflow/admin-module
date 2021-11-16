@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
+use Modules\Admin\Database\Factories\Rbac\UserFactory;
 use Modules\Admin\Supports\DefaultValue;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -79,6 +80,13 @@ class User extends Authenticatable implements HasMedia, Auditable
         return $this->belongsTo(User::class, 'updated_by');
     }
 
+    /************************ Static Methods ************************/
+
+    protected static function newFactory()
+    {
+        return UserFactory::new();
+    }
+
     /**
      * @return BelongsTo
      */
@@ -86,6 +94,8 @@ class User extends Authenticatable implements HasMedia, Auditable
     {
         return $this->belongsTo(User::class, 'deleted_by');
     }
+
+
 
     /**
      * Register profile Image Media Collection
@@ -107,7 +117,5 @@ class User extends Authenticatable implements HasMedia, Auditable
     {
         return (bool)$this->hasRole('Super Administrator');
     }
-
-
 
 }

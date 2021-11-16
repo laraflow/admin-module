@@ -2,12 +2,12 @@
 
 namespace Modules\Admin\Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Admin\Database\Rbac\Seeders\PermissionSeeder;
-use Modules\Admin\Database\Rbac\Seeders\RolePermissionSeeder;
-use Modules\Admin\Database\Rbac\Seeders\RoleSeeder;
-use Modules\Admin\Database\Rbac\Seeders\UserSeeder;
+use Illuminate\Database\Seeder;
+use Modules\Admin\Database\Seeders\Rbac\PermissionSeeder;
+use Modules\Admin\Database\Seeders\Rbac\RolePermissionSeeder;
+use Modules\Admin\Database\Seeders\Rbac\RoleSeeder;
+use Modules\Admin\Database\Seeders\Rbac\UserSeeder;
 
 class AdminDatabaseSeeder extends Seeder
 {
@@ -24,6 +24,6 @@ class AdminDatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(RolePermissionSeeder::class);
-
+        $this->call(UserRegisterSeeder::class);
     }
 }
