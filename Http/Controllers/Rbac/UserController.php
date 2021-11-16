@@ -3,6 +3,7 @@
 namespace Modules\Admin\Http\Controllers\Rbac;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -192,5 +193,84 @@ class UserController extends Controller
         }
 
         abort(403, 'Wrong user credentials');
+    }
+
+    /**
+     * Restore a Soft Deleted Resource
+     *
+     * @param $id
+     * @param Request $request
+     * @return RedirectResponse|void
+     * @throws \Throwable
+     */
+    public function restore($id, Request $request)
+    {
+        if ($this->authenticatedSessionService->verifyUser($request)) {
+
+            if ($this->userService->destroyRole($id)) {
+                notify('User Deleted', 'success', 'Notification');
+            } else {
+                notify('User Removal Failed', 'error', 'Alert');
+            }
+            return redirect()->route('users.index');
+        }
+
+        abort(403, 'Wrong user credentials');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Application|Factory|View
+     * @throws Exception
+     * @throws \Exception
+     */
+    public function exportPdf(Request $request)
+    {
+        $filters = $request->except('page');
+        $users = $this->userService->getAllUsers($filters);
+
+        return view('admin::rbac.user.index', [
+            'users' => $users
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Application|Factory|View
+     * @throws Exception
+     */
+    public function exportExcel(Request $request)
+    {
+        $filters = $request->except('_token');
+        $roles = $this->roleService->getAllRoles($filters);
+
+        return view('admin::rbac.role.index', [
+            'roles' => $roles
+        ]);
+    }
+
+    /**
+     * Display a detail of the resource.
+     *
+     * @return Application|Factory|View
+     * @throws Exception
+     */
+    public function exportShow($id)
+    {
+        $withTrashed = false;
+
+        if (\request()->has('with') && \request()->get('with') == Constant::PURGE_MODEL_QSA) {
+            $withTrashed = true;
+        }
+
+        if ($user = $this->userService->getUserById($id, $withTrashed)) {
+            return view('admin::rbac.user.show', [
+                'user' => $user
+            ]);
+        }
+
+        abort(404);
     }
 }

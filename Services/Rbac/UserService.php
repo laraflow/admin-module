@@ -5,8 +5,8 @@ namespace Modules\Admin\Services\Rbac;
 
 
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Modules\Admin\Http\Requests\Rbac\UserRequest;
 use Modules\Admin\Models\User;
@@ -45,14 +45,15 @@ class UserService
         $this->fileUploadService = $fileUploadService;
     }
 
-
     /**
-     * @param array $filers
-     * @return Collection|Model[]
+     * @param array $filters
+     * @param array $eagerRelations
+     * @return Builder[]|Collection
+     * @throws Exception
      */
-    public function getAllUsers(array $filers = [])
+    public function getAllUsers(array $filters = [], array $eagerRelations = [])
     {
-        return $this->userRepository->all();
+        return $this->userRepository->getAllUserWith($filters, $eagerRelations, true);
     }
 
     /**

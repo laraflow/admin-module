@@ -1,5 +1,5 @@
-{{--@canany([$resourceRouteName . '.show', $resourceRouteName . '.edit',
-        $resourceRouteName . '.destroy', $resourceRouteName . '.restore'])--}}
+@canany([$resourceRouteName . '.show', $resourceRouteName . '.edit',
+        $resourceRouteName . '.destroy', $resourceRouteName . '.restore'])
     <div class="d-flex justify-content-center">
         <a id="actions1Invoker"
            class="link-muted {{ $bgClass ?? '' }}" href="#!"
@@ -15,7 +15,7 @@
                         <li>
                             <a href="{{ route($resourceRouteName . '.show', $id) }}" title="Show"
                                class="d-flex align-items-center link-muted py-2 px-3">
-                                <i class="mdi mdi-eye fw-bold"></i> Details
+                                <i class="fas fa-eye  mr-2"></i> Details
                             </a>
                         </li>
                     @endcan
@@ -24,31 +24,31 @@
                 @if(in_array('edit', $options) && Route::has($resourceRouteName . '.edit'))
                     @can($resourceRouteName . '.edit')
                         <li>
-                            <a href="{{ route($resourceRouteName . '.edit', $id) }}" title="Show"
+                            <a href="{{ route($resourceRouteName . '.edit', $id) }}" title="Edit"
                                class="d-flex align-items-center link-muted py-2 px-3">
-                                <i class="mdi mdi-square-edit fw-bold"></i> Edit
+                                <i class="fas fa-edit  mr-2"></i> Edit
                             </a>
                         </li>
                     @endcan
                 @endif
 
                 @if(in_array('delete', $options) && Route::has($resourceRouteName . '.destroy'))
-                    {{--@can($resourceRouteName . '.destroy')--}}
+                    @can($resourceRouteName . '.destroy')
                         <li>
-                            <a href="{{ route('admin.common.delete', [$resourceRouteName, $id]) }}" title="Show"
+                            <a href="{{ route('admin.common.delete', [$resourceRouteName, $id]) }}" title="Delete"
                                class="d-flex align-items-center link-muted py-2 px-3 delete-btn">
-                                <i class="mdi mdi-close-thick fw-bold mr-1"></i> Delete
+                                <i class="fas fa-trash  mr-2"></i> Delete
                             </a>
                         </li>
-                    {{--@endcan--}}
+                    @endcan
                 @endif
 
                 @if(in_array('delete', $options) && Route::has($resourceRouteName . '.restore'))
                     @can($resourceRouteName . '.restore')
                         <li>
-                            <a href="{{ route($resourceRouteName . '.restore', $id) }}" title="Show"
+                            <a href="{{ route($resourceRouteName . '.restore', $id) }}" title="Restore"
                                class="d-flex align-items-center link-muted py-2 px-3">
-                                <i class="mdi mdi-delete-restore fw-bold mr-1"></i> Restore
+                                <i class="fas fa-trash-restore  mr-2"></i> Restore
                             </a>
                         </li>
                     @endcan
@@ -56,4 +56,4 @@
             </ul>
         </div>
     </div>
-{{--@endcanany--}}
+@endcanany
