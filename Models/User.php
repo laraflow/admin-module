@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
 use Modules\Admin\Supports\DefaultValue;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
@@ -16,9 +18,9 @@ use Spatie\Permission\Traits\HasRoles;
  * Class Preference
  * @package App\Models\Auth
  */
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable implements HasMedia, Auditable
 {
-    use HasFactory, Notifiable, InteractsWithMedia, HasRoles, Sortable;
+    use AuditableTrait, HasFactory, Notifiable, InteractsWithMedia, HasRoles, Sortable;
 
     /**
      * The attributes that are mass assignable.

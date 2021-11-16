@@ -14,7 +14,7 @@ use Spatie\Permission\Models\Permission as SpatiePermission;
 
 class Permission extends SpatiePermission implements Auditable
 {
-    use AuditableTrait, HasFactory, Notifiable, SoftDeletes, Sortable;
+    use AuditableTrait, HasFactory, SoftDeletes, Sortable;
 
     /**
      * @var string $table
