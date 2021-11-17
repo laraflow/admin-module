@@ -98,7 +98,7 @@
 
                                 </td>
                                 <td class="text-center">{{ $user->created_at->format(config('app.datetime')) ?? '' }}</td>
-                                <td class="exclude-search pr-3 text-center">
+                                <td class="exclude-search pr-3 text-center align-middle">
                                     {!! \Html::actionDropdown('admin.users', $user->id, ['show', 'edit', 'delete']) !!}
                                 </td>
                             </tr>

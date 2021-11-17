@@ -91,7 +91,7 @@
 
                                 </td>
                                 <td class="text-center">{{ $role->created_at->format(config('app.datetime')) ?? '' }}</td>
-                                <td class="exclude-search pr-3 text-center">
+                                <td class="exclude-search pr-3 text-center align-middle">
                                     {!! \Html::actionDropdown('admin.roles', $role->id, ['show', 'edit', 'delete']) !!}
                                 </td>
                             </tr>

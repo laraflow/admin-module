@@ -87,7 +87,7 @@
 
                                 </td>
                                 <td class="text-center">{{ $permission->created_at->format(config('app.datetime')) ?? '' }}</td>
-                                <td class="exclude-search pr-3 text-center">
+                                <td class="exclude-search pr-3 text-center align-middle">
                                     {!! \Html::actionDropdown('admin.permissions', $permission->id, ['show', 'edit', 'delete']) !!}
                                 </td>
                             </tr>

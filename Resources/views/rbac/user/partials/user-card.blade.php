@@ -6,14 +6,16 @@
 <div class="card border-0">
     <div class="card-body box-profile border-0">
         <div class="text-center">
-            <a href="{{ $user->getFirstMediaUrl('avatars') }}" data-toggle="lightbox" data-title="{{ $user->name }}"
-               data-gallery="gallery">
+            <a data-remote="{{ $user->getFirstMediaUrl('avatars') }}" data-toggle="lightbox" data-title="{{ $user->name }}" data-type="image">
                 <img class="profile-user-img img-fluid img-circle"
                      src="{{ $user->getFirstMediaUrl('avatars') }}"
                      alt="{{ $user->name }}" width="128">
             </a>
         </div>
-        <h3 class="profile-username text-center">{{ $user->name }}</h3>
+        <h3 class="profile-username text-center text-truncate"
+            data-toggle="tooltip" data-placement="top" title="{{ $user->name }}">
+            {{ $user->name }}
+        </h3>
 
         <p class="text-muted text-center mb-3">
             @<span>{{ $user->username }}</span>
@@ -64,10 +66,9 @@
         $(function () {
             $(document).on('click', '[data-toggle="lightbox"]', function (event) {
                 event.preventDefault();
-                $(this).ekkoLightbox({
-                    alwaysShowClose: true
-                });
+                $(this).ekkoLightbox();
             });
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
 @endpush

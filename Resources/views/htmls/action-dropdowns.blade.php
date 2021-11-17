@@ -1,12 +1,16 @@
 @canany([$resourceRouteName . '.show', $resourceRouteName . '.edit',
         $resourceRouteName . '.destroy', $resourceRouteName . '.restore'])
+    <style>
+        /* Only To Handle This Dropdown*/
+        .action-dropdown > ul > li > a.link-muted:hover {color: #007bff}
+    </style>
     <div class="d-flex justify-content-center">
         <a id="actions1Invoker"
            class="link-muted {{ $bgClass ?? '' }}" href="#!"
            aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
             <i class="fa fa-sliders-h"></i>
         </a>
-        <div class="dropdown-menu dropdown-menu-right dropdown"
+        <div class="dropdown-menu dropdown-menu-right dropdown action-dropdown"
              style="width: 150px; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(898px, 169px, 0px);"
              aria-labelledby="actions1Invoker" x-placement="bottom-end">
             <ul class="list-unstyled mb-0">
