@@ -19,6 +19,7 @@
 @endpush
 
 @push('inline-style')
+
 @endpush
 
 @push('head-script')
@@ -42,7 +43,7 @@
                     <table class="table table-hover mb-0" id="role-table">
                         <thead class="thead-light">
                         <tr>
-                            <th>
+                            <th class="align-middle">
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="customCheckbox1"
                                            value="option1">
@@ -54,13 +55,14 @@
                             <th class="text-center">@sortablelink('permissions', 'Permissions')</th>
                             <th class="text-center">@sortablelink('users', 'Users')</th>
                             <th class="text-center">@sortablelink('enabled', 'Enabled')</th>
+                            <th class="text-center">@sortablelink('created_at', 'Created')</th>
                             <th class="text-center">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         @forelse($roles as $index => $role)
                             <tr>
-                                <td class="exclude-search">
+                                <td class="exclude-search align-middle">
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" type="checkbox" id="customCheckbox1"
                                                value="option1">
@@ -88,7 +90,8 @@
                                            @if($role->enabled == 'yes') checked @endif>
 
                                 </td>
-                                <td class="exclude-search pr-3 text-center">
+                                <td class="text-center">{{ $role->created_at->format(config('app.datetime')) ?? '' }}</td>
+                                <td class="exclude-search pr-3 text-center align-middle">
                                     {!! \Html::actionDropdown('admin.roles', $role->id, ['show', 'edit', 'delete']) !!}
                                 </td>
                             </tr>

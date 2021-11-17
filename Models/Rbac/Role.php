@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
-use Modules\Core\Models\User;
+use Modules\Admin\Models\User;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Permission\Models\Role as SpatieRole;
@@ -48,19 +48,6 @@ class Role extends SpatieRole implements Auditable
     protected $attributes = [
         'guard_name' => 'web',
         'enabled' => 'yes'
-    ];
-
-    /**
-     * The model's public sortable columns
-     *
-     * @var array
-     */
-    public $sortable = [
-        'id',
-        'name',
-        'guard_name',
-        'remarks',
-        'enabled'
     ];
 
     /************************ Audit Relations ************************/

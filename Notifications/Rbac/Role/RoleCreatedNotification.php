@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Rbac\Notifications\Role;
+namespace Modules\Admin\Notifications\Rbac\Role;
 
 use Modules\Rbac\Models\Role;
 use App\Models\Auth\User;

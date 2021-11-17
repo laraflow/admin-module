@@ -3,7 +3,7 @@
 namespace Modules\Admin\Http\Requests\Rbac;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Modules\Core\Supports\Constant;
+use Modules\Admin\Supports\Constant;
 
 class PermissionRequest extends FormRequest
 {

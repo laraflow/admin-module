@@ -1,10 +1,11 @@
 <?php
 
-namespace Modules\Admin\Database\Seeders;
+namespace Modules\Admin\Database\Seeders\Rbac;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Admin\Models\Rbac\Role;
+use Modules\Admin\Supports\DefaultValue;
 
 class RoleSeeder extends Seeder
 {
@@ -21,13 +22,13 @@ class RoleSeeder extends Seeder
         Role::unsetEventDispatcher();
         Role::create([
             'id' => 1,
-            'name' => 'Super Administration',
+            'name' => DefaultValue::SUPER_ADMIN_ROLE,
             'remarks' => 'Role which will have all privileges.'
         ]);
 
         Role::create([
             'id' => 2,
-            'name' => 'Administration',
+            'name' => 'Administrator',
             'remarks' => 'Role which will have all privileges.'
         ]);
 

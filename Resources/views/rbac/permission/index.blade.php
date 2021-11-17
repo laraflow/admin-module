@@ -42,7 +42,7 @@
                     <table class="table table-hover mb-0" id="permission-table">
                         <thead class="thead-light">
                         <tr>
-                            <th>
+                            <th class="align-middle">
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="customCheckbox1"
                                            value="option1">
@@ -53,13 +53,14 @@
                             <th>@sortablelink('name', 'Name')</th>
                             <th>@sortablelink('guard_name', 'Guard')</th>
                             <th class="text-center">@sortablelink('enabled', 'Enabled')</th>
+                            <th class="text-center">@sortablelink('created_at', 'Created')</th>
                             <th class="text-center">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         @forelse($permissions as $index => $permission)
                             <tr>
-                                <td class="exclude-search">
+                                <td class="exclude-search align-middle">
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" type="checkbox" id="customCheckbox1"
                                                value="option1">
@@ -85,7 +86,8 @@
                                            @if($permission->enabled == 'yes') checked @endif>
 
                                 </td>
-                                <td class="exclude-search pr-3 text-center">
+                                <td class="text-center">{{ $permission->created_at->format(config('app.datetime')) ?? '' }}</td>
+                                <td class="exclude-search pr-3 text-center align-middle">
                                     {!! \Html::actionDropdown('admin.permissions', $permission->id, ['show', 'edit', 'delete']) !!}
                                 </td>
                             </tr>

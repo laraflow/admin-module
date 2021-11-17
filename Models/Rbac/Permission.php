@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
-use Modules\Core\Models\User;
+use Modules\Admin\Models\User;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Permission\Models\Permission as SpatiePermission;
 
 class Permission extends SpatiePermission implements Auditable
 {
-    use AuditableTrait, HasFactory, Notifiable, SoftDeletes, Sortable;
+    use AuditableTrait, HasFactory, SoftDeletes, Sortable;
 
     /**
      * @var string $table
@@ -59,21 +59,6 @@ class Permission extends SpatiePermission implements Auditable
         'guard_name' => 'web',
         'enabled' => 'yes'
     ];
-
-    /**
-     * The model's public sortable columns
-     *
-     * @var array
-     */
-    public $sortable = [
-        'id',
-        'display_name',
-        'name',
-        'guard_name',
-        'remarks',
-        'enabled'
-    ];
-
 
     /************************ Audit Relations ************************/
 

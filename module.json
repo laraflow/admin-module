@@ -8,7 +8,9 @@
         "Modules\\Admin\\Providers\\AdminServiceProvider"
     ],
     "aliases": {},
-    "files": [],
+    "files": [
+        "helpers.php"
+    ],
     "requires": [],
     "minimumCoreVersion": "",
     "title": "",

@@ -4,7 +4,10 @@ namespace Modules\Admin\Providers;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Modules\Admin\View\Composers\MessageDropDownComposer;
 use Modules\Admin\View\Composers\NavbarShortcutComposer;
+use Modules\Admin\View\Composers\NotificationDropDownComposer;
+use Modules\Admin\View\Composers\UserDropDownComposer;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -35,6 +38,9 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        View::composer('admin::partials.navbar-message', MessageDropDownComposer::class);
         View::composer('admin::partials.navbar-shortcut', NavbarShortcutComposer::class);
+        View::composer('admin::partials.navbar-notification', NotificationDropDownComposer::class);
+        View::composer(['admin::partials.navbar-user', 'admin::partials.menu-sidebar'], UserDropDownComposer::class);
     }
 }

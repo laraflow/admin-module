@@ -10,9 +10,9 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\Rbac\PermissionRequest;
+use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Services\Rbac\PermissionService;
-use Modules\Core\Services\Auth\AuthenticatedSessionService;
-use Modules\Core\Supports\Constant;
+use Modules\Admin\Supports\Constant;
 
 class PermissionController extends Controller
 {
@@ -159,7 +159,7 @@ class PermissionController extends Controller
      * @return RedirectResponse
      * @throws \Throwable
      */
-    public function destroy($id, Request $request): RedirectResponse
+    public function destroy($id, Request $request)
     {
         if ($this->authenticatedSessionService->verifyUser($request)) {
 
@@ -173,5 +173,84 @@ class PermissionController extends Controller
             return redirect()->route('admin.permissions.index');
         }
         abort(403, 'Wrong user credentials');
+    }
+
+    /**
+     * Restore a Soft Deleted Resource
+     *
+     * @param $id
+     * @param Request $request
+     * @return RedirectResponse|void
+     * @throws \Throwable
+     */
+    public function restore($id, Request $request)
+    {
+        if ($this->authenticatedSessionService->verifyUser($request)) {
+
+            $confirm = $this->permissionService->destroyPermission($id);
+
+            if ($confirm['status'] == true) {
+                notify($confirm['message'], $confirm['level'], $confirm['title']);
+            } else {
+                notify($confirm['message'], $confirm['level'], $confirm['title']);
+            }
+            return redirect()->route('admin.permissions.index');
+        }
+        abort(403, 'Wrong user credentials');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Application|Factory|View
+     * @throws Exception
+     */
+    public function exportPdf(Request $request)
+    {
+        $filters = $request->except('page');
+        $permissions = $this->permissionService->getAllPermissions($filters);
+
+        return view('admin::rbac.permission.index', [
+            'permissions' => $permissions
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Application|Factory|View
+     * @throws Exception
+     */
+    public function exportExcel(Request $request)
+    {
+        $filters = $request->except('page');
+        $permissions = $this->permissionService->getAllPermissions($filters);
+
+        return view('admin::rbac.permission.index', [
+            'permissions' => $permissions
+        ]);
+    }
+
+    /**
+     * Display a detail of the resource.
+     *
+     * @return Application|Factory|View
+     * @throws Exception
+     */
+    public function exportShow($id)
+    {
+        $withTrashed = false;
+
+        if (\request()->has('with') && \request()->get('with') == Constant::PURGE_MODEL_QSA) {
+            $withTrashed = true;
+        }
+
+        if ($permission = $this->permissionService->getPermissionById($id, $withTrashed)) {
+            return view('admin::rbac.permission.show', [
+                'permission' => $permission
+            ]);
+        }
+
+        abort(404);
     }
 }

@@ -4,11 +4,12 @@ namespace Modules\Admin\Services\Rbac;
 
 
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Admin\Models\Rbac\Permission;
 use Modules\Admin\Repositories\Eloquent\Rbac\PermissionRepository;
-use Modules\Core\Supports\Constant;
+use Modules\Admin\Supports\Constant;
 use Throwable;
 
 
@@ -30,11 +31,14 @@ class PermissionService
     }
 
     /**
-     * @return Collection|Model[]
+     * @param array $filters
+     * @param array $eagerRelations
+     * @return Builder[]|Collection
+     * @throws Exception
      */
-    public function getAllPermissions()
+    public function getAllPermissions(array $filters = [], array $eagerRelations = [])
     {
-        return $this->permissionRepository->all();
+        return $this->permissionRepository->getAllPermissionWith($filters, $eagerRelations, true);
     }
 
     /**
