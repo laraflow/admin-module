@@ -42,7 +42,7 @@
                     <table class="table table-hover mb-0" id="user-table">
                         <thead class="thead-light">
                         <tr>
-                            <th>
+                            <th class="align-middle">
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="customCheckbox1"
                                            value="option1">
@@ -60,7 +60,7 @@
                         <tbody>
                         @forelse($users as $index => $user)
                             <tr>
-                                <td class="exclude-search">
+                                <td class="exclude-search align-middle">
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" type="checkbox" id="customCheckbox1"
                                                value="option1">
