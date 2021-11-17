@@ -2,12 +2,15 @@
 
 namespace Modules\Admin\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Modules\Admin\Database\Factories\UserFactory;
+use Kyslik\ColumnSortable\Sortable;
+use Modules\Admin\Database\Factories\Rbac\UserFactory;
+use Modules\Admin\Supports\DefaultValue;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
@@ -16,9 +19,9 @@ use Spatie\Permission\Traits\HasRoles;
  * Class Preference
  * @package App\Models\Auth
  */
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable implements HasMedia, Auditable
 {
-    use HasFactory, Notifiable, InteractsWithMedia, HasRoles;
+    use AuditableTrait, HasFactory, Notifiable, InteractsWithMedia, HasRoles, Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -59,6 +62,8 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
     ];
 
+    /************************ Audit Relations ************************/
+
     /**
      * @return BelongsTo
      */
@@ -75,6 +80,13 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsTo(User::class, 'updated_by');
     }
 
+    /************************ Static Methods ************************/
+
+    protected static function newFactory()
+    {
+        return UserFactory::new();
+    }
+
     /**
      * @return BelongsTo
      */
@@ -83,13 +95,17 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsTo(User::class, 'deleted_by');
     }
 
+
+
     /**
      * Register profile Image Media Collection
      * @return void
      */
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('avatars')->useDisk('avatar');
+        $this->addMediaCollection('avatars')
+            ->useDisk('avatar')
+            ->useFallbackUrl(DefaultValue::USER_PROFILE_IMAGE);
     }
 
     /**
@@ -101,6 +117,5 @@ class User extends Authenticatable implements HasMedia
     {
         return (bool)$this->hasRole('Super Administrator');
     }
-
 
 }

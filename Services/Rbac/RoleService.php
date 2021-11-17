@@ -4,6 +4,7 @@
 namespace Modules\Admin\Services\Rbac;
 
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Admin\Models\Rbac\Role;
@@ -27,12 +28,16 @@ class RoleService
         $this->roleRepository->itemsPerPage = 10;
     }
 
+
     /**
-     * @return Collection|Model[]
+     * @param array $filters
+     * @param array $eagerRelations
+     * @return Builder[]|Collection
+     * @throws \Exception
      */
-    public function getAllRoles()
+    public function getAllRoles(array $filters = [], array $eagerRelations = [])
     {
-        return $this->roleRepository->all();
+        return $this->roleRepository->getAllRoleWith($filters, $eagerRelations, true);
     }
 
     /**

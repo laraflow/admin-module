@@ -50,19 +50,6 @@ class Role extends SpatieRole implements Auditable
         'enabled' => 'yes'
     ];
 
-    /**
-     * The model's public sortable columns
-     *
-     * @var array
-     */
-    public $sortable = [
-        'id',
-        'name',
-        'guard_name',
-        'remarks',
-        'enabled'
-    ];
-
     /************************ Audit Relations ************************/
 
     /**

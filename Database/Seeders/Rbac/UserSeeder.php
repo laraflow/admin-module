@@ -4,7 +4,7 @@ namespace Modules\Admin\Database\Seeders\Rbac;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Admin\Models\Rbac\User;
+use Modules\Admin\Models\User;
 
 class UserSeeder extends Seeder
 {

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Modules\Admin\Models\Rbac\Role;
 use Modules\Admin\Models\User;
-use Modules\Admin\Repositories\Eloquent\UserRepository;
+use Modules\Admin\Repositories\Eloquent\Rbac\UserRepository;
 use Modules\Admin\Services\Common\FileUploadService;
 use Modules\Admin\Supports\DefaultValue;
 use Modules\Admin\Supports\Utility;
@@ -67,12 +67,11 @@ class UserRegisterSeeder extends Seeder
 
             $newUser = $this->userRepository->create($newUser);
             if ($newUser instanceof User) {
-                $adminRole = Role::findByName('Super Administrator');
                 if (!$this->attachProfilePicture($newUser)) {
                     throw new Exception("User Photo Create Failed");
                 }
 
-                if (!$this->attachUserRoles($newUser, [$adminRole])) {
+                if (!$this->attachUserRoles($newUser)) {
                     throw new Exception("User Role Assignment Failed");
                 }
             } else {
@@ -109,12 +108,13 @@ class UserRegisterSeeder extends Seeder
      * Attach Role to user Model
      *
      * @param User $user
-     * @param array $roles
      * @return bool
      */
-    protected function attachUserRoles(User $user, array $roles = [DefaultValue::GUEST_ROLE_ID]): bool
+    protected function attachUserRoles(User $user): bool
     {
+
+        $adminRole = Role::findByName(DefaultValue::SUPER_ADMIN_ROLE);
         $this->userRepository->setModel($user);
-        return $this->userRepository->manageRoles($roles);
+        return $this->userRepository->manageRoles([$adminRole->id]);
     }
 }

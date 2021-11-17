@@ -9,6 +9,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Laravolt\Avatar\Facade as Avatar;
+use Modules\Admin\Supports\DefaultValue;
 
 class FileUploadService
 {
@@ -31,7 +32,7 @@ class FileUploadService
         try {
             $imageObject = Avatar::create($name)->getImageObject();
         } catch (Exception $imageMakeException) {
-            $imageObject = Image::make('public/assets/images/favicon.ico');
+            $imageObject = Image::make(DefaultValue::USER_PROFILE_IMAGE);
             \Log::error($imageMakeException->getMessage());
         } finally {
             try {
@@ -69,13 +70,10 @@ class FileUploadService
             Log::error($imageMakeException->getMessage());
         } finally {
             try {
-                if ($imageObject instanceof Image) {
-                    if ($imageObject->resize(256, 256, function ($constraint) {
+                if ($imageObject instanceof \Intervention\Image\Image) {
+                    if ($imageObject->resize(256, null, function ($constraint) {
                         $constraint->aspectRatio();
                     })->crop(256, 256, 0, 0)
-                        ->circle(255 / 2, 0, 0, function ($draw) {
-                            $draw->border(1, '#000000');
-                        })
                         ->save($tmpPath . $fileName, 80, $extension))
                         return $tmpPath . $fileName;
                     else

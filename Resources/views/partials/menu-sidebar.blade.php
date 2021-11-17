@@ -10,7 +10,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex border-bottom-0">
+        <div class="user-panel mt-3 d-flex border-bottom-0">
             <div class="image">
                 <img src="{{ $authUser->getFirstMediaUrl('avatars') }}" class="img-circle elevation-2"
                      alt="{{ $authUser->name }}">
@@ -19,21 +19,6 @@
                 <a href="#" class="d-block">{{ $authUser->name }}</a>
             </div>
         </div>
-
-        <!-- SidebarSearch Form -->
-        <form>
-            <div class="form-inline pb-3 border-bottom border-secondary">
-                <div class="input-group" data-widget="sidebar-search">
-                    <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                           aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-sidebar">
-                            <i class="fas fa-search fa-fw"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
         <!-- Sidebar Menu -->
         <nav class="mt-3">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">

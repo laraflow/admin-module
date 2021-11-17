@@ -14,6 +14,7 @@ use Modules\Admin\Http\Controllers\Common\ModelEnabledController;
 use Modules\Admin\Http\Controllers\Common\ModelSoftDeleteController;
 use Modules\Admin\Http\Controllers\Rbac\PermissionController;
 use Modules\Admin\Http\Controllers\Rbac\RoleController;
+use Modules\Admin\Http\Controllers\Rbac\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,6 +99,42 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     Route::resource('permissions', PermissionController::class);
+
+    Route::prefix('permissions')->name('permissions.')->group(function () {
+
+        Route::get('{permission}/restore', [PermissionController::class, 'restore'])->name('restore');
+
+        Route::prefix('exports')->name('exports.')->group(function () {
+            Route::get('pdf', [PermissionController::class, 'exportPdf'])->name('pdf');
+            Route::get('excel', [PermissionController::class, 'exportExcel'])->name('excel');
+            Route::get('{permission}/details', [PermissionController::class, 'exportShow'])->name('show');
+        });
+    });
+
     Route::resource('roles', RoleController::class);
-    Route::resource('users', RoleController::class);
+
+    Route::prefix('roles')->name('roles.')->group(function () {
+
+        Route::get('{role}/restore', [RoleController::class, 'restore'])->name('restore');
+
+        Route::prefix('exports')->name('exports.')->group(function () {
+            Route::get('pdf', [RoleController::class, 'exportPdf'])->name('pdf');
+            Route::get('excel', [RoleController::class, 'exportExcel'])->name('excel');
+            Route::get('{role}/details', [RoleController::class, 'exportShow'])->name('show');
+        });
+    });
+
+    Route::resource('users', UserController::class);
+
+    Route::prefix('users')->name('users.')->group(function () {
+
+        Route::get('{user}/restore', [UserController::class, 'restore'])->name('restore');
+
+        Route::prefix('exports')->name('exports.')->group(function () {
+            Route::get('pdf', [UserController::class, 'exportPdf'])->name('pdf');
+            Route::get('excel', [UserController::class, 'exportExcel'])->name('excel');
+            Route::get('{user}/details', [UserController::class, 'exportShow'])->name('show');
+        });
+    });
+
 });

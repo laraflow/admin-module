@@ -10,10 +10,15 @@ namespace Modules\Admin\Supports;
 class DefaultValue
 {
 
+
     /**
      * Default Role ID for frontend registered user
      */
     const GUEST_ROLE_ID = 7;
+    /**
+     * Default Role Name for system administrator
+     */
+    const SUPER_ADMIN_ROLE = 'Super Administrator';
 
     /**
      * Default Mobile Number for backend admin panel
@@ -44,4 +49,8 @@ class DefaultValue
      */
     const PASSWORD = '123456789';
 
+    /**
+     * Default profile display image is user image is missing
+     */
+    const USER_PROFILE_IMAGE = '/modules/admin/assets/img/AdminLTELogo.png';
 }

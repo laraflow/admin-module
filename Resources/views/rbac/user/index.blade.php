@@ -1,6 +1,6 @@
 @extends('admin::layouts.master')
 
-@section('title', 'Permissions')
+@section('title', 'Users')
 
 @push('meta')
 
@@ -30,16 +30,16 @@
 @section('breadcrumbs', \Breadcrumbs::render())
 
 @section('actions')
-    {!! \Html::linkButton('Add Permission', 'admin.permissions.create', [], 'mdi mdi-plus', 'success') !!}
+    {!! \Html::linkButton('Add User', 'admin.users.create', [], 'mdi mdi-plus', 'success') !!}
 @endsection
 
 @section('content')
     <div class="container-fluid">
         <div class="card card-default">
             <div class="card-body p-0">
-                {!! \Html::cardSearch('search', 'admin.permissions.index', 'Search Permission Display Name, Code, Guard, Status, etc.') !!}
+                {!! \Html::cardSearch('search', 'admin.users.index', 'Search User Name, Code, Guard, Status, etc.') !!}
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0" id="permission-table">
+                    <table class="table table-hover mb-0" id="user-table">
                         <thead class="thead-light">
                         <tr>
                             <th class="align-middle">
@@ -49,16 +49,16 @@
                                     <label for="customCheckbox1" class="custom-control-label"></label>
                                 </div>
                             </th>
-                            <th>@sortablelink('display_name', 'Display Name')</th>
-                            <th>@sortablelink('name', 'Name')</th>
-                            <th>@sortablelink('guard_name', 'Guard')</th>
+                            <th class="pl-0">@sortablelink('name', 'Name')</th>
+                            <th class="text-center">@sortablelink('email', 'Email')</th>
+                            <th class="text-center">@sortablelink('mobile', 'Mobile')</th>
                             <th class="text-center">@sortablelink('enabled', 'Enabled')</th>
                             <th class="text-center">@sortablelink('created_at', 'Created')</th>
                             <th class="text-center">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse($permissions as $index => $permission)
+                        @forelse($users as $index => $user)
                             <tr>
                                 <td class="exclude-search align-middle">
                                     <div class="custom-control custom-checkbox">
@@ -67,33 +67,44 @@
                                         <label for="customCheckbox1" class="custom-control-label"></label>
                                     </div>
                                 </td>
-                                <td class="text-left">
-                                    <a href="{{ route('admin.permissions.show', $permission->id) }}">
-                                        {{ $permission->display_name }}
-                                    </a>
+                                <td class="text-left pl-0">
+                                    <div class="media">
+                                        <img class="align-self-center mr-1 img-circle direct-chat-img elevation-1"
+                                             src="{{ $user->getFirstMediaUrl('avatars') }}" alt="{{ $user->name }}">
+                                        <div class="media-body">
+                                            <p class="my-0">
+                                                <a href="{{ route('admin.users.show', $user->id) }}">
+                                                    {{ $user->name }}
+                                                </a>
+                                            </p>
+                                            <p class="mb-0 small">{{ $user->username }}</p>
+                                        </div>
+                                    </div>
+
+
                                 </td>
-                                <td>{{ $permission->name }}</td>
-                                <td>{{ $permission->guard_name }}</td>
+                                <td class="text-left">{{ $user->email ?? '-' }}</td>
+                                <td class="text-center">{{ $user->mobile ?? '-' }}</td>
                                 <td class="text-center exclude-search">
                                     <input type="checkbox" data-toggle="toggle" data-size="small"
                                            data-onstyle="{{ $on ?? 'success' }}"
                                            data-offstyle="{{ $off ?? 'danger' }}"
                                            data-model=""
                                            data-field="enabled"
-                                           data-id="{{$permission->id}}"
+                                           data-id="{{$user->id}}"
                                            data-on="<i class='mdi mdi-check-bold fw-bolder'></i> Yes"
                                            data-off="<i class='mdi mdi-close fw-bolder'></i> No"
-                                           @if($permission->enabled == 'yes') checked @endif>
+                                           @if($user->enabled == 'yes') checked @endif>
 
                                 </td>
-                                <td class="text-center">{{ $permission->created_at->format(config('app.datetime')) ?? '' }}</td>
+                                <td class="text-center">{{ $user->created_at->format(config('app.datetime')) ?? '' }}</td>
                                 <td class="exclude-search pr-3 text-center align-middle">
-                                    {!! \Html::actionDropdown('admin.permissions', $permission->id, ['show', 'edit', 'delete']) !!}
+                                    {!! \Html::actionDropdown('admin.users', $user->id, ['show', 'edit', 'delete']) !!}
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="exclude-search text-center">No data to display</td>
+                                <td colspan="7" class="exclude-search text-center">No data to display</td>
                             </tr>
                         @endforelse
                         </tbody>
@@ -101,7 +112,7 @@
                 </div>
             </div>
             <div class="card-footer bg-transparent pb-0">
-                {!! \Modules\Admin\Supports\CHTML::pagination($permissions) !!}
+                {!! \Modules\Admin\Supports\CHTML::pagination($users) !!}
             </div>
         </div>
     </div>
@@ -116,7 +127,7 @@
 @push('page-script')
     <script>
         $(function () {
-            highLightQueryString('search', 'permission-table');
+            highLightQueryString('search', 'user-table');
         });
     </script>
 @endpush
