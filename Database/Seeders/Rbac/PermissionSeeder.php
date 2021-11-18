@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Route;
 use Modules\Admin\Models\Rbac\Permission;
 use Modules\Admin\Supports\Helper;
+use Modules\Admin\Supports\Utility;
 
 class PermissionSeeder extends Seeder
 {
@@ -26,7 +27,7 @@ class PermissionSeeder extends Seeder
 
         foreach ($routes as $route) {
             try {
-                Permission::create(['display_name' => Helper::permissionDisplay($route), 'name' => $route, 'guard_name' => 'web', 'enabled' => 'yes']);
+                Permission::create(['display_name' => Utility::permissionDisplay($route), 'name' => $route, 'guard_name' => 'web', 'enabled' => 'yes']);
             } catch (\PDOException $exception) {
                 throw new \PDOException($exception->getMessage());
             }
