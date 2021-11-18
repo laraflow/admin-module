@@ -79,7 +79,7 @@ class UserCreatedNotification extends Notification
             'icon_class' => 'mdi mdi-account-plus text-white',
             'icon_background' => 'bg-success',
             'description' => 'New user named ( ' . $this->user->name . ' ) created',
-            'url' => route('users.show', $this->user->id)
+            'url' => route('admin.users.show', $this->user->id)
         ];
     }
 }

@@ -89,4 +89,5 @@ class Utility
     {
         return preg_replace('/laravel\-([\d]{4})-([\d]{2})-([\d]{2})\.log/', '$3/$2/$1', $filename);
     }
+
 }

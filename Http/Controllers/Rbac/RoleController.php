@@ -9,10 +9,13 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Modules\Admin\Http\Requests\Rbac\RolePermissionRequest;
 use Modules\Admin\Http\Requests\Rbac\RoleRequest;
-use Modules\Admin\Services\Rbac\RoleService;
 use Modules\Admin\Services\Auth\AuthenticatedSessionService;
+use Modules\Admin\Services\Rbac\PermissionService;
+use Modules\Admin\Services\Rbac\RoleService;
 use Modules\Admin\Supports\Constant;
+use Modules\Admin\Supports\DefaultValue;
 use Throwable;
 
 class RoleController extends Controller
@@ -28,16 +31,24 @@ class RoleController extends Controller
     private $authenticatedSessionService;
 
     /**
+     * @var PermissionService
+     */
+    private $permissionService;
+
+    /**
      * PermissionController constructor.
      *
      * @param AuthenticatedSessionService $authenticatedSessionService
      * @param RoleService $roleService
+     * @param PermissionService $permissionService
      */
     public function __construct(AuthenticatedSessionService $authenticatedSessionService,
-                                RoleService                 $roleService)
+                                RoleService                 $roleService,
+                                PermissionService           $permissionService)
     {
         $this->roleService = $roleService;
         $this->authenticatedSessionService = $authenticatedSessionService;
+        $this->permissionService = $permissionService;
     }
 
     /**
@@ -103,8 +114,17 @@ class RoleController extends Controller
         }
 
         if ($role = $this->roleService->getRoleById($id, $withTrashed)) {
+
+            $permissions = $this->permissionService->getAllPermissions([
+                'sort' => 'display_name', 'direction' => 'asc'
+            ]);
+
+            $availablePermissionIds = $role->permissions()->pluck('id')->toArray();
+
             return view('admin::rbac.role.show', [
-                'role' => $role
+                'role' => $role,
+                'permissions' => $permissions,
+                'availablePermissionIds' => $availablePermissionIds
             ]);
         }
 
@@ -177,7 +197,6 @@ class RoleController extends Controller
         abort(403, 'Wrong user credentials');
     }
 
-
     /**
      * Restore a Soft Deleted Resource
      *
@@ -249,6 +268,28 @@ class RoleController extends Controller
         if ($role = $this->roleService->getRoleById($id, $withTrashed)) {
             return view('admin::rbac.role.show', [
                 'role' => $role
+            ]);
+        }
+
+        abort(404);
+    }
+
+    /**
+     * @param $id
+     * @param RolePermissionRequest $request
+     * @return Application|Factory|View|void
+     * @throws Exception
+     */
+    public function permission($id, RolePermissionRequest $request)
+    {
+        if ($role = $this->roleService->getRoleById($id)) {
+
+            $permissions = $this->permissionService->getAllPermissions(['enabled' => DefaultValue::ENABLED_OPTION]);
+
+            return view('admin::rbac.role.show', [
+                'role' => $role,
+                'permissions' => $permissions,
+                'availablePermissions' => $availablePermissionIds
             ]);
         }
 

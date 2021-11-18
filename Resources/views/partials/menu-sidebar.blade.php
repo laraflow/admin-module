@@ -25,7 +25,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item menu-open">
-                    <a href="#" class="nav-link active">
+                    <a href="#" class="nav-link @if(\Route::is('admin.*')) active @endif ">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Administration
@@ -34,19 +34,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                          <li class="nav-item">
-                            <a href="{{ route('admin.users.index') }}" class="nav-link">
+                            <a href="{{ route('admin.users.index') }}" class="nav-link @if(\Route::is('admin.users.*')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Users</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.roles.index') }}" class="nav-link">
+                            <a href="{{ route('admin.roles.index') }}" class="nav-link  @if(\Route::is('admin.roles.*')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Roles</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.permissions.index') }}" class="nav-link">
+                            <a href="{{ route('admin.permissions.index') }}" class="nav-link  @if(\Route::is('admin.permissions.*')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Permissions</p>
                             </a>

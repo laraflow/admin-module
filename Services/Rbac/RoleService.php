@@ -158,4 +158,25 @@ class RoleService
                 'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
         }
     }
+
+    public function syncPermission($id, array $permissions = [])
+    {
+        \DB::beginTransaction();
+        try {
+            if ($this->roleRepository->update($inputs, $id)) {
+                \DB::commit();
+                return ['status' => true, 'message' => __('Role Info Updated'),
+                    'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
+            } else {
+                \DB::rollBack();
+                return ['status' => false, 'message' => __('Role Info Update Failed'),
+                    'level' => Constant::MSG_TOASTR_ERROR, 'title' => 'Alert!'];
+            }
+        } catch (\Exception $exception) {
+            $this->roleRepository->handleException($exception);
+            \DB::rollBack();
+            return ['status' => false, 'message' => $exception->getMessage(),
+                'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
+        }
+    }
 }

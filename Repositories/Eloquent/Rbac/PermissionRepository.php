@@ -41,6 +41,15 @@ class PermissionRepository extends EloquentRepository
                 ->orWhere('enabled', '=', "%{$filters['search']}%");
         endif;
 
+        if (!empty($filters['enabled'])) :
+            $query->where('enabled', '=', $filters['enabled']);
+        endif;
+
+        if (!empty($filters['sort']) && !empty($filters['direction'])) :
+            $query->orderBy($filters['sort'], $filters['direction']);
+        endif;
+
+
         if ($is_sortable == true)
             $query->sortable();
 
