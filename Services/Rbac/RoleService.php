@@ -159,17 +159,17 @@ class RoleService
         }
     }
 
-    public function syncPermission($id, array $permissions = [])
+    public function syncPermission($id, array $permissions = []): array
     {
         \DB::beginTransaction();
         try {
-            if ($this->roleRepository->update($inputs, $id)) {
+            if ($this->roleRepository->syncPermissions($permissions, $id)) {
                 \DB::commit();
-                return ['status' => true, 'message' => __('Role Info Updated'),
+                return ['status' => true, 'message' => __('Role Permissions Updated'),
                     'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
             } else {
                 \DB::rollBack();
-                return ['status' => false, 'message' => __('Role Info Update Failed'),
+                return ['status' => false, 'message' => __('Role Permissions Update Failed'),
                     'level' => Constant::MSG_TOASTR_ERROR, 'title' => 'Alert!'];
             }
         } catch (\Exception $exception) {

@@ -19,8 +19,8 @@ function initDeleteModal() {
                 $("#deleteConfirmationForm").empty().html(error.responseText);
             }).always(function () {
                 deleteModalElement.modal({
-                    backdrop:'static',
-                    show:true
+                    backdrop: 'static',
+                    show: true
                 });
             });
         }
@@ -199,6 +199,34 @@ function imageResolutionValidation(imgWidth, imgHeight, minWidth, minHeight, max
             "status": true,
             "error": "<b>Image Validation Successful.</b>"
         };
+    }
+}
+
+
+function notify(message, level = 'success', title = '') {
+    if (window.toastr != undefined) {
+        switch (level) {
+            case 'success' :
+                toastr.success(message, title, []);
+                break;
+
+            case 'danger':
+            case 'error' :
+                toastr.error(message, title, []);
+                break;
+
+            case 'warning' :
+                toastr.warning(message, title, []);
+                break;
+
+            case 'info' :
+                toastr.warning(message, title, []);
+                break;
+
+            default :
+                toastr.success(message, title, []);
+                break;
+        }
     }
 }
 

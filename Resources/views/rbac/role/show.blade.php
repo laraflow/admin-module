@@ -93,7 +93,7 @@
          aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                {!! \Form::open(['route' => ['admin.roles.permission', $role->id], 'method' => 'put']) !!}
+                {!! \Form::open(['route' => ['admin.roles.permission', $role->id], 'method' => 'put', 'id' => 'role-permission-form']) !!}
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Available Permissions</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -123,10 +123,8 @@
                                     <tr class="text-center">
                                         <th width="35" class="p-2 align-middle">
                                             <div class="icheck-primary">
-                                                {!! Form::checkbox('permissions[]', $permission->id,
-                                                    in_array($permission->id, $availablePermissionIds),
-                                                     ['id' => 'permission_' . $permission->id, 'class' => 'permission-checkbox']) !!}
-                                                <label for="{{ 'permission_' . $permission->id }}"></label>
+                                                {!! Form::checkbox('test', 1,false, ['id' => 'permission_all']) !!}
+                                                <label for="permission_all"></label>
                                             </div>
                                         </th>
                                         <th class="align-middle">Permission</th>
@@ -162,7 +160,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
                 {!! \Form::close(); !!}
             </div>
@@ -176,5 +174,60 @@
 
 
 @push('page-script')
+    <script>
+        $(function () {
+            $("#permission_all").click(function () {
+                if ($(this).prop("checked")) {
+                    $(".permission-checkbox").each(function () {
+                        $(this).prop("checked", true);
+                    });
+                } else {
+                    $(".permission-checkbox").each(function () {
+                        $(this).prop("checked", false);
+                    });
+                }
+            });
 
+            $("#role-permission-form").submit(function (event) {
+                event.preventDefault();
+                var formData = new FormData(this);
+                var formUrl = $(this).attr('action');
+
+                $.ajax({
+                    url: formUrl,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    type: "POST",
+                    dateType: "JSON",
+                    success: function (response) {
+                        if (response.status == true) {
+                            notify(response.message, response.level, response.title);
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 5000);
+
+                        } else {
+                            notify(response.message, response.level, response.title);
+                        }
+                    },
+                    error: function (error) {
+                        var responseObject = error.responseJSON;
+
+                        var message = "<b>" + responseObject.message + "</b>";
+
+                        for (var field in responseObject.errors) {
+                            message += "<br><ul>";
+                            for (var errorText of responseObject.errors[field]) {
+                                message += ("<li>" + errorText + "</li>");
+                            }
+                            message += "</ul>";
+                        }
+
+                        notify(message, 'error', 'Error!');
+                    }
+                });
+            });
+        });
+    </script>
 @endpush

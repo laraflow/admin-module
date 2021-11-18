@@ -9,13 +9,13 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Modules\Admin\Http\Requests\Rbac\RolePermissionRequest;
 use Modules\Admin\Http\Requests\Rbac\RoleRequest;
 use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Services\Rbac\PermissionService;
 use Modules\Admin\Services\Rbac\RoleService;
 use Modules\Admin\Supports\Constant;
-use Modules\Admin\Supports\DefaultValue;
 use Throwable;
 
 class RoleController extends Controller
@@ -277,22 +277,29 @@ class RoleController extends Controller
     /**
      * @param $id
      * @param RolePermissionRequest $request
-     * @return Application|Factory|View|void
+     * @return mixed
      * @throws Exception
      */
     public function permission($id, RolePermissionRequest $request)
     {
-        if ($role = $this->roleService->getRoleById($id)) {
+        if ($request->ajax()) {
 
-            $permissions = $this->permissionService->getAllPermissions(['enabled' => DefaultValue::ENABLED_OPTION]);
+            $jsonResponse = ['message' => null, 'errors' => []];
 
-            return view('admin::rbac.role.show', [
-                'role' => $role,
-                'permissions' => $permissions,
-                'availablePermissions' => $availablePermissionIds
-            ]);
+            if ($role = $this->roleService->getRoleById($id)) {
+                $permissions = $request->get('permissions', []);
+                $confirm = $this->roleService->syncPermission($id, $permissions);
+
+                //formatted response is collected from service
+                return response()->json(array_merge($jsonResponse, $confirm));
+
+            } else {
+                throw ValidationException::withMessages([
+                    'role' => 'Invalid Role Id Provided'
+                ]);
+            }
         }
 
-        abort(404);
+        abort(403);
     }
 }
