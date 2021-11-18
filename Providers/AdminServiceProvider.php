@@ -117,10 +117,10 @@ class AdminServiceProvider extends ServiceProvider
 
     public function registerPublicAssets()
     {
-        $this->publishes([module_path($this->moduleName, 'Resources/assets') => public_path('modules/' . $this->moduleNameLower . '/assets'),
+        $this->publishes([module_path($this->moduleName, 'Resources/dist/assets') => public_path('modules/' . $this->moduleNameLower . '/assets'),
         ], $this->moduleNameLower . '-module-assets');
 
-        $this->publishes([module_path($this->moduleName, 'Resources/plugins') => public_path('modules/' . $this->moduleNameLower . '/plugins'),
+        $this->publishes([module_path($this->moduleName, 'Resources/dist/plugins') => public_path('modules/' . $this->moduleNameLower . '/plugins'),
         ], $this->moduleNameLower . '-module-plugins');
     }
 }
