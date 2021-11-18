@@ -3,6 +3,7 @@
 namespace Modules\Admin\Services\Auth;
 
 use Exception;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Modules\Admin\Models\User;
 use Modules\Admin\Repositories\Eloquent\Rbac\UserRepository;

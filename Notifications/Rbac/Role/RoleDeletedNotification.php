@@ -2,13 +2,13 @@
 
 namespace Modules\Admin\Notifications\Rbac\Role;
 
-use Modules\Rbac\Models\Role;
-use App\Models\Auth\User;
+use Modules\Admin\Models\Rbac\Role;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
+use Modules\Admin\Models\User;
 
 class RoleDeletedNotification extends Notification
 {
