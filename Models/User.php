@@ -118,4 +118,22 @@ class User extends Authenticatable implements HasMedia, Auditable
         return (bool)$this->hasRole('Super Administrator');
     }
 
+    /**
+     * Return all Role ID's of a user
+     *
+     * @return array
+     */
+    public function getRoleIdsAttribute(): array
+    {
+        return $this->roles()->pluck('id')->toArray();
+    }
+    /**
+     * Return all Permission ID's of a user
+     *
+     * @return array
+     */
+    public function getPermissionIdsAttribute(): array
+    {
+        return $this->permissions()->pluck('id')->toArray();
+    }
 }

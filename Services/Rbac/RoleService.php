@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Admin\Models\Rbac\Role;
 use Modules\Admin\Repositories\Eloquent\Rbac\RoleRepository;
 use Modules\Admin\Supports\Constant;
+use Spatie\Permission\PermissionRegistrar;
 
 class RoleService
 {
@@ -165,6 +166,10 @@ class RoleService
         try {
             if ($this->roleRepository->syncPermissions($permissions, $id)) {
                 \DB::commit();
+
+                //Update Permission Cache for Roles
+                $this->clearPermissionCache();
+
                 return ['status' => true, 'message' => __('Role Permissions Updated'),
                     'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
             } else {
@@ -178,5 +183,13 @@ class RoleService
             return ['status' => false, 'message' => $exception->getMessage(),
                 'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function clearPermissionCache()
+    {
+        return app(PermissionRegistrar::class)->forgetCachedPermissions();
     }
 }

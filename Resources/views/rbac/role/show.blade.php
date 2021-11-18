@@ -67,10 +67,12 @@
                             <i class="mdi mdi-account-details-outline"></i>
                             Permissions
                         </div>
+                        @can('admin.roles.permission')
                         <button data-toggle="modal" data-target="#bd-example-modal-lg" class="btn btn-primary mb-2">
                             <i class="mdi mdi-account-convert-outline"></i>
                             <span class="d-none d-sm-inline-block">Add / Remove Permissions</span>
                         </button>
+                            @endcan
                     </div>
                     <div class="row mt-2">
                         @forelse($role->permissions as $permission)
@@ -89,6 +91,7 @@
         </div>
     </div>
     <!-- Permission Modal -->
+    @can('admin.roles.permission')
     <div class="modal fade" id="bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -166,6 +169,7 @@
             </div>
         </div>
     </div>
+    @endcan
 @endsection
 
 @push('component-scripts')
@@ -174,6 +178,7 @@
 
 
 @push('page-script')
+@can('admin.roles.permission')
     <script>
         $(function () {
             $("#permission_all").click(function () {
@@ -230,4 +235,5 @@
             });
         });
     </script>
+@endcan
 @endpush
