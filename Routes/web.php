@@ -86,7 +86,7 @@ Route::prefix(config('auth.admin_auth_prefix'))
             ->name('logout');
     });
 
-Route::view('/privacy-terms', 'core::terms')->name('admin.terms');
+Route::view('/privacy-terms', 'admin::terms')->name('admin.terms');
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -116,6 +116,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::prefix('roles')->name('roles.')->group(function () {
 
         Route::get('{role}/restore', [RoleController::class, 'restore'])->name('restore');
+        Route::put('{role}/permissions', [RoleController::class, 'permission'])->name('permission');
+
 
         Route::prefix('exports')->name('exports.')->group(function () {
             Route::get('pdf', [RoleController::class, 'exportPdf'])->name('pdf');

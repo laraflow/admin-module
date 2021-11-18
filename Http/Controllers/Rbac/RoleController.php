@@ -9,9 +9,12 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Modules\Admin\Http\Requests\Rbac\RolePermissionRequest;
 use Modules\Admin\Http\Requests\Rbac\RoleRequest;
-use Modules\Admin\Services\Rbac\RoleService;
 use Modules\Admin\Services\Auth\AuthenticatedSessionService;
+use Modules\Admin\Services\Rbac\PermissionService;
+use Modules\Admin\Services\Rbac\RoleService;
 use Modules\Admin\Supports\Constant;
 use Throwable;
 
@@ -28,16 +31,24 @@ class RoleController extends Controller
     private $authenticatedSessionService;
 
     /**
+     * @var PermissionService
+     */
+    private $permissionService;
+
+    /**
      * PermissionController constructor.
      *
      * @param AuthenticatedSessionService $authenticatedSessionService
      * @param RoleService $roleService
+     * @param PermissionService $permissionService
      */
     public function __construct(AuthenticatedSessionService $authenticatedSessionService,
-                                RoleService                 $roleService)
+                                RoleService                 $roleService,
+                                PermissionService           $permissionService)
     {
         $this->roleService = $roleService;
         $this->authenticatedSessionService = $authenticatedSessionService;
+        $this->permissionService = $permissionService;
     }
 
     /**
@@ -103,8 +114,17 @@ class RoleController extends Controller
         }
 
         if ($role = $this->roleService->getRoleById($id, $withTrashed)) {
+
+            $permissions = $this->permissionService->getAllPermissions([
+                'sort' => 'display_name', 'direction' => 'asc'
+            ]);
+
+            $availablePermissionIds = $role->permissions()->pluck('id')->toArray();
+
             return view('admin::rbac.role.show', [
-                'role' => $role
+                'role' => $role,
+                'permissions' => $permissions,
+                'availablePermissionIds' => $availablePermissionIds
             ]);
         }
 
@@ -176,7 +196,6 @@ class RoleController extends Controller
         }
         abort(403, 'Wrong user credentials');
     }
-
 
     /**
      * Restore a Soft Deleted Resource
@@ -253,5 +272,34 @@ class RoleController extends Controller
         }
 
         abort(404);
+    }
+
+    /**
+     * @param $id
+     * @param RolePermissionRequest $request
+     * @return mixed
+     * @throws Exception
+     */
+    public function permission($id, RolePermissionRequest $request)
+    {
+        if ($request->ajax()) {
+
+            $jsonResponse = ['message' => null, 'errors' => []];
+
+            if ($role = $this->roleService->getRoleById($id)) {
+                $permissions = $request->get('permissions', []);
+                $confirm = $this->roleService->syncPermission($id, $permissions);
+
+                //formatted response is collected from service
+                return response()->json(array_merge($jsonResponse, $confirm));
+
+            } else {
+                throw ValidationException::withMessages([
+                    'role' => 'Invalid Role Id Provided'
+                ]);
+            }
+        }
+
+        abort(403);
     }
 }

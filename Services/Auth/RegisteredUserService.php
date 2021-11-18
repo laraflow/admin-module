@@ -3,9 +3,10 @@
 namespace Modules\Admin\Services\Auth;
 
 use Exception;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Modules\Admin\Models\User;
-use Modules\Admin\Repositories\Eloquent\UserRepository;
+use Modules\Admin\Repositories\Eloquent\Rbac\UserRepository;
 use Modules\Admin\Services\Common\FileUploadService;
 use Modules\Admin\Supports\Constant;
 use Modules\Admin\Supports\DefaultValue;

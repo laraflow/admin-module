@@ -70,9 +70,13 @@
                                     </div>
                                 </td>
                                 <td class="text-left">
-                                    <a href="{{ route('admin.roles.show', $role->id) }}">
+                                    @if(auth()->user()->can('admin.roles.show') || in_array($role->id, auth()->user()->role_ids))
+                                        <a href="{{ route('admin.roles.show', $role->id) }}">
+                                            {{ $role->name }}
+                                        </a>
+                                    @else
                                         {{ $role->name }}
-                                    </a>
+                                    @endif
                                 </td>
                                 <td class="text-center">{{ $role->guard_name }}</td>
                                 <td class="text-center">{{ $role->total_permissions }}</td>

@@ -3,6 +3,12 @@
 namespace Modules\Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\Admin\Models\Rbac\Permission;
+use Modules\Admin\Models\Rbac\Role;
+use Modules\Admin\Models\User;
+use Modules\Admin\Observers\Rbac\PermissionObserver;
+use Modules\Admin\Observers\Rbac\RoleObserver;
+use Modules\Admin\Observers\Rbac\UserObserver;
 
 class ObserverServiceProvider extends ServiceProvider
 {
@@ -24,5 +30,17 @@ class ObserverServiceProvider extends ServiceProvider
     public function provides()
     {
         return [];
+    }
+
+    /**
+     * Register any observer for your application.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        User::observe(UserObserver::class);
+        Role::observe(RoleObserver::class);
+        Permission::observe(PermissionObserver::class);
     }
 }

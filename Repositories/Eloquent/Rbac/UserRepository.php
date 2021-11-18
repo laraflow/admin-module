@@ -77,10 +77,7 @@ class UserRepository extends EloquentRepository
      */
     public function verifyUniqueUsername(string $testUserName): bool
     {
-        if ($existingUser = $this->findFirstWhere('username', '=', $testUserName)) {
-            return false;
-        }
-        return true;
+        return ($this->findFirstWhere('username', '=', $testUserName) == null);
     }
 
     /**
@@ -101,6 +98,15 @@ class UserRepository extends EloquentRepository
                 ->orWhere('mobile', '=', "%{$filters['search']}%")
                 ->orWhere('enabled', '=', "%{$filters['search']}%");
         endif;
+
+        if (!empty($filters['enabled'])) :
+            $query->where('enabled', '=', $filters['enabled']);
+        endif;
+
+        if (!empty($filters['sort']) && !empty($filters['direction'])) :
+            $query->orderBy($filters['sort'], $filters['direction']);
+        endif;
+
 
         if ($is_sortable == true)
             $query->sortable();
