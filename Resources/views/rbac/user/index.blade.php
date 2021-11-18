@@ -73,9 +73,13 @@
                                              src="{{ $user->getFirstMediaUrl('avatars') }}" alt="{{ $user->name }}">
                                         <div class="media-body">
                                             <p class="my-0">
-                                                <a href="{{ route('admin.users.show', $user->id) }}">
+                                                @if(auth()->user()->can('admin.users.show') || $user->id == auth()->user()->id)
+                                                    <a href="{{ route('admin.users.show', $user->id) }}">
+                                                        {{ $user->name }}
+                                                    </a>
+                                                @else
                                                     {{ $user->name }}
-                                                </a>
+                                                @endif
                                             </p>
                                             <p class="mb-0 small">{{ $user->username }}</p>
                                         </div>
