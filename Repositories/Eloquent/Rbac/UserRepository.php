@@ -77,10 +77,7 @@ class UserRepository extends EloquentRepository
      */
     public function verifyUniqueUsername(string $testUserName): bool
     {
-        if ($existingUser = $this->findFirstWhere('username', '=', $testUserName)) {
-            return false;
-        }
-        return true;
+        return ($this->findFirstWhere('username', '=', $testUserName)  == null);
     }
 
     /**

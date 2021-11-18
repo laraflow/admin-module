@@ -11,9 +11,13 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.copyDirectory(__dirname + '/node_modules/admin-lte/dist',
-    __dirname + '/Resources/assets/')
+mix.copyDirectory(__dirname + '/node_modules/admin-lte/dist', __dirname + '/Resources/assets/')
     .copyDirectory(__dirname + '/node_modules/admin-lte/plugins', __dirname + '/Resources/plugins/')
     .copyDirectory(__dirname + '/node_modules/@mdi/font/css', __dirname + '/Resources/plugins/mdi/css/')
     .copyDirectory(__dirname + '/node_modules/@mdi/font/fonts', __dirname + '/Resources/plugins/mdi/fonts/')
-    .copyDirectory(__dirname + '/node_modules/bootstrap4-toggle', __dirname + '/Resources/plugins/bootstrap4-toggle/');
+    .sass(__dirname + '/Resources/sass/custom-switch.scss',     __dirname + '/Resources/assets/css/', {
+        sourceMap: true,
+        sassOptions: {
+            outputStyle: "compressed",
+        }
+    });

@@ -86,7 +86,7 @@ Route::prefix(config('auth.admin_auth_prefix'))
             ->name('logout');
     });
 
-Route::view('/privacy-terms', 'core::terms')->name('admin.terms');
+Route::view('/privacy-terms', 'admin::terms')->name('admin.terms');
 
 Route::prefix('admin')->name('admin.')->group(function () {
 

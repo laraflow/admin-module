@@ -59,7 +59,7 @@
     @endif
     <div class="row">
         <div class="col-12">
-            {!! \Form::nTextarea('remarks', 'Remarks', old('remarks', $role->remarks ?? null)) !!}
+            {!! \Form::nTextarea('remarks', 'Remarks', old('remarks', $user->remarks ?? null)) !!}
         </div>
     </div>
     <div class="row mt-3">

@@ -4,7 +4,8 @@
 namespace Modules\Admin\Supports;
 
 use Illuminate\Support\Facades\Hash;
-use Modules\Admin\Repositories\Eloquent\UserRepository;
+use Illuminate\Support\Str;
+use Modules\Admin\Repositories\Eloquent\Rbac\UserRepository;
 
 /***
  * Class Utility
@@ -13,6 +14,9 @@ use Modules\Admin\Repositories\Eloquent\UserRepository;
 class Utility
 {
     /**
+     * Hash any text with laravel default has algo.
+     * Currently, only support bcrypt() with cost 10
+     *
      * @param string $password
      * @return string
      */
@@ -22,6 +26,9 @@ class Utility
     }
 
     /**
+     * Create a unique random username with given having input
+     * As prefix text and a random number
+     *
      * @param string $name
      * @param UserRepository|null $userRepository
      * @return string
@@ -33,14 +40,53 @@ class Utility
             $userRepository = new UserRepository;
         }
 
-        $pattern = " ";
-        $firstPart = strstr(strtolower($name), $pattern, true);
-        $secondPart = substr(strstr(strtolower($name), $pattern, false), 0, 3);
-        $nrRand = rand(0, 100);
-        $username = trim($firstPart) . trim($secondPart) . trim($nrRand);
+        //removed white space from name
+        $firstPart = preg_replace("([\s]+)", '-', Str::lower($name));
+
+        //add a random number to end
+        $username = trim($firstPart) . rand(100, 1000);
 
         //verify generated username is unique
         return ($userRepository->verifyUniqueUsername($username)) ? $username : self::generateUsername($name, $userRepository);
 
+    }
+
+    /**
+     * Admin LTE 3 Supported Random Badge Colors
+     *
+     * @param bool $rounded
+     * @return string
+     */
+    public static function randomBadgeBackground(bool $rounded = false): string
+    {
+        $class = "badge ";
+
+        $badges = [
+            "bg-primary",
+            "bg-secondary",
+            "bg-success",
+            "bg-danger",
+            "bg-warning text-dark",
+            "bg-info text-white",
+            "bg-light text-dark",
+            "bg-dark"
+        ];
+
+        if ($rounded) $class .= "rounded-pill ";
+
+        $class .= $badges[array_rand($badges)];
+
+        return $class;
+    }
+
+    /**
+     * Rename laravel log filename to more human readable format
+     *
+     * @param string $filename
+     * @return array|string|string[]|null
+     */
+    public static function formatLogFilename(string $filename)
+    {
+        return preg_replace('/laravel\-([\d]{4})-([\d]{2})-([\d]{2})\.log/', '$3/$2/$1', $filename);
     }
 }
