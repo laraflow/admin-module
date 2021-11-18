@@ -68,9 +68,13 @@
                                     </div>
                                 </td>
                                 <td class="text-left">
+                                    @can('admin.permissions.show')
                                     <a href="{{ route('admin.permissions.show', $permission->id) }}">
                                         {{ $permission->display_name }}
                                     </a>
+                                    @else
+                                        {{ $permission->display_name }}
+                                    @endcan
                                 </td>
                                 <td>{{ $permission->name }}</td>
                                 <td>{{ $permission->guard_name }}</td>
