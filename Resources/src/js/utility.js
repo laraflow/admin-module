@@ -28,9 +28,8 @@ function initDeleteModal() {
 }
 
 /**
- * Modal Status Update
+ * Modal Enabled Status Update
  */
-
 function toggleEnabledStatus() {
     $(".toggle-class").change(function () {
         var toggle = $(this);
@@ -52,7 +51,8 @@ function toggleEnabledStatus() {
 }
 
 /**
- * mark search keyword in table
+ * Mark search keyword in table
+ *
  * @param searchElement
  * @param targetTable
  */
@@ -90,6 +90,28 @@ function highLightQueryString(searchElement, targetTable) {
             });
         });
     }
+}
+
+/**
+ * Filter Table Row based on search Query
+ *
+ * @param filter
+ * @param targetTable
+ */
+function searchFilter(filter, targetTable) {
+    $("#" + targetTable).find("tbody tr").each(function () {
+        var row = $(this);
+        if (filter.length >= 1) {
+            var cellText = row.find("td").eq(1).text();
+            if (cellText.toLowerCase().indexOf(filter.toLowerCase()) < 0) {
+                row.hide();
+            } else {
+
+            }
+        } else {
+            row.show();
+        }
+    });
 }
 
 /**

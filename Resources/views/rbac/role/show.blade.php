@@ -176,21 +176,5 @@
 
 
 @push('page-script')
-    <script>
-        function searchFilter(filter, targetTable) {
-            filter = filter.toLowerCase();
 
-            $("#" + targetTable).find("tbody tr").each(function () {
-                var row = $(this);
-                if (filter.length >= 1) {
-                    var cellText = row.find("td").eq(1).text();
-                    if (cellText.toLowerCase().indexOf(filter) < 0) {
-                        row.hide();
-                    }
-                } else {
-                    row.show();
-                }
-            });
-        }
-    </script>
 @endpush
