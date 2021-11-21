@@ -31,6 +31,7 @@
 
 @section('actions')
     {!! \Html::linkButton('Add Permission', 'admin.permissions.create', [], 'mdi mdi-plus', 'success') !!}
+    {!! \Html::bulkDropdown('admin.permissions', 0, ['color' => 'warning']) !!}
 @endsection
 
 @section('content')
