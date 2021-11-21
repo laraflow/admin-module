@@ -6,7 +6,7 @@
                 type="button" id="dropdownMenuButton"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-sliders-h"></i>
-            <span class="d-none d-md-inline-flex">Actions</span>
+            <span class="d-none d-md-inline-flex ml-2">Actions</span>
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
             @if(\Route::has($resourceRouteName . '.edit'))

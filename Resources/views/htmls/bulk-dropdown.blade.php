@@ -6,7 +6,7 @@
                 type="button" id="dropdownMenuButton"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-sliders-h"></i>
-            <span class="d-none d-md-inline-flex">Actions</span>
+            <span class="d-none d-md-inline-flex ml-2">Actions</span>
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
             @if(\Route::has($resourceRouteName . '.destroy'))
@@ -41,7 +41,7 @@
                     @can($resourceRouteName . '.exports.excel')
                         <a href="{{ route('admin.common.delete', [$resourceRouteName, $id]) }}" title="Delete"
                            class="dropdown-item py-2 px-3 link-muted delete-btn">
-                            <i class="fas fa-file-excel  mr-2"></i> Export XLSX
+                            <i class="fas fa-file-excel mr-2"></i> Export XLSX
                         </a>
                     @endcan
                 @endif
