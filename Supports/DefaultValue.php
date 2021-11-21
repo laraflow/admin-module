@@ -41,6 +41,11 @@ class DefaultValue
     const ENABLED_OPTION = 'yes';
 
     /**
+     * Default model disabled status
+     */
+    const DISABLED_OPTION = 'no';
+
+    /**
      * Default Guard for all users if any special is not provided
      */
     const PERMISSION_GUARD = 'web';

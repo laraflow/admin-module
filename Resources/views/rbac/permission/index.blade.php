@@ -79,16 +79,7 @@
                                 <td>{{ $permission->name }}</td>
                                 <td>{{ $permission->guard_name }}</td>
                                 <td class="text-center exclude-search">
-                                    <input type="checkbox" data-toggle="toggle" data-size="small"
-                                           data-onstyle="{{ $on ?? 'success' }}"
-                                           data-offstyle="{{ $off ?? 'danger' }}"
-                                           data-model=""
-                                           data-field="enabled"
-                                           data-id="{{$permission->id}}"
-                                           data-on="<i class='mdi mdi-check-bold fw-bolder'></i> Yes"
-                                           data-off="<i class='mdi mdi-close fw-bolder'></i> No"
-                                           @if($permission->enabled == 'yes') checked @endif>
-
+                                    {!! \Html::enableToggle($permission) !!}
                                 </td>
                                 <td class="text-center">{{ $permission->created_at->format(config('app.datetime')) ?? '' }}</td>
                                 <td class="exclude-search pr-3 text-center align-middle">

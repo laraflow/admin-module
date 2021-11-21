@@ -15,7 +15,6 @@ mix.copyDirectory(__dirname + '/node_modules/admin-lte/dist', __dirname + '/Reso
     .copyDirectory(__dirname + '/node_modules/admin-lte/plugins', __dirname + '/Resources/dist/plugins/')
     .copyDirectory(__dirname + '/node_modules/@mdi/font/css', __dirname + '/Resources/dist/plugins/mdi/css/')
     .copyDirectory(__dirname + '/node_modules/@mdi/font/fonts', __dirname + '/Resources/dist/plugins/mdi/fonts/')
-    .sass(__dirname + '/Resources/src/sass/custom-switch.scss',     __dirname + '/Resources/dist/assets/css/', {sourceMap: true})
-    .minify(__dirname + '/Resources/dist/assets/css/custom-switch.css', __dirname + '/Resources/dist/assets/css/custom-switch.min.css')
+    .copyDirectory(__dirname + '/node_modules/bootstrap4-toggle', __dirname + '/Resources/dist/plugins/bootstrap4-toggle/')
     .copy(__dirname + '/Resources/src/js/utility.js', __dirname + '/Resources/dist/assets/js/utility.js')
     .copy(__dirname + '/Resources/dist/assets/js/utility.js', __dirname + '/Resources/dist/assets/js/utility.min.js');
