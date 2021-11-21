@@ -76,7 +76,7 @@
                                 </td>
                                 <td class="text-center">{{ $permission->created_at->format(config('app.datetime')) ?? '' }}</td>
                                 <td class="exclude-search pr-3 text-center align-middle">
-                                    {!! \Html::actionDropdown('admin.permissions', $permission->id, ['show', 'edit', 'delete']) !!}
+                                    {!! \Html::actionDropdown('admin.permissions', $permission->id, array_merge(['show', 'edit'], ($permission->deleted_at == null) ? ['delete'] : ['restore'])) !!}
                                 </td>
                             </tr>
                         @empty

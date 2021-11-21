@@ -35,7 +35,7 @@
         <section class="content">
             @yield('content')
 
-            @include('admin::partials.delete-modal')
+            @include('admin::partials.confirm-modal')
         </section>
         <!-- /.content -->
     </div>

@@ -1,4 +1,4 @@
-{!! \Form::open(['route' => [$route .'.destroy', $id], 'method' => 'delete']) !!}
+{!! \Form::open(['route' => $route, 'method' => $method]) !!}
 <div class="modal-body">
     <p class="mb-3 text-dark fw-bold text-center">
         {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
