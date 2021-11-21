@@ -44,11 +44,7 @@
                         <thead class="thead-light">
                         <tr>
                             <th class="align-middle">
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" type="checkbox" id="customCheckbox1"
-                                           value="option1">
-                                    <label for="customCheckbox1" class="custom-control-label"></label>
-                                </div>
+                                @sortablelink('id', '#')
                             </th>
                             <th>@sortablelink('display_name', 'Display Name')</th>
                             <th>@sortablelink('name', 'Name')</th>
@@ -62,11 +58,7 @@
                         @forelse($permissions as $index => $permission)
                             <tr @if($permission->deleted_at != null) class="table-danger" @endif>
                                 <td class="exclude-search align-middle">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox1"
-                                               value="option1">
-                                        <label for="customCheckbox1" class="custom-control-label"></label>
-                                    </div>
+                                    {{ $permission->id }}
                                 </td>
                                 <td class="text-left">
                                     @can('admin.permissions.show')
