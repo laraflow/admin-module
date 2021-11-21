@@ -60,7 +60,7 @@
                         </thead>
                         <tbody>
                         @forelse($permissions as $index => $permission)
-                            <tr>
+                            <tr @if($permission->deleted_at != null) class="table-danger" @endif>
                                 <td class="exclude-search align-middle">
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" type="checkbox" id="customCheckbox1"
@@ -70,9 +70,9 @@
                                 </td>
                                 <td class="text-left">
                                     @can('admin.permissions.show')
-                                    <a href="{{ route('admin.permissions.show', $permission->id) }}">
-                                        {{ $permission->display_name }}
-                                    </a>
+                                        <a href="{{ route('admin.permissions.show', $permission->id) }}">
+                                            {{ $permission->display_name }}
+                                        </a>
                                     @else
                                         {{ $permission->display_name }}
                                     @endcan
