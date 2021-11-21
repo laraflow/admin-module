@@ -73,9 +73,9 @@ class PermissionCreatedNotification extends Notification
             'icon_class' => 'mdi mdi-card-account-details-star-outline text-white',
             'icon_background' => 'bg-success',
             'description' => 'New permission named '
-                . link_to(route('permissions.show', $this->permission->id), $this->permission->name ?? '') . ' created by '
-                . link_to(route('users.show', $this->user->id), $this->user->name ?? '') . '.',
-            'url' => route('permissions.show', $this->permission->id)
+                . link_to(route('admin.permissions.show', $this->permission->id), $this->permission->name ?? '') . ' created by '
+                . link_to(route('admin.users.show', $this->user->id), $this->user->name ?? '') . '.',
+            'url' => route('admin.permissions.show', $this->permission->id)
         ];
     }
 
