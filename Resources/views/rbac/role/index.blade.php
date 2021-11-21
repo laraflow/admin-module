@@ -83,16 +83,7 @@
                                 <td class="text-center">{{ $role->total_users }}</td>
 
                                 <td class="text-center exclude-search">
-                                    <input type="checkbox" data-toggle="toggle" data-size="small"
-                                           data-onstyle="{{ $on ?? 'success' }}"
-                                           data-offstyle="{{ $off ?? 'danger' }}"
-                                           data-model=""
-                                           data-field="enabled"
-                                           data-id="{{$role->id}}"
-                                           data-on="<i class='mdi mdi-check-bold fw-bolder'></i> Yes"
-                                           data-off="<i class='mdi mdi-close fw-bolder'></i> No"
-                                           @if($role->enabled == 'yes') checked @endif>
-
+                                    {!! \Html::enableToggle($role) !!}
                                 </td>
                                 <td class="text-center">{{ $role->created_at->format(config('app.datetime')) ?? '' }}</td>
                                 <td class="exclude-search pr-3 text-center align-middle">

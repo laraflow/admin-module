@@ -35,16 +35,18 @@ function toggleEnabledStatus() {
         var toggle = $(this);
 
         var fieldData = (toggle.prop("checked") === true)
-            ? toggle.data("on")
-            : toggle.data("off");
+            ? toggle.data("onvalue")
+            : toggle.data("offvalue");
 
-        $.get(TOGGLE_URL, {m: toggle.data("model"), i: toggle.data("id"), f: toggle.data("field"), v: fieldData},
+        $.get(TOGGLE_URL, {m: toggle.data("model"), i: toggle.data("id"), v: fieldData},
             function (response) {
-                if (response.status === 200) {
-                    //@TODO add notify popup
-                    console.log(response);
+                if (response.status === true) {
+                    notify(response.message, response.level, response.title);
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 3000);
                 } else {
-                    console.log(response);
+                    notify(response.message, response.level, response.title);
                 }
             }, "json");
     });
@@ -382,4 +384,5 @@ if (typeof $.validator === 'function') {
 
 $(document).ready(function () {
     initDeleteModal();
+    toggleEnabledStatus();
 });

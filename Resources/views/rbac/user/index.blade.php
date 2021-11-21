@@ -90,16 +90,7 @@
                                 <td class="text-left">{{ $user->email ?? '-' }}</td>
                                 <td class="text-center">{{ $user->mobile ?? '-' }}</td>
                                 <td class="text-center exclude-search">
-                                    <input type="checkbox" data-toggle="toggle" data-size="small"
-                                           data-onstyle="{{ $on ?? 'success' }}"
-                                           data-offstyle="{{ $off ?? 'danger' }}"
-                                           data-model=""
-                                           data-field="enabled"
-                                           data-id="{{$user->id}}"
-                                           data-on="<i class='mdi mdi-check-bold fw-bolder'></i> Yes"
-                                           data-off="<i class='mdi mdi-close fw-bolder'></i> No"
-                                           @if($user->enabled == 'yes') checked @endif>
-
+                                    {!! \Html::enableToggle($user) !!}
                                 </td>
                                 <td class="text-center">{{ $user->created_at->format(config('app.datetime')) ?? '' }}</td>
                                 <td class="exclude-search pr-3 text-center align-middle">
