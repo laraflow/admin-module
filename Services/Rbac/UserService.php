@@ -231,4 +231,31 @@ class UserService
         $user->addMedia($profileImagePath)->toMediaCollection('avatars');
         return $user->save();
     }
+
+    /**
+     * @param $id
+     * @return array
+     * @throws \Throwable
+     */
+    public function restoreUser($id): array
+    {
+        \DB::beginTransaction();
+        try {
+            if ($this->userRepository->restore($id)) {
+                \DB::commit();
+                return ['status' => true, 'message' => __('User is Restored'),
+                    'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
+
+            } else {
+                \DB::rollBack();
+                return ['status' => false, 'message' => __('User is Restoration Failed'),
+                    'level' => Constant::MSG_TOASTR_ERROR, 'title' => 'Alert!'];
+            }
+        } catch (Exception $exception) {
+            $this->userRepository->handleException($exception);
+            \DB::rollBack();
+            return ['status' => false, 'message' => $exception->getMessage(),
+                'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
+        }
+    }
 }
