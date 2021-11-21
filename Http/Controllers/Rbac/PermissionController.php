@@ -187,7 +187,7 @@ class PermissionController extends Controller
     {
         if ($this->authenticatedSessionService->verifyUser($request)) {
 
-            $confirm = $this->permissionService->destroyPermission($id);
+            $confirm = $this->permissionService->restorePermission($id);
 
             if ($confirm['status'] == true) {
                 notify($confirm['message'], $confirm['level'], $confirm['title']);
