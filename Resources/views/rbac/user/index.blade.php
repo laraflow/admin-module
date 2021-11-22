@@ -86,7 +86,7 @@
                                 </td>
                                 <td class="text-center">{{ $user->created_at->format(config('app.datetime')) ?? '' }}</td>
                                 <td class="exclude-search pr-3 text-center align-middle">
-                                    {!! \Html::actionDropdown('admin.users', $user->id, ['show', 'edit', 'delete']) !!}
+                                    {!! \Html::actionDropdown('admin.users', $user->id, array_merge(['show', 'edit'], ($user->deleted_at == null) ? ['delete'] : ['restore'])) !!}
                                 </td>
                             </tr>
                         @empty
