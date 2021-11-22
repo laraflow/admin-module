@@ -208,7 +208,7 @@ class RoleController extends Controller
     public function restore($id, Request $request)
     {
         if ($this->authenticatedSessionService->verifyUser($request)) {
-            $confirm = $this->roleService->destroyRole($id);
+            $confirm = $this->roleService->restoreRole($id);
             if ($confirm['status'] == true) {
                 notify($confirm['message'], $confirm['level'], $confirm['title']);
             } else {
