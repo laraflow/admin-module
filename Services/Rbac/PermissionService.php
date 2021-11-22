@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Admin\Models\Rbac\Permission;
 use Modules\Admin\Repositories\Eloquent\Rbac\PermissionRepository;
+use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Supports\Constant;
 use Throwable;
 
@@ -59,6 +60,10 @@ class PermissionService
      */
     public function getPermissionById(int $id, bool $purge = false)
     {
+        if($purge == false) {
+            $purge = AuthenticatedSessionService::isSuperAdmin();
+        }
+
         return $this->permissionRepository->show($id, $purge);
     }
 

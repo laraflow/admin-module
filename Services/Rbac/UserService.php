@@ -11,6 +11,7 @@ use Illuminate\Http\UploadedFile;
 use Modules\Admin\Http\Requests\Rbac\UserRequest;
 use Modules\Admin\Models\User;
 use Modules\Admin\Repositories\Eloquent\Rbac\UserRepository;
+use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Services\Common\FileUploadService;
 use Modules\Admin\Supports\Constant;
 use Modules\Admin\Supports\DefaultValue;
@@ -133,6 +134,10 @@ class UserService
      */
     public function getUserById($id, bool $purge = false)
     {
+        if($purge == false) {
+            $purge = AuthenticatedSessionService::isSuperAdmin();
+        }
+
         return $this->userRepository->show($id, $purge);
     }
 
