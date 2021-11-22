@@ -74,9 +74,9 @@ class RoleDeletedNotification extends Notification
             'icon_class' => 'mdi mdi-account-check text-white',
             'icon_background' => 'bg-secondary',
             'description' => 'Role named '
-                . link_to(route('roles.show', $this->role->id) . '?with=purge', $this->role->name ?? '') . ' deleted by '
-                . link_to(route('users.show', $this->user->id), $this->user->name ?? '') . '.',
-            'url' => route('roles.show', $this->role->id)
+                . link_to(route('admin.roles.show', $this->role->id) . '?with=purge', $this->role->name ?? '') . ' deleted by '
+                . link_to(route('admin.users.show', $this->user->id), $this->user->name ?? '') . '.',
+            'url' => route('admin.roles.show', $this->role->id)
         ];
     }
 
