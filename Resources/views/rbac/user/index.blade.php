@@ -54,8 +54,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse($users as $index => $user)
-                            <tr>
+                        @forelse($users as $user)
+                            <tr @if($user->deleted_at != null) class="table-danger" @endif >
                                 <td class="exclude-search align-middle">
                                     {{ $user->id }}
                                 </td>
