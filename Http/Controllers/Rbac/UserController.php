@@ -195,13 +195,13 @@ class UserController extends Controller
     public function restore($id, Request $request)
     {
         if ($this->authenticatedSessionService->verifyUser($request)) {
-
-            if ($this->userService->destroyRole($id)) {
-                notify('User Deleted', 'success', 'Notification');
+            $confirm = $this->userService->restoreUser($id);
+            if ($confirm['status'] == true) {
+                notify($confirm['message'], $confirm['level'], $confirm['title']);
             } else {
-                notify('User Removal Failed', 'error', 'Alert');
+                notify($confirm['message'], $confirm['level'], $confirm['title']);
             }
-            return redirect()->route('users.index');
+            return redirect()->route('admin.users.index');
         }
 
         abort(403, 'Wrong user credentials');
