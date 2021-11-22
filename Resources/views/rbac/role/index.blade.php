@@ -61,7 +61,7 @@
                         </thead>
                         <tbody>
                         @forelse($roles as $index => $role)
-                            <tr>
+                            <tr  @if($role->deleted_at != null) class="table-danger" @endif>
                                 <td class="exclude-search align-middle">
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" type="checkbox" id="customCheckbox1"
