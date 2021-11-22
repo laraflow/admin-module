@@ -87,7 +87,7 @@
                                 </td>
                                 <td class="text-center">{{ $role->created_at->format(config('app.datetime')) ?? '' }}</td>
                                 <td class="exclude-search pr-3 text-center align-middle">
-                                    {!! \Html::actionDropdown('admin.roles', $role->id, ['show', 'edit', 'delete']) !!}
+                                    {!! \Html::actionDropdown('admin.roles', $role->id, array_merge(['show', 'edit'], ($role->deleted_at == null) ? ['delete'] : ['restore'])) !!}
                                 </td>
                             </tr>
                         @empty
