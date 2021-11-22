@@ -43,11 +43,7 @@
                         <thead class="thead-light">
                         <tr>
                             <th class="align-middle">
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" type="checkbox" id="customCheckbox1"
-                                           value="option1">
-                                    <label for="customCheckbox1" class="custom-control-label"></label>
-                                </div>
+                                @sortablelink('id', '#')
                             </th>
                             <th class="pl-0">@sortablelink('name', 'Name')</th>
                             <th class="text-center">@sortablelink('email', 'Email')</th>
@@ -61,11 +57,7 @@
                         @forelse($users as $index => $user)
                             <tr>
                                 <td class="exclude-search align-middle">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox1"
-                                               value="option1">
-                                        <label for="customCheckbox1" class="custom-control-label"></label>
-                                    </div>
+                                    {{ $user->id }}
                                 </td>
                                 <td class="text-left pl-0">
                                     <div class="media">
