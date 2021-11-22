@@ -11,6 +11,7 @@ use Illuminate\Http\UploadedFile;
 use Modules\Admin\Http\Requests\Rbac\UserRequest;
 use Modules\Admin\Models\User;
 use Modules\Admin\Repositories\Eloquent\Rbac\UserRepository;
+use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Services\Common\FileUploadService;
 use Modules\Admin\Supports\Constant;
 use Modules\Admin\Supports\DefaultValue;
@@ -133,6 +134,10 @@ class UserService
      */
     public function getUserById($id, bool $purge = false)
     {
+        if($purge == false) {
+            $purge = AuthenticatedSessionService::isSuperAdmin();
+        }
+
         return $this->userRepository->show($id, $purge);
     }
 
@@ -189,24 +194,27 @@ class UserService
 
     /**
      * @param $id
-     * @return bool
-     * @throws \Throwable
+     * @return array
+     * @throws Exception
      */
-    public function destroyUser($id): bool
+    public function destroyUser($id): array
     {
         \DB::beginTransaction();
         try {
             if ($this->userRepository->delete($id)) {
                 \DB::commit();
-                return true;
+                return ['status' => true, 'message' => __('User is Trashed'),
+                    'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
             } else {
                 \DB::rollBack();
-                return false;
+                return ['status' => false, 'message' => __('User is Delete Failed'),
+                    'level' => Constant::MSG_TOASTR_ERROR, 'title' => 'Alert!'];
             }
         } catch (\Exception $exception) {
             $this->userRepository->handleException($exception);
             \DB::rollBack();
-            return false;
+            return ['status' => false, 'message' => $exception->getMessage(),
+                'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
         }
     }
 

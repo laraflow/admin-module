@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Admin\Models\Rbac\Permission;
 use Modules\Admin\Repositories\EloquentRepository;
+use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Supports\DefaultValue;
 
 class PermissionRepository extends EloquentRepository
@@ -54,7 +55,7 @@ class PermissionRepository extends EloquentRepository
             $query->sortable();
         endif;
 
-        if (auth()->user()->hasRole(DefaultValue::SUPER_ADMIN_ROLE)) :
+        if (AuthenticatedSessionService::isSuperAdmin()) :
             $query->withTrashed();
         endif;
 

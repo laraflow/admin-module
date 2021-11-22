@@ -44,11 +44,7 @@
                         <thead class="thead-light">
                         <tr>
                             <th class="align-middle">
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" type="checkbox" id="customCheckbox1"
-                                           value="option1">
-                                    <label for="customCheckbox1" class="custom-control-label"></label>
-                                </div>
+                                @sortablelink('id', '#')
                             </th>
                             <th>@sortablelink('name', 'Name')</th>
                             <th class="text-center">@sortablelink('guard_name', 'Guard')</th>
@@ -61,13 +57,9 @@
                         </thead>
                         <tbody>
                         @forelse($roles as $index => $role)
-                            <tr>
+                            <tr  @if($role->deleted_at != null) class="table-danger" @endif>
                                 <td class="exclude-search align-middle">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox1"
-                                               value="option1">
-                                        <label for="customCheckbox1" class="custom-control-label"></label>
-                                    </div>
+                                    {{ $role->id }}
                                 </td>
                                 <td class="text-left">
                                     @if(auth()->user()->can('admin.roles.show') || in_array($role->id, auth()->user()->role_ids))
@@ -87,7 +79,7 @@
                                 </td>
                                 <td class="text-center">{{ $role->created_at->format(config('app.datetime')) ?? '' }}</td>
                                 <td class="exclude-search pr-3 text-center align-middle">
-                                    {!! \Html::actionDropdown('admin.roles', $role->id, ['show', 'edit', 'delete']) !!}
+                                    {!! \Html::actionDropdown('admin.roles', $role->id, array_merge(['show', 'edit'], ($role->deleted_at == null) ? ['delete'] : ['restore'])) !!}
                                 </td>
                             </tr>
                         @empty

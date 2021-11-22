@@ -43,11 +43,7 @@
                         <thead class="thead-light">
                         <tr>
                             <th class="align-middle">
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" type="checkbox" id="customCheckbox1"
-                                           value="option1">
-                                    <label for="customCheckbox1" class="custom-control-label"></label>
-                                </div>
+                                @sortablelink('id', '#')
                             </th>
                             <th class="pl-0">@sortablelink('name', 'Name')</th>
                             <th class="text-center">@sortablelink('email', 'Email')</th>
@@ -58,14 +54,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse($users as $index => $user)
-                            <tr>
+                        @forelse($users as $user)
+                            <tr @if($user->deleted_at != null) class="table-danger" @endif >
                                 <td class="exclude-search align-middle">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox1"
-                                               value="option1">
-                                        <label for="customCheckbox1" class="custom-control-label"></label>
-                                    </div>
+                                    {{ $user->id }}
                                 </td>
                                 <td class="text-left pl-0">
                                     <div class="media">
@@ -94,7 +86,7 @@
                                 </td>
                                 <td class="text-center">{{ $user->created_at->format(config('app.datetime')) ?? '' }}</td>
                                 <td class="exclude-search pr-3 text-center align-middle">
-                                    {!! \Html::actionDropdown('admin.users', $user->id, ['show', 'edit', 'delete']) !!}
+                                    {!! \Html::actionDropdown('admin.users', $user->id, array_merge(['show', 'edit'], ($user->deleted_at == null) ? ['delete'] : ['restore'])) !!}
                                 </td>
                             </tr>
                         @empty

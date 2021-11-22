@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Admin\Models\Rbac\Role;
 use Modules\Admin\Repositories\Eloquent\Rbac\RoleRepository;
+use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Supports\Constant;
 use Spatie\Permission\PermissionRegistrar;
 use Throwable;
@@ -61,6 +62,10 @@ class RoleService
      */
     public function getRoleById(int $id, bool $purge = false)
     {
+        if($purge == false) {
+            $purge = AuthenticatedSessionService::isSuperAdmin();
+        }
+
         return $this->roleRepository->show($id, $purge);
     }
 

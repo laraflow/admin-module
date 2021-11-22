@@ -4,6 +4,7 @@ namespace Modules\Admin\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
@@ -21,7 +22,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable implements HasMedia, Auditable
 {
-    use AuditableTrait, HasFactory, Notifiable, InteractsWithMedia, HasRoles, Sortable;
+    use AuditableTrait, HasFactory, Notifiable, InteractsWithMedia, HasRoles, Sortable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
