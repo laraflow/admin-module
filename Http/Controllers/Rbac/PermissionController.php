@@ -109,13 +109,7 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        $withTrashed = false;
-
-        if (\request()->has('with') && \request()->get('with') == Constant::PURGE_MODEL_QSA) {
-            $withTrashed = true;
-        }
-
-        if ($permission = $this->permissionService->getPermissionById($id, $withTrashed)) {
+        if ($permission = $this->permissionService->getPermissionById($id)) {
             return view('admin::rbac.permission.edit', [
                 'permission' => $permission
             ]);

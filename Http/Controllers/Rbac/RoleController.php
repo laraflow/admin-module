@@ -107,13 +107,7 @@ class RoleController extends Controller
      */
     public function show(int $id)
     {
-        $withTrashed = false;
-
-        if (request()->has('with') && request()->get('with') == Constant::PURGE_MODEL_QSA) {
-            $withTrashed = true;
-        }
-
-        if ($role = $this->roleService->getRoleById($id, $withTrashed)) {
+        if ($role = $this->roleService->getRoleById($id)) {
 
             $permissions = $this->permissionService->getAllPermissions([
                 'sort' => 'display_name', 'direction' => 'asc'
@@ -140,13 +134,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $withTrashed = false;
-
-        if (request()->has('with') && request()->get('with') == Constant::PURGE_MODEL_QSA) {
-            $withTrashed = true;
-        }
-
-        if ($role = $this->roleService->getRoleById($id, $withTrashed)) {
+        if ($role = $this->roleService->getRoleById($id)) {
 
             return view('admin::rbac.role.edit', ['role' => $role]);
         }

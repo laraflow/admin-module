@@ -109,13 +109,8 @@ class UserController extends Controller
      */
     public function show(int $id)
     {
-        $withTrashed = false;
 
-        if (\request()->has('with') && \request()->get('with') == Constant::PURGE_MODEL_QSA) {
-            $withTrashed = true;
-        }
-
-        if ($user = $this->userService->getUserById($id, $withTrashed)) {
+        if ($user = $this->userService->getUserById($id)) {
             return view('admin::rbac.user.show', [
                 'user' => $user
             ]);
@@ -134,13 +129,7 @@ class UserController extends Controller
     public function edit(int $id)
     {
 
-        $withTrashed = false;
-
-        if (\request()->has('with') && \request()->get('with') == Constant::PURGE_MODEL_QSA) {
-            $withTrashed = true;
-        }
-
-        if ($user = $this->userService->getUserById($id, $withTrashed)) {
+        if ($user = $this->userService->getUserById($id)) {
             $roles = $this->roleService->roleDropdown();
             $user_roles = $user->roles()->pluck('id')->toArray() ?? [];
             return view('admin::rbac.user.edit', [
