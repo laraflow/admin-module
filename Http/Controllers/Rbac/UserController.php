@@ -109,7 +109,6 @@ class UserController extends Controller
      */
     public function show(int $id)
     {
-
         if ($user = $this->userService->getUserById($id)) {
             return view('admin::rbac.user.show', [
                 'user' => $user
@@ -128,7 +127,6 @@ class UserController extends Controller
      */
     public function edit(int $id)
     {
-
         if ($user = $this->userService->getUserById($id)) {
             $roles = $this->roleService->roleDropdown();
             $user_roles = $user->roles()->pluck('id')->toArray() ?? [];

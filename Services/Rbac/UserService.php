@@ -194,24 +194,27 @@ class UserService
 
     /**
      * @param $id
-     * @return bool
-     * @throws \Throwable
+     * @return array
+     * @throws Exception
      */
-    public function destroyUser($id): bool
+    public function destroyUser($id): array
     {
         \DB::beginTransaction();
         try {
             if ($this->userRepository->delete($id)) {
                 \DB::commit();
-                return true;
+                return ['status' => true, 'message' => __('User is Trashed'),
+                    'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
             } else {
                 \DB::rollBack();
-                return false;
+                return ['status' => false, 'message' => __('User is Delete Failed'),
+                    'level' => Constant::MSG_TOASTR_ERROR, 'title' => 'Alert!'];
             }
         } catch (\Exception $exception) {
             $this->userRepository->handleException($exception);
             \DB::rollBack();
-            return false;
+            return ['status' => false, 'message' => $exception->getMessage(),
+                'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
         }
     }
 
