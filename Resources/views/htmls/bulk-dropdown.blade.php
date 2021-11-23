@@ -1,6 +1,5 @@
 @canany([$resourceRouteName . '.exports.show', $resourceRouteName . '.edit',
         $resourceRouteName . '.destroy', $resourceRouteName . '.restore'])
-
     <div class="dropdown d-inline-block">
         <button class="btn btn-{{ $options['color'] ?? 'warning' }} dropdown-toggle"
                 type="button" id="dropdownMenuButton"
@@ -26,34 +25,33 @@
                     </a>
                 @endcan
             @endif
-            @canany([$resourceRouteName . '.exports.excel', $resourceRouteName . '.exports.pdf'])
-                <div class="dropdown-divider"></div>
-                @if(\Route::has($resourceRouteName . '.exports.excel'))
-                    @can($resourceRouteName . '.exports.excel')
-                        <a href="{{ route('admin.common.delete', [$resourceRouteName, $id]) }}" title="Delete"
-                           class="dropdown-item py-2 px-3 link-muted delete-btn">
-                            <i class="fas fa-file-csv  mr-2"></i> Bulk Import
-                        </a>
-                    @endcan
-                @endif
 
-                @if(\Route::has($resourceRouteName . '.exports.excel'))
-                    @can($resourceRouteName . '.exports.excel')
-                        <a href="{{ route('admin.common.delete', [$resourceRouteName, $id]) }}" title="Delete"
-                           class="dropdown-item py-2 px-3 link-muted delete-btn">
-                            <i class="fas fa-file-excel mr-2"></i> Export XLSX
-                        </a>
-                    @endcan
-                @endif
-                @if(\Route::has($resourceRouteName . '.exports.pdf'))
-                    @can($resourceRouteName . '.exports.pdf')
-                        <a href="{{ route('admin.common.delete', [$resourceRouteName, $id]) }}" title="Delete"
-                           class="dropdown-item py-2 px-3 link-muted delete-btn">
-                            <i class="fas fa-file-pdf  mr-2"></i> Export PDF
-                        </a>
-                    @endcan
-                @endif
-            @endcanany
+            @if(\Route::has($resourceRouteName . '.import'))
+                @can($resourceRouteName . '.import')
+                    <a href="{{ route('admin.common.delete', [$resourceRouteName, $id]) }}" title="Delete"
+                       class="dropdown-item py-2 px-3 link-muted delete-btn">
+                        <i class="fas fa-file-import mr-2"></i> Import
+                    </a>
+                @endcan
+            @endif
+
+            @if(\Route::has($resourceRouteName . '.export'))
+                @can($resourceRouteName . '.exports')
+                    <a href="{{ route('admin.common.delete', [$resourceRouteName, $id]) }}" title="Delete"
+                       class="dropdown-item py-2 px-3 link-muted delete-btn">
+                        <i class="fas fa-file-export mr-2"></i> Export
+                    </a>
+                @endcan
+            @endif
+
+            @if(\Route::has($resourceRouteName . '.print'))
+                @can($resourceRouteName . '.print')
+                    <a href="{{ route('admin.common.delete', [$resourceRouteName, $id]) }}" title="Delete"
+                       class="dropdown-item py-2 px-3 link-muted delete-btn">
+                        <i class="fas fa-print mr-2"></i> Print
+                    </a>
+                @endcan
+            @endif
         </div>
     </div>
 @endcanany

@@ -102,40 +102,26 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('permissions', PermissionController::class);
     Route::prefix('permissions')->name('permissions.')->group(function () {
-
         Route::patch('{permission}/restore', [PermissionController::class, 'restore'])->name('restore');
-
-        Route::prefix('exports')->name('exports.')->group(function () {
-            Route::get('pdf', [PermissionController::class, 'exportPdf'])->name('pdf');
-            Route::get('excel', [PermissionController::class, 'exportExcel'])->name('excel');
-            Route::get('{permission}/details', [PermissionController::class, 'exportShow'])->name('show');
-        });
+        Route::post('export', [PermissionController::class, 'export'])->name('export');
+        Route::get('import', [PermissionController::class, 'import'])->name('import');
+        Route::post('import', [PermissionController::class, 'importBulk']);
+        Route::post('print', [PermissionController::class, 'print'])->name('print');
     });
 
     Route::resource('roles', RoleController::class);
     Route::prefix('roles')->name('roles.')->group(function () {
-
-        Route::patch('{role}/restore', [RoleController::class, 'restore'])->name('restore');
-        Route::put('{role}/permissions', [RoleController::class, 'permission'])->name('permission');
-
-
-        Route::prefix('exports')->name('exports.')->group(function () {
-            Route::get('pdf', [RoleController::class, 'exportPdf'])->name('pdf');
-            Route::get('excel', [RoleController::class, 'exportExcel'])->name('excel');
-            Route::get('{role}/details', [RoleController::class, 'exportShow'])->name('show');
-        });
+        Route::post('export', [RoleController::class, 'export'])->name('export');
+        Route::get('import', [RoleController::class, 'import'])->name('import');
+        Route::post('import', [RoleController::class, 'importBulk']);
+        Route::post('print', [RoleController::class, 'print'])->name('print');
     });
 
     Route::resource('users', UserController::class);
     Route::prefix('users')->name('users.')->group(function () {
-
-        Route::patch('{user}/restore', [UserController::class, 'restore'])->name('restore');
-
-        Route::prefix('exports')->name('exports.')->group(function () {
-            Route::get('pdf', [UserController::class, 'exportPdf'])->name('pdf');
-            Route::get('excel', [UserController::class, 'exportExcel'])->name('excel');
-            Route::get('{user}/details', [UserController::class, 'exportShow'])->name('show');
-        });
+        Route::post('export', [UserController::class, 'export'])->name('export');
+        Route::get('import', [UserController::class, 'import'])->name('import');
+        Route::post('import', [UserController::class, 'importBulk']);
+        Route::post('print', [UserController::class, 'print'])->name('print');
     });
-
 });
