@@ -37,6 +37,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="card card-default">
+            @if(!empty($permissions))
             <div class="card-body p-0">
                 {!! \Html::cardSearch('search', 'admin.permissions.index', 'Search Permission Display Name, Code, Guard, Status, etc.') !!}
                 <div class="table-responsive">
@@ -91,6 +92,11 @@
             <div class="card-footer bg-transparent pb-0">
                 {!! \Modules\Admin\Supports\CHTML::pagination($permissions) !!}
             </div>
+            @else
+                <div class="card-body min-vh-100">
+
+                </div>
+            @endif
         </div>
     </div>
     <!-- /.container-fluid -->
@@ -105,7 +111,7 @@
     <script>
         $(function () {
             highLightQueryString('search', 'permission-table');
-            console.log(window.location.search);
+/*            console.log(window.location.search);*/
         });
     </script>
 @endpush
