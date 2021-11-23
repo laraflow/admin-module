@@ -188,12 +188,22 @@ class PermissionController extends Controller
     }
 
     /**
+     * Return an Import view page
+     *
+     * @return Application|Factory|View
+     */
+    public function import()
+    {
+        return view('admin::rbac.permission.import');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return Application|Factory|View
      * @throws Exception
      */
-    public function exportPdf(Request $request)
+    public function importBulk(Request $request)
     {
         $filters = $request->except('page');
         $permissions = $this->permissionService->getAllPermissions($filters);
@@ -209,7 +219,7 @@ class PermissionController extends Controller
      * @return Application|Factory|View
      * @throws Exception
      */
-    public function exportExcel(Request $request)
+    public function export(Request $request)
     {
         $filters = $request->except('page');
         $permissions = $this->permissionService->getAllPermissions($filters);
@@ -225,7 +235,7 @@ class PermissionController extends Controller
      * @return Application|Factory|View
      * @throws Exception
      */
-    public function exportShow($id)
+    public function print($id)
     {
         $withTrashed = false;
 

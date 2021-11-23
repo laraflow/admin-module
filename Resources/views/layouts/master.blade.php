@@ -36,6 +36,8 @@
             @yield('content')
 
             @include('admin::partials.confirm-modal')
+
+            @include('admin::partials.export-modal')
         </section>
         <!-- /.content -->
     </div>

@@ -8,7 +8,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div id="deleteConfirmationForm">
+            <div id="exportOptionForm">
 
             </div>
         </div>

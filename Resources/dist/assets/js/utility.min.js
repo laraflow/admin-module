@@ -28,6 +28,34 @@ function initDeleteModal() {
 }
 
 /**
+ * Trigger Export Modal
+ */
+function initExportModal() {
+    $(".export-btn").click(function (event) {
+        //stop href to trigger
+        event.preventDefault();
+        //Model
+        var exportModalElement = $("#exportConfirmModal");
+        //ahref has link
+        var url = this.getAttribute('href');
+        if (url.length > 0 && url !== "#") {
+            //Ajax
+            $.get(url, function (response) {
+                $("#exportOptionForm").empty().html(response);
+            }, 'html').done(function () {
+            }).fail(function (error) {
+                $("#exportOptionForm").empty().html(error.responseText);
+            }).always(function () {
+                exportModalElement.modal({
+                    backdrop: 'static',
+                    show: true
+                });
+            });
+        }
+    });
+}
+
+/**
  * Modal Enabled Status Update
  */
 function toggleEnabledStatus() {
@@ -384,5 +412,6 @@ if (typeof $.validator === 'function') {
 
 $(document).ready(function () {
     initDeleteModal();
+    initExportModal();
     toggleEnabledStatus();
 });

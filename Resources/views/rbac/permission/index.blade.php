@@ -105,6 +105,7 @@
     <script>
         $(function () {
             highLightQueryString('search', 'permission-table');
+            console.log(window.location.search);
         });
     </script>
 @endpush
