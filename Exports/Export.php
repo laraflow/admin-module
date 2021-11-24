@@ -5,8 +5,11 @@ namespace Modules\Admin\Exports;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithProperties;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class Export implements ShouldAutoSize, WithProperties
+class Export implements ShouldAutoSize, WithProperties, WithStyles
 {
     /**
      * Export collection that will be exported
@@ -33,4 +36,24 @@ class Export implements ShouldAutoSize, WithProperties
         ];
     }
 
+    public function styles(Worksheet $sheet): array
+    {
+        return [
+            1 => [
+                'font' => [
+                    'bold' => true,
+                    'size' => 12,
+                    'name' => 'Arial',
+                    'color' => ['argb' => Color::COLOR_WHITE]
+                ],
+                'alignment' => [
+                    'horizontal' => 'center',
+                ],
+                'fill' => [
+                    'fillType' => 'solid',
+                    'color' => ['argb' => Color::COLOR_BLACK]
+                ]
+            ]
+        ];
+    }
 }

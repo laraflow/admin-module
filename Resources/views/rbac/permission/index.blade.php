@@ -112,30 +112,32 @@
         $(function () {
             highLightQueryString('search', 'permission-table');
 
-            function initExportModal() {
-                $(".export-btn").click(function (event) {
-                    //stop href to trigger
-                    event.preventDefault();
-                    var exportModalElement = $("#exportConfirmModal");
-                    //href has link
-                    var url = this.getAttribute('href');
-                    if (url.length > 0 && url !== "#") {
-                        url += window.location.search;
-                        console.log(url);
-                        $.get(url, function (response) {
-                            console.log(response);
-                            $("#exportOptionForm").empty().html(response);
-                        }, 'html').done(function () {
-                        }).fail(function (error) {
-                            $("#exportOptionForm").empty().html(error.responseText);
-                        }).always(function () {
-                            exportModalElement.modal();
-                        });
-                    }
-                });
-            }
+            $(".export-btn").click(function (event) {
+                //stop href to trigger
+                event.preventDefault();
+                $("#exportOptionForm").attr('action', $(this).attr('href'));
+                $("#exportConfirmModal").modal();
+            });
 
-            initExportModal();
+            $("#exportOptionForm").submit(function (event) {
+                //stop href to trigger
+                event.preventDefault();
+                var form = $(this);
+                var search = window.location.search;
+
+                if (search.length === 0) {
+                    search = '?';
+                }
+
+                var formAction = form.attr('action') + search + "&format=" + $("#format").val();
+
+                var deleted = $('#exportOptionForm input[name=with_trashed]:radio');
+
+                if (deleted) {
+                    formAction += "&with_trashed=" + deleted.val();
+                }
+                window.location.href = formAction;
+            });
         });
     </script>
 @endpush

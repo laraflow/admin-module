@@ -8,9 +8,15 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" id="exportOptionForm">
+            <form method="get" id="exportOptionForm">
             <div class="modal-body">
+                {!! \Form::nSelect('format', 'Export Format', \Modules\Admin\Supports\Constant::EXPORT_OPTIONS,
+                     \Modules\Admin\Supports\DefaultValue::EXPORT_DEFAULT, true) !!}
 
+                @hasrole(\Modules\Admin\Supports\DefaultValue::SUPER_ADMIN_ROLE)
+                {!! \Form::nRadio('with_trashed', 'Include Trashed',
+                     ['yes' => 'With Trashed', 'no' => 'Exclude Trashed'], 'no') !!}
+                @endhasrole
             </div>
             <div class="modal-footer d-flex justify-content-between">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

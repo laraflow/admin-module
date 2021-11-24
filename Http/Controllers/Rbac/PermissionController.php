@@ -230,12 +230,12 @@ class PermissionController extends Controller
 
         if (isset($filters['format'])) :
             $exportFormat = Utility::getExportExt($filters['format']);
-            unset($filters['format']);
         endif;
 
         $permissionExport = $this->permissionService->exportPermission($filters);
 
-        return $permissionExport->download(null, $exportFormat);
+        $exportFileName = 'Permission-' . date('Y-m-d-His') . '.' . ($filters['format'] ?? 'xlsx');
+        return $permissionExport->download($exportFileName, $exportFormat);
 
     }
 
