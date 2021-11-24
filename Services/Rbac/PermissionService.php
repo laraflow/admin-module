@@ -6,7 +6,6 @@ namespace Modules\Admin\Services\Rbac;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Maatwebsite\Excel\Excel;
 use Modules\Admin\Exports\Rbac\PermissionExport;
 use Modules\Admin\Models\Rbac\Permission;
 use Modules\Admin\Repositories\Eloquent\Rbac\PermissionRepository;
@@ -194,12 +193,10 @@ class PermissionService
      */
     public function exportPermission(array $filters = []): PermissionExport
     {
-        $permissions = $this->permissionRepository->getAllPermissionWith($filters);
-
         $permissionExport = new PermissionExport();
 
-        $permissionExport->collection = $permissions;
+        $permissionCollection = $this->permissionRepository->getAllPermissionWith($filters);
 
-        return $permissionExport;
+        return $permissionExport->setCollection($permissionCollection);
     }
 }

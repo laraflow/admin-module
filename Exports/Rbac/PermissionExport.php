@@ -21,21 +21,13 @@ class PermissionExport extends Export implements FromCollection, WithMapping, Wi
     use Exportable;
 
     /**
-     * PermissionExport Construct
-     */
-    public function __construct()
-    {
-        $this->collection = new Collection();
-    }
-
-    /**
      * Export Permission List a export file
      *
      * @return Collection
      */
     public function collection(): Collection
     {
-        return $this->collection;
+        return $this->getCollection();
     }
 
     /**
@@ -54,7 +46,15 @@ class PermissionExport extends Export implements FromCollection, WithMapping, Wi
             $row->guard_name,
             $row->remarks,
             Constant::ENABLED_OPTIONS[$row->enabled ?? DefaultValue::ENABLED_OPTION],
-            Carbon::parse($row->created_at)->format(config("app.datetime"))
+            Carbon::parse($row->created_at)->format(config("app.datetime")),
+            $row->id,
+            $row->display_name,
+            $row->name,
+            $row->guard_name,
+            $row->remarks,
+            Constant::ENABLED_OPTIONS[$row->enabled ?? DefaultValue::ENABLED_OPTION],
+            Carbon::parse($row->created_at)->format(config("app.datetime")),
+
         ];
     }
 
@@ -64,6 +64,13 @@ class PermissionExport extends Export implements FromCollection, WithMapping, Wi
     public function headings(): array
     {
         return [
+            '#',
+            'Display Name',
+            'Code Name',
+            'Guard',
+            'Remarks',
+            'Enabled',
+            'Created',
             '#',
             'Display Name',
             'Code Name',
