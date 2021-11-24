@@ -38,60 +38,60 @@
     <div class="container-fluid">
         <div class="card card-default">
             @if(!empty($permissions))
-            <div class="card-body p-0">
-                {!! \Html::cardSearch('search', 'admin.permissions.index', 'Search Permission Display Name, Code, Guard, Status, etc.') !!}
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0" id="permission-table">
-                        <thead class="thead-light">
-                        <tr>
-                            <th class="align-middle">
-                                @sortablelink('id', '#')
-                            </th>
-                            <th>@sortablelink('display_name', 'Display Name')</th>
-                            <th>@sortablelink('name', 'Name')</th>
-                            <th>@sortablelink('guard_name', 'Guard')</th>
-                            <th class="text-center">@sortablelink('enabled', 'Enabled')</th>
-                            <th class="text-center">@sortablelink('created_at', 'Created')</th>
-                            <th class="text-center">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @forelse($permissions as $index => $permission)
-                            <tr @if($permission->deleted_at != null) class="table-danger" @endif>
-                                <td class="exclude-search align-middle">
-                                    {{ $permission->id }}
-                                </td>
-                                <td class="text-left">
-                                    @can('admin.permissions.show')
-                                        <a href="{{ route('admin.permissions.show', $permission->id) }}">
-                                            {{ $permission->display_name }}
-                                        </a>
-                                    @else
-                                        {{ $permission->display_name }}
-                                    @endcan
-                                </td>
-                                <td>{{ $permission->name }}</td>
-                                <td>{{ $permission->guard_name }}</td>
-                                <td class="text-center exclude-search">
-                                    {!! \Html::enableToggle($permission) !!}
-                                </td>
-                                <td class="text-center">{{ $permission->created_at->format(config('app.datetime')) ?? '' }}</td>
-                                <td class="exclude-search pr-3 text-center align-middle">
-                                    {!! \Html::actionDropdown('admin.permissions', $permission->id, array_merge(['show', 'edit'], ($permission->deleted_at == null) ? ['delete'] : ['restore'])) !!}
-                                </td>
-                            </tr>
-                        @empty
+                <div class="card-body p-0">
+                    {!! \Html::cardSearch('search', 'admin.permissions.index', 'Search Permission Display Name, Code, Guard, Status, etc.') !!}
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0" id="permission-table">
+                            <thead class="thead-light">
                             <tr>
-                                <td colspan="6" class="exclude-search text-center">No data to display</td>
+                                <th class="align-middle">
+                                    @sortablelink('id', '#')
+                                </th>
+                                <th>@sortablelink('display_name', 'Display Name')</th>
+                                <th>@sortablelink('name', 'Name')</th>
+                                <th>@sortablelink('guard_name', 'Guard')</th>
+                                <th class="text-center">@sortablelink('enabled', 'Enabled')</th>
+                                <th class="text-center">@sortablelink('created_at', 'Created')</th>
+                                <th class="text-center">Actions</th>
                             </tr>
-                        @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            @forelse($permissions as $index => $permission)
+                                <tr @if($permission->deleted_at != null) class="table-danger" @endif>
+                                    <td class="exclude-search align-middle">
+                                        {{ $permission->id }}
+                                    </td>
+                                    <td class="text-left">
+                                        @can('admin.permissions.show')
+                                            <a href="{{ route('admin.permissions.show', $permission->id) }}">
+                                                {{ $permission->display_name }}
+                                            </a>
+                                        @else
+                                            {{ $permission->display_name }}
+                                        @endcan
+                                    </td>
+                                    <td>{{ $permission->name }}</td>
+                                    <td>{{ $permission->guard_name }}</td>
+                                    <td class="text-center exclude-search">
+                                        {!! \Html::enableToggle($permission) !!}
+                                    </td>
+                                    <td class="text-center">{{ $permission->created_at->format(config('app.datetime')) ?? '' }}</td>
+                                    <td class="exclude-search pr-3 text-center align-middle">
+                                        {!! \Html::actionDropdown('admin.permissions', $permission->id, array_merge(['show', 'edit'], ($permission->deleted_at == null) ? ['delete'] : ['restore'])) !!}
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="exclude-search text-center">No data to display</td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div class="card-footer bg-transparent pb-0">
-                {!! \Modules\Admin\Supports\CHTML::pagination($permissions) !!}
-            </div>
+                <div class="card-footer bg-transparent pb-0">
+                    {!! \Modules\Admin\Supports\CHTML::pagination($permissions) !!}
+                </div>
             @else
                 <div class="card-body min-vh-100">
 
@@ -111,7 +111,31 @@
     <script>
         $(function () {
             highLightQueryString('search', 'permission-table');
-/*            console.log(window.location.search);*/
+
+            function initExportModal() {
+                $(".export-btn").click(function (event) {
+                    //stop href to trigger
+                    event.preventDefault();
+                    var exportModalElement = $("#exportConfirmModal");
+                    //href has link
+                    var url = this.getAttribute('href');
+                    if (url.length > 0 && url !== "#") {
+                        url += window.location.search;
+                        console.log(url);
+                        $.get(url, function (response) {
+                            console.log(response);
+                            $("#exportOptionForm").empty().html(response);
+                        }, 'html').done(function () {
+                        }).fail(function (error) {
+                            $("#exportOptionForm").empty().html(error.responseText);
+                        }).always(function () {
+                            exportModalElement.modal();
+                        });
+                    }
+                });
+            }
+
+            initExportModal();
         });
     </script>
 @endpush

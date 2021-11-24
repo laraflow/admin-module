@@ -6,6 +6,8 @@ namespace Modules\Admin\Services\Rbac;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Maatwebsite\Excel\Excel;
+use Modules\Admin\Exports\Rbac\PermissionExport;
 use Modules\Admin\Models\Rbac\Permission;
 use Modules\Admin\Repositories\Eloquent\Rbac\PermissionRepository;
 use Modules\Admin\Services\Auth\AuthenticatedSessionService;
@@ -58,9 +60,9 @@ class PermissionService
      * @return mixed
      * @throws Exception
      */
-    public function getPermissionById(int $id, bool $purge = false)
+    public function getPermissionById($id, bool $purge = false)
     {
-        if($purge == false) {
+        if ($purge == false) {
             $purge = AuthenticatedSessionService::isSuperAdmin();
         }
 
@@ -180,5 +182,24 @@ class PermissionService
             return ['status' => false, 'message' => $exception->getMessage(),
                 'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
         }
+    }
+
+
+    /**
+     * Export Object for Export Download
+     *
+     * @param array $filters
+     * @return PermissionExport
+     * @throws Exception
+     */
+    public function exportPermission(array $filters = []): PermissionExport
+    {
+        $permissions = $this->permissionRepository->getAllPermissionWith($filters);
+
+        $permissionExport = new PermissionExport();
+
+        $permissionExport->collection = $permissions;
+
+        return $permissionExport;
     }
 }

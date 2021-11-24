@@ -37,7 +37,7 @@
 
             @if(\Route::has($resourceRouteName . '.export'))
                 @can($resourceRouteName . '.export')
-                    <a href="#" title="Export"
+                    <a href="{{ route($resourceRouteName . '.export') }}" title="Export"
                        class="dropdown-item py-2 px-3 link-muted export-btn">
                         <i class="fas fa-file-export mr-2"></i> Export
                     </a>

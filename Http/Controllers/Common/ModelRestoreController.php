@@ -31,7 +31,7 @@ class ModelRestoreController extends Controller
     public function __invoke($route, $id, ModelRestoreRequest $request)
     {
         if ($request->user()->can($route . '.restore')) {
-            return view('admin::partials.confirm-form', [
+            return view('admin::layouts.partials.confirm-form', [
                 'route' => [$route . '.restore', $id],
                 'method' => 'patch'
             ]);

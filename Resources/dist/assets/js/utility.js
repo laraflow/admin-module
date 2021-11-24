@@ -30,6 +30,7 @@ function initDeleteModal() {
 /**
  * Trigger Export Modal
  */
+/*
 function initExportModal() {
     $(".export-btn").click(function (event) {
         //stop href to trigger
@@ -54,6 +55,7 @@ function initExportModal() {
         }
     });
 }
+*/
 
 /**
  * Modal Enabled Status Update

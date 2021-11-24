@@ -30,7 +30,7 @@ class ModelSoftDeleteController extends Controller
     public function __invoke($route, $id, ModelSoftDeleteRequest $request)
     {
         if ($request->user()->can($route . '.destroy')) {
-            return view('admin::partials.confirm-form', [
+            return view('admin::layouts.partials.confirm-form', [
                 'route' => [$route . '.destroy', $id],
                 'method' => 'delete'
             ]);

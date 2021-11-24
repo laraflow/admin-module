@@ -8,9 +8,15 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div id="exportOptionForm">
+            <form method="post" id="exportOptionForm">
+            <div class="modal-body">
 
             </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success">Export</button>
+            </div>
+        </form>
         </div>
     </div>
 </div>
