@@ -22,31 +22,31 @@
     <!-- Preloader -->
 @include('admin::layouts.includes.preloader')
 <!-- Navbar -->
-@include('admin::partials.navbar')
+@include('admin::layouts.partials.navbar')
 
 <!-- Main Sidebar Container -->
-@include('admin::partials.menu-sidebar')
+@include('admin::layouts.partials.menu-sidebar')
 
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-    @include('admin::partials.content-header')
+    @include('admin::layouts.partials.content-header')
     <!-- Main content -->
         <section class="content">
             @yield('content')
 
-            @include('admin::partials.confirm-modal')
+            @include('admin::layouts.partials.confirm-modal')
 
-            @include('admin::partials.export-modal')
+            @include('admin::layouts.partials.export-modal')
         </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
 
     <!-- Control Sidebar -->
-@include('admin::partials.control-sidebar')
+@include('admin::layouts.partials.control-sidebar')
 <!-- Main Footer -->
-    @include('admin::partials.main-footer')
+    @include('admin::layouts.partials.main-footer')
 </div>
 <!-- ./wrapper -->
 <!-- JS Constants -->

@@ -5,6 +5,7 @@ namespace Modules\Admin\Supports;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Excel;
 use Modules\Admin\Repositories\Eloquent\Rbac\UserRepository;
 
 /***
@@ -100,5 +101,32 @@ class Utility
     public static function permissionDisplay(string $permission): string
     {
         return ucwords(str_replace(['.', '-', '_'], [' ', ' ', ' '], $permission));
+    }
+
+    /**
+     * @param string $format
+     * @return string
+     */
+    public static function getExportExt(string $format = Excel::XLSX): string
+    {
+        switch ($format) {
+            case 'xlsx' :
+                return Excel::XLSX;
+
+            case 'csv' :
+                return Excel::CSV;
+
+            case 'pdf' :
+                return Excel::DOMPDF;
+
+            case 'html' :
+                return Excel::HTML;
+
+            case 'ods' :
+                return Excel::ODS;
+
+            default :
+                return Excel::XLSX;
+        }
     }
 }

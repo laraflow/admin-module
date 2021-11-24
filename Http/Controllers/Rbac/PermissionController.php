@@ -9,10 +9,13 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Modules\Admin\Http\Requests\Rbac\PermissionRequest;
 use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Services\Rbac\PermissionService;
 use Modules\Admin\Supports\Constant;
+use Modules\Admin\Supports\Utility;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PermissionController extends Controller
 {
@@ -216,17 +219,24 @@ class PermissionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Application|Factory|View
+     * @return Response|BinaryFileResponse
      * @throws Exception
      */
     public function export(Request $request)
     {
         $filters = $request->except('page');
-        $permissions = $this->permissionService->getAllPermissions($filters);
 
-        return view('admin::rbac.permission.index', [
-            'permissions' => $permissions
-        ]);
+        $exportFormat = Utility::getExportExt();
+
+        if (isset($filters['format'])) :
+            $exportFormat = Utility::getExportExt($filters['format']);
+        endif;
+
+        $permissionExport = $this->permissionService->exportPermission($filters);
+
+        $exportFileName = 'Permission-' . date('Y-m-d-His') . '.' . ($filters['format'] ?? 'xlsx');
+        return $permissionExport->download($exportFileName, $exportFormat);
+
     }
 
     /**
