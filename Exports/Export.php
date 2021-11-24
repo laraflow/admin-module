@@ -68,7 +68,11 @@ class Export implements ShouldAutoSize, WithStyles
         //Default Font size for whole sheet
         $sheet->getParent()->getDefaultStyle()->getFont()
             ->setName('Arial')
-            ->setSize(12);;
+            ->setSize(12);
+
+    //Default wrap text for whole sheet
+        $sheet->getParent()->getDefaultStyle()->getAlignment()
+        ->setWrapText(true);
 
         //Header Style
         $sheet->getStyle(1)
