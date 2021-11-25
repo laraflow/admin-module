@@ -32,6 +32,7 @@
 
 @section('actions')
     {!! \Html::linkButton('Add Role', 'admin.roles.create', [], 'mdi mdi-plus', 'success') !!}
+    {!! \Html::bulkDropdown('admin.roles', 0, ['color' => 'warning']) !!}
 @endsection
 
 @section('content')
@@ -39,7 +40,9 @@
         <div class="card card-default">
             @if(!empty($roles))
                 <div class="card-body p-0">
-                    {!! \Html::cardSearch('search', 'admin.roles.index', 'Search Role Name, Code, Guard, Status, etc.') !!}
+                    {!! \Html::cardSearch('search', 'admin.roles.index',
+['placeholder' => 'Search Role Name, Code, Guard, Status, etc.',
+'class' => 'form-control', 'id' => 'search', 'data-target-table' => 'role-table']) !!}
                     <div class="table-responsive">
                         <table class="table table-hover mb-0" id="role-table">
                             <thead class="thead-light">
@@ -111,9 +114,5 @@
 @endpush
 
 @push('page-script')
-    <script>
-        $(function () {
-            highLightQueryString('search', 'role-table');
-        });
-    </script>
+
 @endpush

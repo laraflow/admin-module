@@ -193,10 +193,6 @@ class PermissionService
      */
     public function exportPermission(array $filters = []): PermissionExport
     {
-        $permissionExport = new PermissionExport();
-
-        $permissionCollection = $this->permissionRepository->getAllPermissionWith($filters);
-
-        return $permissionExport->setCollection($permissionCollection);
+        return (new PermissionExport($this->permissionRepository->getAllPermissionWith($filters)));
     }
 }

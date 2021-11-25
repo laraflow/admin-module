@@ -6,7 +6,7 @@ use Box\Spout\Common\Exception\InvalidArgumentException;
 use Modules\Admin\Exports\Export;
 use Modules\Admin\Models\Rbac\Permission;
 
-class PermissionExport extends Export
+class UserExport extends Export
 {
     /**
      * @param null $data
@@ -27,17 +27,25 @@ class PermissionExport extends Export
     {
         $this->formatRow = [
             '#' => $row->id,
-            'Display Name' => $row->display_name,
-            'System Name' => $row->name,
-            'Guard' => ucfirst($row->guard_name),
+            'Full Name' => $row->name,
+            'Username' => $row->username,
+            'Email' => $row->email,
+            'Mobile' => $row->email,
+            'Role(s)' => $this->mergeRoles($row->roles->pluck('name')->toArray()),
             'Remarks' => $row->remarks,
             'Enabled' => ucfirst($row->enabled),
             'Created' => $row->created_at->format(config('app.datetime')),
             'Updated' => $row->updated_at->format(config('app.datetime'))
         ];
-
         $this->getSupperAdminColumns($row);
-
         return $this->formatRow;
+    }
+
+    protected function mergeRoles(array $roles): string
+    {
+        if (count($roles) > 0)
+            return implode(', ', $roles);
+        else
+            return 'Not Assigned';
     }
 }

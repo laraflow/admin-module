@@ -102,31 +102,4 @@ class Utility
     {
         return ucwords(str_replace(['.', '-', '_'], [' ', ' ', ' '], $permission));
     }
-
-    /**
-     * @param string $format
-     * @return string
-     */
-    public static function getExportExt(string $format = Excel::XLSX): string
-    {
-        switch ($format) {
-            case 'xlsx' :
-                return Excel::XLSX;
-
-            case 'csv' :
-                return Excel::CSV;
-
-            case 'pdf' :
-                return Excel::DOMPDF;
-
-            case 'html' :
-                return Excel::HTML;
-
-            case 'ods' :
-                return Excel::ODS;
-
-            default :
-                return Excel::XLSX;
-        }
-    }
 }

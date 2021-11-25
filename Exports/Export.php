@@ -2,88 +2,136 @@
 
 namespace Modules\Admin\Exports;
 
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\WithStyles;
-use PhpOffice\PhpSpreadsheet\Exception;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Box\Spout\Common\Entity\Style\Border;
+use Box\Spout\Common\Entity\Style\CellAlignment;
+use Box\Spout\Common\Entity\Style\Color;
+use Box\Spout\Common\Entity\Style\Style;
+use Box\Spout\Common\Exception\InvalidArgumentException;
+use Box\Spout\Writer\Common\Creator\Style\BorderBuilder;
+use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
+use Modules\Admin\Services\Auth\AuthenticatedSessionService;
+use Rap2hpoutre\FastExcel\FastExcel;
 
-class Export implements ShouldAutoSize, WithStyles
+abstract class Export extends FastExcel
 {
     /**
-     * Export collection that will be exported
-     *
-     * @var Collection $collection
+     * @var BorderBuilder $border
      */
-    protected $collection;
+    protected $borderStyle = null;
 
     /**
-     * Export Construct
+     * @var StyleBuilder
+     */
+    protected $headingStyle = null;
+
+    /**
+     * @var StyleBuilder
+     */
+    protected $rowStyle = null;
+
+    /**
+     * @var array $formatRow
+     */
+    public $formatRow = [];
+
+    /**
+     * Modify Output Row Cells
+     *
+     * @param $row
+     * @return array
+     */
+    public abstract function map($row): array;
+
+    /**
+     * Export Constructor
+     *
+     * @throws InvalidArgumentException
      */
     public function __construct()
     {
-        $this->collection = new Collection();
+        parent::__construct();
+
+        $this->setHeadingStyle((new StyleBuilder())
+            ->setFontBold()
+            ->setFontSize(12)
+            ->setFontColor(Color::WHITE)
+            ->setShouldWrapText()
+            ->setBackgroundColor(Color::BLACK)
+            ->setCellAlignment(CellAlignment::CENTER)
+            ->build());
+
+        $this->setRowStyle((new StyleBuilder())
+            ->setFontSize(12)
+            ->setShouldWrapText()
+            ->setCellAlignment(CellAlignment::LEFT)
+            ->build());
+
+        //Border Style on extend to this package
+        //Origin Spout style support
+        /*
+        $this->setBorderStyle((new BorderBuilder())
+            ->setBorderTop(Color::RED, Border::WIDTH_THIN)
+            ->setBorderRight(Color::RED, Border::WIDTH_THIN)
+            ->setBorderBottom(Color::RED, Border::WIDTH_THIN)
+            ->setBorderLeft(Color::RED, Border::WIDTH_THIN)
+            ->build());
+    */
     }
 
     /**
-     * @param $collection
-     * @return $this
+     * @param Border $style
+     * @return Export
      */
-    public function setCollection($collection): self
+    public function setBorderStyle(Border $style): self
     {
-        $this->collection = $collection;
-
+        $this->borderStyle = (new StyleBuilder())
+            ->setBorder($style)
+            ->build();
         return $this;
     }
 
     /**
-     * @return Collection
+     * @param Style $style
+     * @return Export
      */
-    public function getCollection(): Collection
+    public function setRowStyle(Style $style): self
     {
-        return $this->collection;
+        $this->rowsStyle($style);
+        return $this;
     }
 
     /**
-     * @param Worksheet $sheet
-     * @return void
-     * @throws Exception
+     * @param Style $style
+     * @return Export
      */
-    public function styles(Worksheet $sheet)
+    public function setHeadingStyle(Style $style): self
     {
-        //Page Size
-        $sheet->getPageSetup()
-            ->setPaperSize(PageSetup::PAPERSIZE_A4)
-            ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
+        $this->headerStyle($style);
+        return $this;
+    }
 
-        //Page margin
-        $sheet->getPageMargins()
-            ->setBottom(0.5)
-            ->setLeft(0.5)
-            ->setRight(0.5)
-            ->setTop(0.5);
+    /**
+     * Returns all super admin columns
+     *
+     * @param $row
+     */
+    protected function getSupperAdminColumns($row)
+    {
+        if (AuthenticatedSessionService::isSuperAdmin()):
+            $this->formatRow['Deleted'] = ($row->deleted_at != null)
+                ? $row->deleted_at->format(config('app.datetime'))
+                : null;
 
-        //Default Font size for whole sheet
-        $sheet->getParent()->getDefaultStyle()->getFont()
-            ->setName('Arial')
-            ->setSize(12);
+            $this->formatRow['Creator'] = ($row->createdBy != null)
+                ? $row->createdBy->name
+                : null;
 
-    //Default wrap text for whole sheet
-        $sheet->getParent()->getDefaultStyle()->getAlignment()
-        ->setWrapText(true);
-
-        //Header Style
-        $sheet->getStyle(1)
-            ->applyFromArray([
-                'font' => [
-                    'bold' => true
-                ],
-                'alignment' => [
-                    'horizontal' => Alignment::HORIZONTAL_CENTER,
-                ],
-            ]);
-
+            $this->formatRow['Editor'] = ($row->updatedBy != null)
+                ? $row->updatedBy->name
+                : null;
+            $this->formatRow['Destructor'] = ($row->deletedBy != null)
+                ? $row->deletedBy->name
+                : null;
+        endif;
     }
 }

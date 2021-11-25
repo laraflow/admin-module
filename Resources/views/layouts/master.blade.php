@@ -38,6 +38,7 @@
             @include('admin::layouts.partials.confirm-modal')
 
             @include('admin::layouts.partials.export-modal')
+            @include('admin::layouts.partials.import-modal')
         </section>
         <!-- /.content -->
     </div>

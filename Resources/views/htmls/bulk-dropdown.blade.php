@@ -8,6 +8,7 @@
             <span class="d-none d-md-inline-flex ml-2">Actions</span>
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+            {{--
             @if(\Route::has($resourceRouteName . '.destroy'))
                 @can($resourceRouteName . '.destroy')
                     <a href="{{ route('admin.common.delete', [$resourceRouteName, $id]) }}" title="Delete"
@@ -25,11 +26,12 @@
                     </a>
                 @endcan
             @endif
+            --}}
 
             @if(\Route::has($resourceRouteName . '.import'))
                 @can($resourceRouteName . '.import')
                     <a href="{{ route($resourceRouteName . '.import') }}" title="Import"
-                       class="dropdown-item py-2 px-3 link-muted">
+                       class="dropdown-item py-2 px-3 import-btn link-muted">
                         <i class="fas fa-file-import mr-2"></i> Import
                     </a>
                 @endcan
@@ -47,7 +49,7 @@
             @if(\Route::has($resourceRouteName . '.print'))
                 @can($resourceRouteName . '.print')
                     <a href="{{ route($resourceRouteName . '.print') }}" title="Print"
-                       class="dropdown-item py-2 px-3 link-muted">
+                       class="dropdown-item py-2 px-3 print-btn link-muted">
                         <i class="fas fa-print mr-2"></i> Print
                     </a>
                 @endcan
