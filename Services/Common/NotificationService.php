@@ -4,40 +4,71 @@
 namespace Modules\Admin\Services\Common;
 
 
-
 use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
 use Modules\Admin\Models\User;
-use Modules\Admin\Repositories\Eloquent\UserRepository;
+use Modules\Admin\Services\Rbac\UserService;
 
 class NotificationService
 {
     /**
-     * @var UserRepository
+     * @var UserService
      */
-    private $userRepository;
+    private $userService;
 
     /**
-     * PermissionService constructor.
-     * @param UserRepository $userRepository
+     * @param UserService $userService
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserService $userService)
     {
-        $this->userRepository = $userRepository;
-        $this->userRepository->itemsPerPage = 10;
+        $this->userService = $userService;
     }
 
     /**
-     * @param $userId
-     * @return mixed
+     * Return Paginated Notifications
+     * of current logged user
+     *
+     * @param array $filters
+     * @return LengthAwarePaginator
      * @throws Exception
      */
-    public function getAllNotifications($userId)
+    public function notificationPaginate(array $filters = []): LengthAwarePaginator
     {
-        $user = $this->userRepository->show($userId);
+        $notifications = null;
 
-        return $user->notifications;
+        $notifiableUser = (isset($filters['user_id']))
+            ? $this->userService->getUserById($filters['user_id'])
+            : Auth::user();
+
+        //select Notification type ['all', 'unread']
+        //default : unread
+        if (isset($filters['type'])) {
+            if ($filters['type'] == 'all') {
+                $notifications = $notifiableUser->notifications();
+            } elseif($filters['type'] == 'unread') {
+                $notifications = $notifiableUser->unreadNotifications();
+            }
+        } else {
+            $notifications = $notifiableUser->unreadNotifications();
+        }
+
+        //sort
+        //select Notification type ['asc', 'desc']
+        //default : desc
+        if (isset($filters['sort'])) {
+            if ($filters['sort'] == 'asc') {
+                $notifications = $notifications->oldest();
+            } elseif($filters['type'] == 'desc') {
+                $notifications = $notifications->latest();
+            }
+        } else {
+            $notifications = $notifications->latest();
+        }
+
+        return  $notifications->paginate();
     }
 
     /**

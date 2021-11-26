@@ -65,11 +65,18 @@
                     @endcanany
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.system-logs') }}" class="nav-link">
+                    <a href="{{ route('admin.system-logs') }}" class="nav-link @if(\Route::is('admin.system-logs')) active @endif">
                         <i class="nav-icon fas fa-th"></i>
                         <p>Log Viewer</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.notifications.index') }}" class="nav-link  @if(\Route::is('admin.notifications.*')) active @endif">
+                        <i class="nav-icon fas fa-bell"></i>
+                        <p>Notifications</p>
+                    </a>
+                </li>
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
