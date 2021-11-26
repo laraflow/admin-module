@@ -1,8 +1,5 @@
 @push('plugin-style')
-{{--    <link rel="stylesheet" href="{{ asset('modules/admin/plugins/select2/css/select2.min.css') }}" type="text/css">
-    <link rel="stylesheet"
-          href="{{ asset('modules/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}"
-          type="text/css">--}}
+    <link rel="stylesheet" href="{{ asset('modules/admin/plugins/select2/css/select2.min.css') }}" type="text/css">
 @endpush
 
 <div class="card-body">
@@ -41,7 +38,7 @@
     @endif
     <div class="row">
         <div class="col-md-6">
-            {!! \Form::nSelect('role_id', 'Role', $roles,
+            {!! \Form::nSelectMulti('role_id', 'Role', $roles,
     old('role_id.*', ($user_roles ?? [\Modules\Admin\Supports\DefaultValue::GUEST_ROLE_ID])), true,
     ['class' => 'form-control custom-select select2']) !!}
 
@@ -69,20 +66,19 @@ old('enabled', ($user->enabled ?? \Modules\Admin\Supports\DefaultValue::ENABLED_
     </div>
 </div>
 
-
-
 @push('page-script')
     <script type="text/javascript" src="{{ asset('modules/admin/plugins/select2/js/select2.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             //trigger select2
-/*
             $("select.select2").select2({
+                placeholder: 'Select Role(s)',
                 minimumResultsForSearch: Infinity,
                 maximumSelectionLength: 3,
-                theme : 'bootstrap4'
+                allowClear: true,
+                multiple: true,
+                width: "100%"
             });
-*/
 
             $("#user-form").validate({
                 rules: {
@@ -118,7 +114,6 @@ old('enabled', ($user->enabled ?? \Modules\Admin\Supports\DefaultValue::ENABLED_
                     }
                 }
             });
-
         });
     </script>
 @endpush

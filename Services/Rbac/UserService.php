@@ -164,6 +164,8 @@ class UserService
         //hash user password
         if (!empty($requestData['password'])) {
             $requestData['password'] = Utility::hashPassword($requestData['password']);
+        } else {
+            unset($requestData['password']);
         }
 
         \DB::beginTransaction();
@@ -193,7 +195,7 @@ class UserService
             }
         } catch (Exception $exception) {
             throw new Exception($exception->getMessage());
-/*            $this->userRepository->handleException($exception);*/
+            /*            $this->userRepository->handleException($exception);*/
             \DB::rollBack();
             return ['status' => false, 'message' => $exception->getMessage(),
                 'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
