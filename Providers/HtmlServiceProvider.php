@@ -49,7 +49,7 @@ class HtmlServiceProvider extends ServiceProvider
         Html::component('cardSearch', 'admin::htmls.search-form', ['field', 'route', 'attributes' => []]);
 
         //Dropdown
-        Html::component('actionDropdown', 'admin::htmls.action-dropdowns', ['resourceRouteName', 'id', 'options' => []]);
+        Html::component('actionDropdown', 'admin::htmls.action-dropdowns', ['resourceRouteName', 'id' => 0, 'options' => []]);
         Html::component('modelDropdown', 'admin::htmls.model-dropdown', ['resourceRouteName', 'id' => 0, 'options' => []]);
         Html::component('bulkDropdown', 'admin::htmls.bulk-dropdown', ['resourceRouteName', 'id' => 0, 'options' => []]);
 

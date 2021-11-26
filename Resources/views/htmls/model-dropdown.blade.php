@@ -1,6 +1,4 @@
-@canany([$resourceRouteName . '.exports.show', $resourceRouteName . '.edit',
-        $resourceRouteName . '.destroy', $resourceRouteName . '.restore'])
-
+@canany([$resourceRouteName . '.edit', $resourceRouteName . '.destroy', $resourceRouteName . '.restore'])
     <div class="dropdown d-inline-block">
         <button class="btn btn-{{ $options['color'] ?? 'warning' }} dropdown-toggle"
                 type="button" id="dropdownMenuButton"
@@ -9,7 +7,7 @@
             <span class="d-none d-md-inline-flex ml-2">Actions</span>
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-            @if(\Route::has($resourceRouteName . '.edit'))
+            @if(in_array('edit', $options) && \Route::has($resourceRouteName . '.edit'))
                 @can($resourceRouteName . '.edit')
                     <a href="{{ route($resourceRouteName . '.edit', $id) }}" title="Edit"
                        class="dropdown-item py-2 px-3 link-muted">
@@ -17,7 +15,7 @@
                 @endcan
             @endif
 
-            @if(\Route::has($resourceRouteName . '.destroy'))
+            @if(in_array('delete', $options) && \Route::has($resourceRouteName . '.destroy'))
                 @can($resourceRouteName . '.destroy')
                     <a href="{{ route('admin.common.delete', [$resourceRouteName, $id]) }}" title="Delete"
                        class="dropdown-item py-2 px-3 link-muted delete-btn">
@@ -26,23 +24,14 @@
                 @endcan
             @endif
 
-            @if(\Route::has($resourceRouteName . '.restore'))
+            @if(in_array('restore', $options) && \Route::has($resourceRouteName . '.restore'))
                 @can($resourceRouteName . '.restore')
-                    <a href="{{ route('admin.common.delete', [$resourceRouteName, $id]) }}" title="Delete"
+                    <a href="{{ route('admin.common.restore', [$resourceRouteName, $id]) }}" title="Restore"
                        class="dropdown-item py-2 px-3 link-muted delete-btn">
                         <i class="fas fa-trash-restore  mr-2"></i> Restore
                     </a>
                 @endcan
             @endif
-                @if(\Route::has($resourceRouteName . '.exports.show'))
-                    @can($resourceRouteName . '.exports.show')
-                        <div class="dropdown-divider"></div>
-                        <a href="{{ route('admin.common.delete', [$resourceRouteName, $id]) }}" title="Delete"
-                           class="dropdown-item py-2 px-3 link-muted delete-btn">
-                            <i class="fas fa-print  mr-2"></i> Print
-                        </a>
-                    @endcan
-                @endif
         </div>
     </div>
 @endcanany
