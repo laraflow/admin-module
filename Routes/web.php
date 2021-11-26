@@ -111,6 +111,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('roles', RoleController::class)->where(['role' => '([0-9]+)']);
     Route::prefix('roles')->name('roles.')->group(function () {
+        Route::get('permission', [RoleController::class, 'permission'])->name('permission');
         Route::get('export', [RoleController::class, 'export'])->name('export');
         Route::get('import', [RoleController::class, 'import'])->name('import');
         Route::post('import', [RoleController::class, 'importBulk']);

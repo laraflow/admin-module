@@ -1,14 +1,14 @@
 <li class="nav-item dropdown user-menu">
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
         <img src="{{ \Auth::user()->getFirstMediaUrl('avatars') }}"
-             class="user-image img-circle" alt="User Image">
+             class="user-image img-circle mr-0" alt="User Image">
         {{--        <span class="d-none d-md-inline text-capitalize">{{ auth()->user()->name }}</span>--}}
     </a>
     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         <!-- User image -->
         <li class="user-header bg-white">
             <img src="{{ auth()->user()->getFirstMediaUrl('avatars') }}"
-                 class="img-circle elevation-2" alt="{{ auth()->user()->name }}">
+                 class="img-circle elevation-2 mr-0" alt="{{ auth()->user()->name }}">
 
             <p class="text-capitalize font-weight-bold">
                 {{ auth()->user()->name }}

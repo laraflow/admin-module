@@ -17,6 +17,7 @@ use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Services\Rbac\PermissionService;
 use Modules\Admin\Services\Rbac\RoleService;
 use Modules\Admin\Supports\Constant;
+use Modules\Admin\Supports\Utility;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Throwable;
 
@@ -120,7 +121,8 @@ class RoleController extends Controller
             return view('admin::rbac.role.show', [
                 'role' => $role,
                 'permissions' => $permissions,
-                'availablePermissionIds' => $availablePermissionIds
+                'availablePermissionIds' => $availablePermissionIds,
+                'timeline' => Utility::modelAudits($role)
             ]);
         }
 
