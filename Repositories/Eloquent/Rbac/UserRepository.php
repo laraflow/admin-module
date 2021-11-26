@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Modules\Admin\Models\User;
 use Modules\Admin\Repositories\EloquentRepository;
+use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 
 class UserRepository extends EloquentRepository
 {
@@ -108,8 +109,13 @@ class UserRepository extends EloquentRepository
         endif;
 
 
-        if ($is_sortable == true)
+        if ($is_sortable == true) :
             $query->sortable();
+        endif;
+
+        if (AuthenticatedSessionService::isSuperAdmin()) :
+            $query->withTrashed();
+        endif;
 
         return $query;
     }

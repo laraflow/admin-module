@@ -3,8 +3,7 @@
     <div class="col-md-12">
         <div class="input-group">
             {!! \Form::search($field, old($field, (request()->get($field) ?? null)),
-                ['class' => 'form-control', 'placeholder' => $placeholder,
-                 'id' =>$field]) !!}
+                array_merge(['class' => 'form-control'], $attributes)) !!}
             <div class="input-group-append">
                 {!! \Form::submit('Search', ['class' => 'btn btn-primary input-group-right-btn']) !!}
             </div>

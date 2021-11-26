@@ -1,20 +1,20 @@
 <li class="nav-item dropdown user-menu">
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-        <img src="{{ $authUser->getFirstMediaUrl('avatars') }}"
+        <img src="{{ \Auth::user()->getFirstMediaUrl('avatars') }}"
              class="user-image img-circle" alt="User Image">
-        {{--        <span class="d-none d-md-inline text-capitalize">{{ $authUser->name }}</span>--}}
+        {{--        <span class="d-none d-md-inline text-capitalize">{{ auth()->user()->name }}</span>--}}
     </a>
     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         <!-- User image -->
         <li class="user-header bg-white">
-            <img src="{{ $authUser->getFirstMediaUrl('avatars') }}"
-                 class="img-circle elevation-2" alt="{{ $authUser->name }}">
+            <img src="{{ auth()->user()->getFirstMediaUrl('avatars') }}"
+                 class="img-circle elevation-2" alt="{{ auth()->user()->name }}">
 
             <p class="text-capitalize font-weight-bold">
-                {{ $authUser->name }}
-                @if($authUser->roles->first() != null)
+                {{ auth()->user()->name }}
+                @if(auth()->user()->roles->first() != null)
                     <br>
-                    <small class="text-warning text-sm">{{ $authUser->roles->first()->name }}</small>
+                    <small class="text-warning text-sm">{{ auth()->user()->roles->first()->name }}</small>
                 @endif
             </p>
         </li>
@@ -35,7 +35,7 @@
         </li>
         <!-- Menu Footer-->
         <li class="user-footer">
-            <a href="{{ route('admin.users.show', $authUser->id) }}" class="btn btn-default btn-flat">Profile</a>
+            <a href="{{ route('admin.users.show', auth()->user()->id) }}" class="btn btn-default btn-flat">Profile</a>
             <a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-default btn-flat float-right">Sign
                 out</a>
         </li>

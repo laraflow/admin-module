@@ -4,7 +4,7 @@
             class="fas fa-bars"></i></a>
 
     <!-- Left navbar links -->
-@include('admin::partials.navbar-shortcut')
+@include('admin::layouts.partials.navbar-shortcut')
 
 <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -15,13 +15,13 @@
             </a>
         </li>
         <!-- Navbar Search -->
-        @include('admin::partials.navbar-search')
+        @include('admin::layouts.partials.navbar-search')
         <!-- Messages Dropdown Menu -->
-        @include('admin::partials.navbar-message')
+        @include('admin::layouts.partials.navbar-message')
         <!-- Notifications Dropdown Menu -->
-        @include('admin::partials.navbar-notification')
+        @include('admin::layouts.partials.navbar-notification')
         <!-- User Profile Dropdown menu -->
-        @include('admin::partials.navbar-user')
+        @include('admin::layouts.partials.navbar-user')
         <li class="nav-item">
             <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                 <i class="fas fa-th-large"></i>

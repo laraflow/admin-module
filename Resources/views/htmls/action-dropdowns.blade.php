@@ -47,11 +47,11 @@
                     @endcan
                 @endif
 
-                @if(in_array('delete', $options) && Route::has($resourceRouteName . '.restore'))
+                @if(in_array('restore', $options) && Route::has($resourceRouteName . '.restore'))
                     @can($resourceRouteName . '.restore')
                         <li>
-                            <a href="{{ route($resourceRouteName . '.restore', $id) }}" title="Restore"
-                               class="d-flex align-items-center link-muted py-2 px-3">
+                            <a href="{{ route('admin.common.restore', [$resourceRouteName, $id]) }}" title="Restore"
+                               class="d-flex align-items-center link-muted py-2 px-3 delete-btn">
                                 <i class="fas fa-trash-restore  mr-2"></i> Restore
                             </a>
                         </li>
