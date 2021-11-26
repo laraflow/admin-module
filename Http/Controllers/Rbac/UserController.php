@@ -15,6 +15,7 @@ use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Services\Rbac\RoleService;
 use Modules\Admin\Services\Rbac\UserService;
 use Modules\Admin\Supports\Constant;
+use Modules\Admin\Supports\Utility;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class UserController extends Controller
@@ -113,7 +114,8 @@ class UserController extends Controller
     {
         if ($user = $this->userService->getUserById($id)) {
             return view('admin::rbac.user.show', [
-                'user' => $user
+                'user' => $user,
+                'timeline' => Utility::modelAudits($user)
             ]);
         }
 
