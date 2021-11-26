@@ -33,6 +33,8 @@
     @include('admin::layouts.partials.content-header')
     <!-- Main content -->
         <section class="content">
+            @include('admin::layouts.includes.errors')
+
             @yield('content')
 
             @include('admin::layouts.partials.confirm-modal')

@@ -9,12 +9,10 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Kint\Kint;
 use Modules\Admin\Http\Requests\Rbac\UserRequest;
 use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Services\Rbac\RoleService;
 use Modules\Admin\Services\Rbac\UserService;
-use Modules\Admin\Supports\Constant;
 use Modules\Admin\Supports\Utility;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -155,13 +153,20 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id): RedirectResponse
     {
-        if ($this->userService->updateUser($request, $id)) {
-            notify('User Information Updated', 'success', 'Notification');
+        $inputs = $request->except(['_token', 'password_confirmation']);
+
+        $photo = $request->file('photo');
+
+        $confirm = $this->userService->updateUser($inputs, $id, $photo);
+
+        if ($confirm['status'] == true) {
+            notify($confirm['message'], $confirm['level'], $confirm['title']);
             return redirect()->route('admin.users.index');
         }
 
-        notify('User Information Update Failed', 'error', 'Alert');
+        notify($confirm['message'], $confirm['level'], $confirm['title']);
         return redirect()->back()->withInput();
+
     }
 
     /**
@@ -208,7 +213,6 @@ class UserController extends Controller
 
         abort(403, 'Wrong user credentials');
     }
-
 
 
     /**

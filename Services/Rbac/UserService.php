@@ -5,12 +5,12 @@ namespace Modules\Admin\Services\Rbac;
 
 
 use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
 use InvalidArgumentException;
 use Modules\Admin\Exports\Rbac\UserExport;
-use Modules\Admin\Http\Requests\Rbac\UserRequest;
 use Modules\Admin\Models\User;
 use Modules\Admin\Repositories\Eloquent\Rbac\UserRepository;
 use Modules\Admin\Services\Auth\AuthenticatedSessionService;
@@ -62,10 +62,10 @@ class UserService
     /**
      * @param array $filters
      * @param array $eagerRelations
-     * @return mixed
+     * @return LengthAwarePaginator
      * @throws Exception
      */
-    public function userPaginate(array $filters = [], array $eagerRelations = [])
+    public function userPaginate(array $filters = [], array $eagerRelations = []): LengthAwarePaginator
     {
         return $this->userRepository->paginateWith($filters, $eagerRelations, true);
     }
@@ -76,8 +76,10 @@ class UserService
      * @return array
      * @throws Exception
      */
-    public function storeUser(array $requestData, UploadedFile $photo = null)
+    public function storeUser(array $requestData, UploadedFile $photo = null): array
     {
+        $roleId = [DefaultValue::GUEST_ROLE_ID];
+
         //extract role id
         if (!empty($requestData['role_id'])) {
             $roleId = $requestData['role_id'];
@@ -90,27 +92,28 @@ class UserService
         }
 
         \DB::beginTransaction();
-        //try {
-        if ($newUser = $this->userRepository->create($requestData)) {
-            if ($newUser instanceof User) {
-                if ($this->userRepository->manageRoles($roleId) && $this->attachAvatarImage($newUser, $photo)) {
+        try {
+            if ($newUser = $this->userRepository->create($requestData)) {
+                if (($newUser instanceof User) && $this->userRepository->manageRoles($roleId) && $this->attachAvatarImage($newUser, $photo)) {
                     \DB::commit();
                     return ['status' => true, 'message' => __('New User Created'),
                         'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
                 } else {
                     \DB::rollBack();
-                    return ['status' => false, 'message' => __('New User Creation Failed'),
-                        'level' => Constant::MSG_TOASTR_ERROR, 'title' => 'Alert!'];
+                    return ['status' => false, 'message' => __('Role or Avatar image Failed'),
+                        'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Warning!'];
                 }
+            } else {
+                \DB::rollBack();
+                return ['status' => false, 'message' => __('New User Creation Failed'),
+                    'level' => Constant::MSG_TOASTR_ERROR, 'title' => 'Alert!'];
             }
-        }
-        /* } catch (Exception $exception) {
-            throw new \Exception($exception->getMessage());
-           // $this->userRepository->handleException($exception);
+        } catch (Exception $exception) {
+            $this->userRepository->handleException($exception);
             \DB::rollBack();
             return ['status' => false, 'message' => $exception->getMessage(),
                 'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
-        }*/
+        }
     }
 
     /**
@@ -144,53 +147,56 @@ class UserService
     }
 
     /**
-     * @param UserRequest $request
+     * @param array $requestData
      * @param $id
-     * @param array $roleId
-     * @return bool
-     * @throws \Throwable
+     * @param UploadedFile|null $photo
+     * @return array
+     * @throws Exception
      */
-    public function updateUser(UserRequest $request, $id, array $roleId = [DefaultValue::GUEST_ROLE_ID]): bool
+    public function updateUser(array $requestData, $id, UploadedFile $photo = null): array
     {
-        $requestData = $request->except(['_token', 'password_confirmation']);
-
+        $roleId = [DefaultValue::GUEST_ROLE_ID];
         //extract role id
         if (!empty($requestData['role_id'])) {
             $roleId = $requestData['role_id'];
+            unset($requestData['role_id']);
         }
-
-        //hash user password or remove password field
-        if (!empty($requestData['password']))
+        //hash user password
+        if (!empty($requestData['password'])) {
             $requestData['password'] = Utility::hashPassword($requestData['password']);
-        else
-            unset($requestData['password']);
+        }
 
         \DB::beginTransaction();
         try {
             //check if user is available or not
             if ($selectUserModel = $this->getUserById($id)) {
-                if ($this->userRepository->update($requestData, $selectUserModel->id)) {
-                    $confirm = $this->userRepository->manageRoles($roleId, true);
+                $this->userRepository->setModel($selectUserModel);
+                if ($this->userRepository->update($requestData, $id) && $this->userRepository->manageRoles($roleId)) {
                     //update profile image
-                    if ($request->hasFile('photo')) {
-                        $profileImagePath = $this->fileUploadService->createAvatarImageFromInput($request->file('photo'));
+                    if ($photo != null) {
+                        $profileImagePath = $this->fileUploadService->createAvatarImageFromInput($photo);
                         $selectUserModel->addMedia($profileImagePath)->toMediaCollection('avatars');
                         $selectUserModel->save();
                     }
-
-                    //DB Commit
-                    if ($confirm == true) {
-                        \DB::commit();
-                        return true;
-                    }
+                    \DB::commit();
+                    return ['status' => true, 'message' => __('User Information Updated'),
+                        'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
+                } else {
+                    \DB::rollBack();
+                    return ['status' => false, 'message' => __('User Information Update Failed'),
+                        'level' => Constant::MSG_TOASTR_ERROR, 'title' => 'Alert!'];
                 }
-                return false;
+            } else {
+                \DB::rollBack();
+                return ['status' => false, 'message' => __('Invalid User ID Update Failed'),
+                    'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Alert!'];
             }
-            return false;
         } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+/*            $this->userRepository->handleException($exception);*/
             \DB::rollBack();
-            $this->userRepository->handleException($exception);
-            return false;
+            return ['status' => false, 'message' => $exception->getMessage(),
+                'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
         }
     }
 
