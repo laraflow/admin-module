@@ -111,6 +111,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('roles', RoleController::class)->where(['role' => '([0-9]+)']);
     Route::prefix('roles')->name('roles.')->group(function () {
+        Route::patch('{role}/restore', [RoleController::class, 'restore'])->name('restore');
         Route::get('permission', [RoleController::class, 'permission'])->name('permission');
         Route::get('export', [RoleController::class, 'export'])->name('export');
         Route::get('import', [RoleController::class, 'import'])->name('import');
@@ -120,6 +121,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('users', UserController::class)->where(['user' => '([0-9]+)']);
     Route::prefix('users')->name('users.')->group(function () {
+        Route::patch('{user}/restore', [UserController::class, 'restore'])->name('restore');
         Route::get('export', [UserController::class, 'export'])->name('export');
         Route::get('import', [UserController::class, 'import'])->name('import');
         Route::post('import', [UserController::class, 'importBulk']);
