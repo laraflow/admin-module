@@ -24,7 +24,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
+                <li class="nav-item @if(\Route::is('admin.*')) menu-open @endif">
                     <a href="#" class="nav-link @if(\Route::is('admin.*')) active @endif ">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
@@ -32,34 +32,42 @@
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                         <li class="nav-item">
-                            <a href="{{ route('admin.users.index') }}" class="nav-link @if(\Route::is('admin.users.*')) active @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Users</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.roles.index') }}" class="nav-link  @if(\Route::is('admin.roles.*')) active @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Roles</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.permissions.index') }}" class="nav-link  @if(\Route::is('admin.permissions.*')) active @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Permissions</p>
-                            </a>
-                        </li>
-                    </ul>
+                    @canany(['admin.users.index', 'admin.roles.index', 'admin.permissions.index'])
+                        <ul class="nav nav-treeview">
+                            @can('admin.users.index')
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.users.index') }}"
+                                       class="nav-link @if(\Route::is('admin.users.*')) active @endif">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Users</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('admin.roles.index')
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.roles.index') }}"
+                                       class="nav-link  @if(\Route::is('admin.roles.*')) active @endif">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Roles</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('admin.permissions.index')
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.permissions.index') }}"
+                                       class="nav-link  @if(\Route::is('admin.permissions.*')) active @endif">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Permissions</p>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    @endcanany
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.system-logs') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Simple Link
-                            <span class="right badge badge-danger">New</span>
-                        </p>
+                        <p>Log Viewer</p>
                     </a>
                 </li>
             </ul>

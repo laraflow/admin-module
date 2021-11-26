@@ -68,7 +68,6 @@
                 event.preventDefault();
                 $(this).ekkoLightbox();
             });
-            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
 @endpush
