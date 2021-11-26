@@ -329,6 +329,9 @@ if (typeof $.validator === 'function') {
 }
 
 $(document).ready(function () {
+    //Enable Tooltip
+    $('[data-toggle="tooltip"]').tooltip();
+
     //Delete and Restore Modal Operation
     $("body").find(".delete-btn").each(function () {
         $(this).click(function (event) {

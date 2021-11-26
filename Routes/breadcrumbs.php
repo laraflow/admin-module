@@ -112,3 +112,9 @@ Breadcrumbs::for('admin.users.edit', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('admin.users.index');
     $trail->push('Edit User', route('admin.users.edit', $user->id));
 });
+
+/****************************************** User ******************************************/
+Breadcrumbs::for('admin.system-logs', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.');
+    $trail->push('System Logs', route('admin.system-logs'));
+});

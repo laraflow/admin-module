@@ -16,6 +16,7 @@ use Modules\Admin\Http\Controllers\Common\ModelSoftDeleteController;
 use Modules\Admin\Http\Controllers\Rbac\PermissionController;
 use Modules\Admin\Http\Controllers\Rbac\RoleController;
 use Modules\Admin\Http\Controllers\Rbac\UserController;
+use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,6 +101,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('enabled', ModelEnabledController::class)->name('enabled');
     });
 
+    //Permission
     Route::resource('permissions', PermissionController::class)->where(['permission' => '([0-9]+)']);
     Route::prefix('permissions')->name('permissions.')->group(function () {
         Route::patch('{permission}/restore', [PermissionController::class, 'restore'])->name('restore');
@@ -109,6 +111,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/print', [PermissionController::class, 'print'])->name('print');
     });
 
+    //Role
     Route::resource('roles', RoleController::class)->where(['role' => '([0-9]+)']);
     Route::prefix('roles')->name('roles.')->group(function () {
         Route::patch('{role}/restore', [RoleController::class, 'restore'])->name('restore');
@@ -119,6 +122,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('print', [RoleController::class, 'print'])->name('print');
     });
 
+    //User
     Route::resource('users', UserController::class)->where(['user' => '([0-9]+)']);
     Route::prefix('users')->name('users.')->group(function () {
         Route::patch('{user}/restore', [UserController::class, 'restore'])->name('restore');
@@ -127,4 +131,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('import', [UserController::class, 'importBulk']);
         Route::post('print', [UserController::class, 'print'])->name('print');
     });
+
+    //Log Viewer
+    Route::get('system-logs', [LogViewerController::class, 'index'])->name('system-logs');
 });
