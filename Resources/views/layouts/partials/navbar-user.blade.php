@@ -1,6 +1,6 @@
 <li class="nav-item dropdown user-menu">
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-        <img src="{{ \Auth::user()->getFirstMediaUrl('avatars') }}"
+        <img src="{{ auth()->user()->getFirstMediaUrl('avatars') }}"
              class="user-image img-circle mr-0" alt="User Image">
         {{--        <span class="d-none d-md-inline text-capitalize">{{ auth()->user()->name }}</span>--}}
     </a>

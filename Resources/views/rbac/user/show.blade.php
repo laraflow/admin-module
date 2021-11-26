@@ -33,7 +33,8 @@
 
 @section('actions')
     {!! \Html::backButton('admin.users.index') !!}
-    {!! \Html::editButton('admin.users.edit', $user->id) !!}
+    {!! \Html::modelDropdown('admin.users', $user->id, ['color' => 'success',
+    'actions' => array_merge(['edit'], ($user->deleted_at == null) ? ['delete'] : ['restore'])]) !!}
 @endsection
 
 @section('content')
