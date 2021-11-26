@@ -118,3 +118,24 @@ Breadcrumbs::for('admin.system-logs', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.');
     $trail->push('System Logs', route('admin.system-logs'));
 });
+
+/****************************************** Permission ******************************************/
+Breadcrumbs::for('admin.notifications.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.');
+    $trail->push('Notifications', route('admin.notifications.index'));
+});
+
+/*Breadcrumbs::for('admin.notifications.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.notifications.index');
+    $trail->push('Add Permission', route('admin.notifications.create'));
+});
+
+Breadcrumbs::for('admin.notifications.show', function (BreadcrumbTrail $trail, Permission $permission) {
+    $trail->parent('admin.notifications.index');
+    $trail->push($permission->display_name, route('admin.notifications.show', $permission->id));
+});
+
+Breadcrumbs::for('admin.notifications.edit', function (BreadcrumbTrail $trail, Permission $permission) {
+    $trail->parent('admin.notifications.index');
+    $trail->push('Edit Permission', route('admin.notifications.edit', $permission->id));
+});*/

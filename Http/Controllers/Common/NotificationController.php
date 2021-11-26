@@ -10,15 +10,17 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Modules\Admin\Models\User;
 use Modules\Admin\Services\Common\NotificationService;
 
 class NotificationController extends Controller
 {
     /**
-     * @var UserService
+     * @var User $notifiableUser
      */
-    protected $userService;
+    protected $notifiableUser = null;
+
     /**
      * @var NotificationService
      */
@@ -27,35 +29,28 @@ class NotificationController extends Controller
     /**
      * NotificationController constructor.
      *
-     * @param UserService $userService
      * @param NotificationService $notificationService
      */
-    public function __construct(UserService $userService,
-                                NotificationService $notificationService)
+    public function __construct(NotificationService $notificationService)
     {
-        $this->userService = $userService;
         $this->notificationService = $notificationService;
+
+        $this->notifiableUser = Auth::user();
     }
 
     /**
      * Display a listing of the resource.
      *
      * @return Application|Factory|View
+     * @throws \Exception
      */
-    public function index()
+    public function index(Request $request)
     {
-        /**
-         * @var User $currentUser
-         */
-        $currentUser = auth()->user();
+        $filters = $request->except(['page']);
+        $notifications = $this->notificationService->notificationPaginate($filters);
 
-        /**
-         * @var LengthAwarePaginator $notifications
-         */
-        $notifications = $currentUser->notifications()->paginate();
-
-        return view('backend.common.notification.index', [
-            'notificationList' => $notifications
+        return view('admin::common.notification.index', [
+            'notifications' => $notifications
         ]);
     }
 
@@ -69,13 +64,11 @@ class NotificationController extends Controller
     public function show(string $id)
     {
         if ($notification = $this->notificationService->getNotificationById($id)) {
-
             $notificationData = $notification->data;
-
             return redirect()->to($notificationData['url']);
         }
 
-        abort(404);
+        return abort(404);
     }
 
     /**
@@ -87,7 +80,7 @@ class NotificationController extends Controller
      */
     public function mark(string $id): Response
     {
-        auth()->user()->unreadNotifications
+        $this->notifiableUser->unreadNotifications
             ->when($id, function ($query) use ($id) {
                 return $query->where('id', $id);
             })->markAsRead();

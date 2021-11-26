@@ -30,7 +30,7 @@
 @section('breadcrumbs', \Breadcrumbs::render())
 
 @section('actions')
-{{--    {!! \Html::linkButton('Add Permission', 'admin.permissions.create', [], 'mdi mdi-plus', 'success') !!}--}}
+    {!! \Html::backButton('admin.') !!}
 @endsection
 
 @section('content')

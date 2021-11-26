@@ -17,7 +17,7 @@
 <!-- Page Level Script -->
     @include('admin::layouts.includes.head-script')
 </head>
-<body class="hold-transition @yield('body-class')">
+<body class="hold-transition layout-fixed @yield('body-class')">
 <div class="wrapper">
     <!-- Preloader -->
 @include('admin::layouts.includes.preloader')
@@ -43,6 +43,9 @@
             @include('admin::layouts.partials.import-modal')
         </section>
         <!-- /.content -->
+        <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+            <i class="fas fa-chevron-up"></i>
+        </a>
     </div>
     <!-- /.content-wrapper -->
 

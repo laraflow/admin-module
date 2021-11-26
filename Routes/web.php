@@ -13,6 +13,7 @@ use Modules\Admin\Http\Controllers\Auth\VerifyEmailController;
 use Modules\Admin\Http\Controllers\Common\ModelEnabledController;
 use Modules\Admin\Http\Controllers\Common\ModelRestoreController;
 use Modules\Admin\Http\Controllers\Common\ModelSoftDeleteController;
+use Modules\Admin\Http\Controllers\Common\NotificationController;
 use Modules\Admin\Http\Controllers\Rbac\PermissionController;
 use Modules\Admin\Http\Controllers\Rbac\RoleController;
 use Modules\Admin\Http\Controllers\Rbac\UserController;
@@ -134,4 +135,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     //Log Viewer
     Route::get('system-logs', [LogViewerController::class, 'index'])->name('system-logs');
+
+    Route::resource('notifications', NotificationController::class)->where(['notification' => '([0-9a-f]{8}\-[0-9a-f]{4})\-[0-9a-f]{4})\-[0-9a-f]{4})\-[0-9a-f]{12})']);
 });
