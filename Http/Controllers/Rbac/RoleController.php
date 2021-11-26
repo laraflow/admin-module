@@ -7,7 +7,6 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -17,7 +16,6 @@ use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Services\Rbac\PermissionService;
 use Modules\Admin\Services\Rbac\RoleService;
 use Modules\Admin\Supports\Constant;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Throwable;
 
 class RoleController extends Controller
@@ -109,7 +107,13 @@ class RoleController extends Controller
      */
     public function show(int $id)
     {
-        if ($role = $this->roleService->getRoleById($id)) {
+        $withTrashed = false;
+
+        if (request()->has('with') && request()->get('with') == Constant::PURGE_MODEL_QSA) {
+            $withTrashed = true;
+        }
+
+        if ($role = $this->roleService->getRoleById($id, $withTrashed)) {
 
             $permissions = $this->permissionService->getAllPermissions([
                 'sort' => 'display_name', 'direction' => 'asc'
@@ -136,7 +140,13 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        if ($role = $this->roleService->getRoleById($id)) {
+        $withTrashed = false;
+
+        if (request()->has('with') && request()->get('with') == Constant::PURGE_MODEL_QSA) {
+            $withTrashed = true;
+        }
+
+        if ($role = $this->roleService->getRoleById($id, $withTrashed)) {
 
             return view('admin::rbac.role.edit', ['role' => $role]);
         }
@@ -198,7 +208,7 @@ class RoleController extends Controller
     public function restore($id, Request $request)
     {
         if ($this->authenticatedSessionService->verifyUser($request)) {
-            $confirm = $this->roleService->restoreRole($id);
+            $confirm = $this->roleService->destroyRole($id);
             if ($confirm['status'] == true) {
                 notify($confirm['message'], $confirm['level'], $confirm['title']);
             } else {
@@ -209,105 +219,65 @@ class RoleController extends Controller
         abort(403, 'Wrong user credentials');
     }
 
-
-
-    /**
-     * Return an Import view page
-     *
-     * @return Application|Factory|View
-     */
-    public function import()
-    {
-        return view('admin::rbac.permission.import');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return Application|Factory|View
      * @throws Exception
      */
-    public function importBulk(Request $request)
+    public function exportPdf(Request $request)
     {
-        $filters = $request->except('page');
-        $permissions = $this->permissionService->getAllPermissions($filters);
+        $filters = $request->except('_token');
+        $roles = $this->roleService->getAllRoles($filters);
 
-        return view('admin::rbac.permission.index', [
-            'permissions' => $permissions
+        return view('admin::rbac.role.index', [
+            'roles' => $roles
         ]);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return string|StreamedResponse
+     * @return Application|Factory|View
      * @throws Exception
      */
-    public function export(Request $request)
+    public function exportExcel(Request $request)
     {
-        $filters = $request->except('page');
+        $filters = $request->except('_token');
+        $roles = $this->roleService->getAllRoles($filters);
 
-        $roleExport = $this->roleService->exportRole($filters);
-
-        $filename = 'Role-' . date('Ymd-His') . '.' . ($filters['format'] ?? 'xlsx');
-
-        return $roleExport->download($filename, function ($role) use ($roleExport) {
-            return $roleExport->map($role);
-        });
-
+        return view('admin::rbac.role.index', [
+            'roles' => $roles
+        ]);
     }
 
     /**
      * Display a detail of the resource.
      *
-     * @return StreamedResponse|string
+     * @return Application|Factory|View
      * @throws Exception
      */
-    public function print(Request $request)
+    public function exportShow($id)
     {
+        $withTrashed = false;
 
-        $filters = $request->except('page');
+        if (request()->has('with') && request()->get('with') == Constant::PURGE_MODEL_QSA) {
+            $withTrashed = true;
+        }
 
-        $roleExport = $this->roleService->exportRole($filters);
+        if ($role = $this->roleService->getRoleById($id, $withTrashed)) {
+            return view('admin::rbac.role.show', [
+                'role' => $role
+            ]);
+        }
 
-        $filename = 'Role-' . date('Ymd-His') . '.' . ($filters['format'] ?? 'xlsx');
-
-        return $roleExport->download($filename, function ($role) {
-            $format = [
-                '#' => $role->id,
-                'Display Name' => $role->display_name,
-                'System Name' => $role->name,
-                'Guard' => ucfirst($role->guard_name),
-                'Remarks' => $role->remarks,
-                'Enabled' => ucfirst($role->enabled),
-                'Created' => $role->created_at->format(config('app.datetime')),
-                'Updated' => $role->updated_at->format(config('app.datetime'))
-            ];
-            if (AuthenticatedSessionService::isSuperAdmin()):
-                $format['Deleted'] = ($role->deleted_at != null)
-                    ? $role->deleted_at->format(config('app.datetime'))
-                    : null;
-
-                $format['Creator'] = ($role->createdBy != null)
-                    ? $role->createdBy->name
-                    : null;
-
-                $format['Editor'] = ($role->updatedBy != null)
-                    ? $role->updatedBy->name
-                    : null;
-                $format['Destructor'] = ($role->deletedBy != null)
-                    ? $role->deletedBy->name
-                    : null;
-            endif;
-            return $format;
-        });
-
+        abort(404);
     }
 
     /**
      * @param $id
      * @param RolePermissionRequest $request
-     * @return JsonResponse|void
+     * @return mixed
      * @throws Exception
      */
     public function permission($id, RolePermissionRequest $request)
@@ -317,8 +287,8 @@ class RoleController extends Controller
             $jsonResponse = ['message' => null, 'errors' => []];
 
             if ($role = $this->roleService->getRoleById($id)) {
-                $roles = $request->get('permissions', []);
-                $confirm = $this->roleService->syncPermission($id, $roles);
+                $permissions = $request->get('permissions', []);
+                $confirm = $this->roleService->syncPermission($id, $permissions);
 
                 //formatted response is collected from service
                 return response()->json(array_merge($jsonResponse, $confirm));

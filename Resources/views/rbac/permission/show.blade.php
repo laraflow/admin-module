@@ -32,159 +32,83 @@
 
 @section('actions')
     {!! \Html::backButton('admin.permissions.index') !!}
-    {!! \Html::modelDropdown('admin.permissions', $permission->id, ['color' => 'success']) !!}
+    @canany(['admin.permissions.show', 'admin.permissions.edit', 'admin.permissions.destroy', 'admin.permissions.restore'])
+        <div class="d-flex justify-content-center">
+            <a id="actions1Invoker"
+               class="link-muted bg-warning" href="#!"
+               aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
+                <i class="fa fa-sliders-h"></i> Actions
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown"
+                 style="width: 150px; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(898px, 169px, 0px);"
+                 aria-labelledby="actions1Invoker" x-placement="bottom-end">
+                <ul class="list-unstyled mb-0">
+                    @if(Route::has('admin.permissions.edit'))
+                        @can('admin.permissions.edit')
+                            <li>
+                                <a href="{{ route('admin.permissions.edit', $permission->id) }}" title="Show"
+                                   class="d-flex align-items-center link-muted py-2 px-3">
+                                    <i class="mdi mdi-square-edit fw-bold"></i> Edit
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+
+                    @if(Route::has('admin.permissions.destroy'))
+                        @can('admin.permissions.destroy')
+                            <li>
+                                <a href="{{ route('admin.common.delete', ['admin.permissions', $permission->id]) }}" title="Show"
+                                   class="d-flex align-items-center link-muted py-2 px-3 delete-btn">
+                                    <i class="mdi mdi-close-thick fw-bold mr-1"></i> Delete
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+
+                    @if(Route::has('admin.permissions.restore'))
+                        @can('admin.permissions.restore')
+                            <li>
+                                <a href="{{ route('admin.permissions.restore', $permission->id) }}" title="Show"
+                                   class="d-flex align-items-center link-muted py-2 px-3">
+                                    <i class="mdi mdi-delete-restore fw-bold mr-1"></i> Restore
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+                </ul>
+            </div>
+        </div>
+    @endcanany
 @endsection
 
 @section('content')
     <div class="container-fluid">
         <div class="card card-default">
-            <div class="card-header p-3">
-                <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="pills-home-tab"
-                           data-toggle="pill" href="#pills-home" role="tab"
-                           aria-controls="pills-home" aria-selected="true"><strong>Details</strong></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-timeline-tab"
-                           data-toggle="pill" href="#pills-timeline"
-                           role="tab" aria-controls="pills-timeline"
-                           aria-selected="false"><strong>Timeline</strong></a>
-                    </li>
-                </ul>
-            </div>
             <div class="card-body min-vh-100">
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                         aria-labelledby="pills-home-tab">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="d-block">Display Name</label>
-                                <p class="fw-bolder">{{ $permission->display_name ?? null }}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="d-block">Name</label>
-                                <p class="fw-bolder">{{ $permission->name ?? null }}</p>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="d-block">Guard(s)</label>
-                                <p class="fw-bolder">{{ $permission->guard_name ?? null }}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="d-block">Enabled</label>
-                                <p class="fw-bolder">{{ \Modules\Admin\Supports\Constant::ENABLED_OPTIONS[$permission->enabled] }}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label class="d-block">Remarks</label>
-                                <p class="fw-bolder">{{ $permission->remarks ?? null }}</p>
-                            </div>
-                        </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="d-block">Display Name</label>
+                        <p class="fw-bolder">{{ $permission->display_name ?? null }}</p>
                     </div>
-                    <div class="tab-pane fade" id="pills-timeline" role="tabpanel"
-                         aria-labelledby="pills-timeline-tab">
-                        <!-- The timeline -->
-                        <div class="timeline timeline-inverse">
-                        @forelse($timeline as $date => $actions)
-                            <!-- timeline time label -->
-                                <div class="time-label">
-                                    <span class="bg-info">
-                                        {{ date('d M. Y', strtotime($date)) }}
-                                    </span>
-                                </div>
-                                <!-- /.timeline-label -->
-                            @foreach($actions as $action)
-                                <!-- timeline item -->
-                                    <div>
-                                        <i class="fas fa-user bg-primary"></i>
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="far fa-clock"></i> {{ \Carbon\Carbon::parse($action->created_at)->format('h:i a')  }}</span>
-                                            <h3 class="timeline-header">
-                                                <a href="{{ route('admin.users.show', $action->user->id) }}">
-                                                    {{ $action->user->name }}</a> {{ ucwords($action->event) }} this
-                                                permission
-                                            </h3>
-
-                                            <div class="timeline-body">
-                                                <table class="table table-striped table-bordered">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            Event
-                                                        </td>
-                                                        <td>
-                                                            {{ ucwords($action->event) }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            IP Address
-                                                        </td>
-                                                        <td>
-                                                            {{ $action->ip_address }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            User Agent
-                                                        </td>
-                                                        <td>
-                                                            {{ $action->user_agent }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Old Value
-                                                        </td>
-                                                        <td>
-                                                            @dump($action->old_values)
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            New Value
-                                                        </td>
-                                                        <td>
-                                                            @dump($action->new_values)
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Entry DateTime
-                                                        </td>
-                                                        <td>
-                                                            {{ \Carbon\Carbon::parse($action->created_at)->format(config('app.datetime')) }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Update DateTime
-                                                        </td>
-                                                        <td>
-                                                            {{ \Carbon\Carbon::parse($action->updated_at)->format(config('app.datetime')) }}
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="timeline-footer">
-                                                <a href="#" class="btn btn-primary btn-sm">Read more</a>
-                                                <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- END timeline item -->
-                                @endforeach
-                            @empty
-                                ""
-                            @endforelse
-                            <div>
-                                <i class="far fa-clock bg-gray"></i>
-                            </div>
-                        </div>
+                    <div class="col-md-6">
+                        <label class="d-block">Name</label>
+                        <p class="fw-bolder">{{ $permission->name ?? null }}</p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="d-block">Guard(s)</label>
+                        <p class="fw-bolder">{{ $permission->guard_name ?? null }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="d-block">Enabled</label>
+                        <p class="fw-bolder">{{ \Modules\Admin\Supports\Constant::ENABLED_OPTIONS[$permission->enabled] }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label class="d-block">Remarks</label>
+                        <p class="fw-bolder">{{ $permission->remarks ?? null }}</p>
                     </div>
                 </div>
             </div>

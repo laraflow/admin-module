@@ -41,11 +41,6 @@ class DefaultValue
     const ENABLED_OPTION = 'yes';
 
     /**
-     * Default model disabled status
-     */
-    const DISABLED_OPTION = 'no';
-
-    /**
      * Default Guard for all users if any special is not provided
      */
     const PERMISSION_GUARD = 'web';
@@ -58,10 +53,4 @@ class DefaultValue
      * Default profile display image is user image is missing
      */
     const USER_PROFILE_IMAGE = '/modules/admin/assets/img/AdminLTELogo.png';
-
-    /**
-     * Default Export Option
-     */
-    const EXPORT_DEFAULT = 'xlsx';
-
 }

@@ -9,13 +9,11 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Kint\Kint;
 use Modules\Admin\Http\Requests\Rbac\UserRequest;
 use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Services\Rbac\RoleService;
 use Modules\Admin\Services\Rbac\UserService;
 use Modules\Admin\Supports\Constant;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class UserController extends Controller
 {
@@ -111,7 +109,13 @@ class UserController extends Controller
      */
     public function show(int $id)
     {
-        if ($user = $this->userService->getUserById($id)) {
+        $withTrashed = false;
+
+        if (\request()->has('with') && \request()->get('with') == Constant::PURGE_MODEL_QSA) {
+            $withTrashed = true;
+        }
+
+        if ($user = $this->userService->getUserById($id, $withTrashed)) {
             return view('admin::rbac.user.show', [
                 'user' => $user
             ]);
@@ -129,7 +133,14 @@ class UserController extends Controller
      */
     public function edit(int $id)
     {
-        if ($user = $this->userService->getUserById($id)) {
+
+        $withTrashed = false;
+
+        if (\request()->has('with') && \request()->get('with') == Constant::PURGE_MODEL_QSA) {
+            $withTrashed = true;
+        }
+
+        if ($user = $this->userService->getUserById($id, $withTrashed)) {
             $roles = $this->roleService->roleDropdown();
             $user_roles = $user->roles()->pluck('id')->toArray() ?? [];
             return view('admin::rbac.user.edit', [
@@ -172,11 +183,11 @@ class UserController extends Controller
     public function destroy($id, Request $request)
     {
         if ($this->authenticatedSessionService->verifyUser($request)) {
-            $confirm = $this->userService->destroyUser($id);
-            if ($confirm['status'] == true) {
-                notify($confirm['message'], $confirm['level'], $confirm['title']);
+
+            if ($this->userService->destroyRole($id)) {
+                notify('User Deleted', 'success', 'Notification');
             } else {
-                notify($confirm['message'], $confirm['level'], $confirm['title']);
+                notify('User Removal Failed', 'error', 'Alert');
             }
             return redirect()->route('admin.users.index');
         }
@@ -195,28 +206,16 @@ class UserController extends Controller
     public function restore($id, Request $request)
     {
         if ($this->authenticatedSessionService->verifyUser($request)) {
-            $confirm = $this->userService->restoreUser($id);
-            if ($confirm['status'] == true) {
-                notify($confirm['message'], $confirm['level'], $confirm['title']);
+
+            if ($this->userService->destroyRole($id)) {
+                notify('User Deleted', 'success', 'Notification');
             } else {
-                notify($confirm['message'], $confirm['level'], $confirm['title']);
+                notify('User Removal Failed', 'error', 'Alert');
             }
-            return redirect()->route('admin.users.index');
+            return redirect()->route('users.index');
         }
 
         abort(403, 'Wrong user credentials');
-    }
-
-
-
-    /**
-     * Return an Import view page
-     *
-     * @return Application|Factory|View
-     */
-    public function import()
-    {
-        return view('admin::rbac.permission.import');
     }
 
     /**
@@ -224,80 +223,54 @@ class UserController extends Controller
      *
      * @return Application|Factory|View
      * @throws Exception
+     * @throws \Exception
      */
-    public function importBulk(Request $request)
+    public function exportPdf(Request $request)
     {
         $filters = $request->except('page');
-        $permissions = $this->permissionService->getAllPermissions($filters);
+        $users = $this->userService->getAllUsers($filters);
 
-        return view('admin::rbac.permission.index', [
-            'permissions' => $permissions
+        return view('admin::rbac.user.index', [
+            'users' => $users
         ]);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return string|StreamedResponse
+     * @return Application|Factory|View
      * @throws Exception
      */
-    public function export(Request $request)
+    public function exportExcel(Request $request)
     {
-        $filters = $request->except('page');
+        $filters = $request->except('_token');
+        $roles = $this->roleService->getAllRoles($filters);
 
-        $userExport = $this->userService->exportUser($filters);
-
-        $filename = 'User-' . date('Ymd-His') . '.' . ($filters['format'] ?? 'xlsx');
-
-        return $userExport->download($filename, function ($user) use ($userExport) {
-            return $userExport->map($user);
-        });
+        return view('admin::rbac.role.index', [
+            'roles' => $roles
+        ]);
     }
 
     /**
      * Display a detail of the resource.
      *
-     * @return StreamedResponse|string
+     * @return Application|Factory|View
      * @throws Exception
      */
-    public function print(Request $request)
+    public function exportShow($id)
     {
+        $withTrashed = false;
 
-        $filters = $request->except('page');
+        if (\request()->has('with') && \request()->get('with') == Constant::PURGE_MODEL_QSA) {
+            $withTrashed = true;
+        }
 
-        $permissionExport = $this->permissionService->exportPermission($filters);
+        if ($user = $this->userService->getUserById($id, $withTrashed)) {
+            return view('admin::rbac.user.show', [
+                'user' => $user
+            ]);
+        }
 
-        $filename = 'Permission-' . date('Ymd-His') . '.' . ($filters['format'] ?? 'xlsx');
-
-        return $permissionExport->download($filename, function ($permission) {
-            $format = [
-                '#' => $permission->id,
-                'Display Name' => $permission->display_name,
-                'System Name' => $permission->name,
-                'Guard' => ucfirst($permission->guard_name),
-                'Remarks' => $permission->remarks,
-                'Enabled' => ucfirst($permission->enabled),
-                'Created' => $permission->created_at->format(config('app.datetime')),
-                'Updated' => $permission->updated_at->format(config('app.datetime'))
-            ];
-            if (AuthenticatedSessionService::isSuperAdmin()):
-                $format['Deleted'] = ($permission->deleted_at != null)
-                    ? $permission->deleted_at->format(config('app.datetime'))
-                    : null;
-
-                $format['Creator'] = ($permission->createdBy != null)
-                    ? $permission->createdBy->name
-                    : null;
-
-                $format['Editor'] = ($permission->updatedBy != null)
-                    ? $permission->updatedBy->name
-                    : null;
-                $format['Destructor'] = ($permission->deletedBy != null)
-                    ? $permission->deletedBy->name
-                    : null;
-            endif;
-            return $format;
-        });
-
+        abort(404);
     }
 }

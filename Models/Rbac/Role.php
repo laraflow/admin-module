@@ -5,6 +5,7 @@ namespace Modules\Admin\Models\Rbac;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
 use Modules\Admin\Models\User;
 use OwenIt\Auditing\Auditable as AuditableTrait;
@@ -13,7 +14,7 @@ use Spatie\Permission\Models\Role as SpatieRole;
 
 class Role extends SpatieRole implements Auditable
 {
-    use AuditableTrait, HasFactory, SoftDeletes, Sortable;
+    use AuditableTrait, HasFactory, Notifiable, SoftDeletes, Sortable;
 
     /**
      * The attributes that are mass assignable.

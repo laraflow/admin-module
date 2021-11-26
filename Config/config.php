@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'name' => 'Admin'
+    'name' => 'Admin',
+    'ui_version' => '3.1.0'
 ];

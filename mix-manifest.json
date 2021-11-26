@@ -1,4 +1,6 @@
 {
+    "/Resources/dist/assets/css/custom-switch.css": "/Resources/dist/assets/css/custom-switch.css",
+    "/Resources/dist/assets/css/custom-switch.min.css": "/Resources/dist/assets/css/custom-switch.min.css",
     "/Resources/dist/assets/js/utility.js": "/Resources/dist/assets/js/utility.js",
     "/Resources/dist/assets/js/utility.min.js": "/Resources/dist/assets/js/utility.min.js"
 }

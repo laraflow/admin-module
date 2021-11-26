@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Modules\Admin\Http\Requests\Auth\LoginRequest;
 use Modules\Admin\Supports\Constant;
-use Modules\Admin\Supports\DefaultValue;
 
 /**
  * Class AuthenticatedSessionService
@@ -191,9 +190,5 @@ class AuthenticatedSessionService
         }
 
         return $credentials;
-    }
-
-    public static function isSuperAdmin() {
-        return (\auth()->user()->hasRole(DefaultValue::SUPER_ADMIN_ROLE));
     }
 }

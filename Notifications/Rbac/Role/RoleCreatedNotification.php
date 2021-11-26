@@ -75,9 +75,9 @@ class RoleCreatedNotification extends Notification
             'icon_class' => 'mdi mdi-account-check-outline text-white',
             'icon_background' => 'bg-primary',
             'description' => 'New role named '
-                . link_to(route('admin.roles.show', $this->role->id), $this->role->name ?? '') . ' created by '
-                . link_to(route('admin.users.show', $this->user->id), $this->user->name ?? '') . '.',
-            'url' => route('admin.roles.show', $this->role->id)
+                . link_to(route('roles.show', $this->role->id), $this->role->name ?? '') . ' created by '
+                . link_to(route('users.show', $this->user->id), $this->user->name ?? '') . '.',
+            'url' => route('roles.show', $this->role->id)
         ];
     }
 

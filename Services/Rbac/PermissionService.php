@@ -6,10 +6,9 @@ namespace Modules\Admin\Services\Rbac;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Modules\Admin\Exports\Rbac\PermissionExport;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Admin\Models\Rbac\Permission;
 use Modules\Admin\Repositories\Eloquent\Rbac\PermissionRepository;
-use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Supports\Constant;
 use Throwable;
 
@@ -59,12 +58,8 @@ class PermissionService
      * @return mixed
      * @throws Exception
      */
-    public function getPermissionById($id, bool $purge = false)
+    public function getPermissionById(int $id, bool $purge = false)
     {
-        if ($purge == false) {
-            $purge = AuthenticatedSessionService::isSuperAdmin();
-        }
-
         return $this->permissionRepository->show($id, $purge);
     }
 
@@ -154,45 +149,5 @@ class PermissionService
             return ['status' => false, 'message' => $exception->getMessage(),
                 'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
         }
-    }
-
-    /**
-     * @param $id
-     * @return array
-     * @throws Throwable
-     */
-    public function restorePermission($id): array
-    {
-        \DB::beginTransaction();
-        try {
-            if ($this->permissionRepository->restore($id)) {
-                \DB::commit();
-                return ['status' => true, 'message' => __('Permission is Restored'),
-                    'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
-
-            } else {
-                \DB::rollBack();
-                return ['status' => false, 'message' => __('Permission is Restoration Failed'),
-                    'level' => Constant::MSG_TOASTR_ERROR, 'title' => 'Alert!'];
-            }
-        } catch (Exception $exception) {
-            $this->permissionRepository->handleException($exception);
-            \DB::rollBack();
-            return ['status' => false, 'message' => $exception->getMessage(),
-                'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
-        }
-    }
-
-
-    /**
-     * Export Object for Export Download
-     *
-     * @param array $filters
-     * @return PermissionExport
-     * @throws Exception
-     */
-    public function exportPermission(array $filters = []): PermissionExport
-    {
-        return (new PermissionExport($this->permissionRepository->getAllPermissionWith($filters)));
     }
 }

@@ -34,7 +34,7 @@ interface RepositoryInterface
      * @param $id
      * @return mixed
      */
-    public function update(array $data, $id): bool;
+    public function update(array $data, $id):bool;
 
     /**
      * remove record from the database
@@ -124,11 +124,4 @@ interface RepositoryInterface
      * @return mixed
      */
     public function paginateWith(array $filters = [], array $eagerRelations = []);
-
-    /**
-     * Restore any Soft-Deleted Table Row/Model
-     * @param $id
-     * @return mixed
-     */
-    public function restore($id): bool;
 }

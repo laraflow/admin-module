@@ -12,11 +12,11 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 d-flex border-bottom-0">
             <div class="image">
-                <img src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" class="img-circle elevation-2"
-                     alt="{{ auth()->user()->name }}">
+                <img src="{{ $authUser->getFirstMediaUrl('avatars') }}" class="img-circle elevation-2"
+                     alt="{{ $authUser->name }}">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ auth()->user()->name }}</a>
+                <a href="#" class="d-block">{{ $authUser->name }}</a>
             </div>
         </div>
         <!-- Sidebar Menu -->

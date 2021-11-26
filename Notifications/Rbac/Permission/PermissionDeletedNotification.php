@@ -74,9 +74,9 @@ class PermissionDeletedNotification extends Notification
             'icon_class' => 'mdi mdi-card-account-details-star text-white',
             'icon_background' => 'bg-secondary',
             'description' => 'Permission named '
-                . link_to(route('admin.permissions.show', $this->permission->id) . '?with=purge', $this->permission->name ?? '') . ' deleted by '
-                . link_to(route('admin.users.show', $this->user->id), $this->user->name ?? '') . '.',
-            'url' => route('admin.permissions.show', $this->permission->id)
+                . link_to(route('permissions.show', $this->permission->id) . '?with=purge', $this->permission->name ?? '') . ' deleted by '
+                . link_to(route('users.show', $this->user->id), $this->user->name ?? '') . '.',
+            'url' => route('permissions.show', $this->permission->id)
         ];
     }
 

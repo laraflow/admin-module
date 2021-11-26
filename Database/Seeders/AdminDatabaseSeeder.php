@@ -8,7 +8,6 @@ use Modules\Admin\Database\Seeders\Rbac\PermissionSeeder;
 use Modules\Admin\Database\Seeders\Rbac\RolePermissionSeeder;
 use Modules\Admin\Database\Seeders\Rbac\RoleSeeder;
 use Modules\Admin\Database\Seeders\Rbac\UserSeeder;
-use Spatie\Permission\PermissionRegistrar;
 
 class AdminDatabaseSeeder extends Seeder
 {
@@ -26,13 +25,5 @@ class AdminDatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(RolePermissionSeeder::class);
         $this->call(UserRegisterSeeder::class);
-
-        //Call This on last
-        $this->resetPermissionCache();
-    }
-
-    protected function resetPermissionCache()
-    {
-        return app(PermissionRegistrar::class)->forgetCachedPermissions();
     }
 }

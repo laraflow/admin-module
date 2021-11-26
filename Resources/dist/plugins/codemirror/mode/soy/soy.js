@@ -140,10 +140,10 @@
         state.context = new Context(state.context, "list-literal", state.variables);
         state.lookupVariables = false;
         return null;
-      } else if (stream.match(/\bmap(?=\()/)) {
+      } else if (stream.match(/map\b/)) {
         state.soyState.push("map-literal");
         return "keyword";
-      } else if (stream.match(/\brecord(?=\()/)) {
+      } else if (stream.match(/record\b/)) {
         state.soyState.push("record-literal");
         return "keyword";
       } else if (stream.match(/([\w]+)(?=\()/)) {
@@ -454,11 +454,11 @@
               state.indent -= 2 * config.indentUnit;
               return null;
             }
-            if (stream.match(/\w+(?=\s+as\b)/)) {
+            if (stream.match(/\w+(?=\s+as)/)) {
               return "variable";
             }
             if (match = stream.match(/\w+/)) {
-              return /\b(from|as)\b/.test(match[0]) ? "keyword" : "def";
+              return /(from|as)/.test(match[0]) ? "keyword" : "def";
             }
             if (match = stream.match(/^["']/)) {
               state.soyState.push("string");
@@ -605,7 +605,7 @@
           state.indent += 2 * config.indentUnit;
           state.soyState.push("tag");
           return "keyword";
-        } else if (!state.context && stream.sol() && stream.match(/import\b/)) {
+        } else if (!state.context && stream.match(/\bimport\b/)) {
           state.soyState.push("import");
           state.indent += 2 * config.indentUnit;
           return "keyword";

@@ -31,8 +31,14 @@ class Constant
     const PURGE_MODEL_QSA = 'purge';
 
     /**
+     *--------------------------------------------------------------------------
      * Timing Constants
+     *--------------------------------------------------------------------------
+     *
+     * Provide simple ways to work with the myriad of PHP functions that
+     * require information to be in seconds.
      */
+
     const SECOND = '1';
     const MINUTE = '60';
     const HOUR = '3600';
@@ -51,26 +57,23 @@ class Constant
     const MSG_TOASTR_INFO = 'info';
 
     /**
+     *--------------------------------------------------------------------------
      * Authentication Login Medium
+     *--------------------------------------------------------------------------
+     *
      */
+
     const LOGIN_EMAIL = 'email';
     const LOGIN_USERNAME = 'username';
     const LOGIN_MOBILE = 'mobile';
     const LOGIN_OTP = 'otp';
 
     /**
+     *--------------------------------------------------------------------------
      * OTP Medium Source
+     *--------------------------------------------------------------------------
+     *
      */
     const OTP_MOBILE = 'mobile';
     const OTP_EMAIL = 'email';
-
-    const EXPORT_OPTIONS = [
-        'xlsx' => 'Microsoft Excel (.xlsx)',
-        'ods' => 'Open Document Spreadsheet (.ods)',
-        'csv' => 'Comma Seperated Values (.csv)',
-/*        'pdf' => 'Portable Document Format (.pdf)',
-        'html' => 'HTML Table Document (.html)',*/
-    ];
-
-
 }

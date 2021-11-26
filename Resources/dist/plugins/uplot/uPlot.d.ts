@@ -436,7 +436,6 @@ declare namespace uPlot {
 		export namespace Points {
 			export type Show   = boolean | ((self: uPlot, seriesIdx: number) => HTMLElement);
 			export type Size   = number  | ((self: uPlot, seriesIdx: number) => number);
-			export type BBox   = (self: uPlot, seriesIdx: number) => BBox;
 			export type Width  = number  | ((self: uPlot, seriesIdx: number, size: number) => number);
 			export type Stroke = CanvasRenderingContext2D['strokeStyle'] | ((self: uPlot, seriesIdx: number) => CanvasRenderingContext2D['strokeStyle']);
 			export type Fill   = CanvasRenderingContext2D['fillStyle']   | ((self: uPlot, seriesIdx: number) => CanvasRenderingContext2D['fillStyle']);
@@ -446,8 +445,6 @@ declare namespace uPlot {
 			show?:   Points.Show;
 			/** hover point diameter in CSS pixels */
 			size?:   Points.Size;
-			/** hover point bbox in CSS pixels (will be used instead of size) */
-			bbox?:   Points.BBox;
 			/** hover point outline width in CSS pixels */
 			width?:  Points.Width;
 			/** hover point outline color, pattern or gradient */
@@ -469,7 +466,7 @@ declare namespace uPlot {
 		}
 
 		export namespace Sync {
-			export type Scales = [xScaleKey: string | null, yScaleKey: string | null];
+			export type Scales = [xScaleKey: string, yScaleKey: string];
 
 			export type Filter = (type: string, client: uPlot, x: number, y: number, w: number, h: number, i: number) => boolean;
 
@@ -608,18 +605,15 @@ declare namespace uPlot {
 
 		/** scale orientation - 0: hz, 1: vt */
 		ori?: 0 | 1;
-
-		/** own key (for read-back) */
-		key?: string;
 	}
 
 	export namespace Series {
 		export interface Paths {
 			/** path to stroke */
-			stroke?: Path2D | Map<CanvasRenderingContext2D['strokeStyle'], Path2D> | null;
+			stroke?: Path2D | null;
 
 			/** path to fill */
-			fill?: Path2D | Map<CanvasRenderingContext2D['fillStyle'], Path2D> | null;
+			fill?: Path2D | null;
 
 			/** path for clipping fill & stroke (used for gaps) */
 			clip?: Path2D | null;
@@ -644,7 +638,7 @@ declare namespace uPlot {
 		export const enum BarsPathBuilderFacetUnit {
 			ScaleValue   = 1,
 			PixelPercent = 2,
-			Color        = 3,
+		//	HexColor     = 3,
 		}
 
 		export const enum BarsPathBuilderFacetKind {
@@ -666,11 +660,11 @@ declare namespace uPlot {
 
 		/** custom per-datapoint styling and positioning */
 		export interface BarsPathBuilderDisplay {
-			x0?: BarsPathBuilderFacet;
-		//	x1?: BarsPathBuilderFacet;
-			size?: BarsPathBuilderFacet;
-			fill?: BarsPathBuilderFacet;
-			stroke?: BarsPathBuilderFacet;
+			x0: BarsPathBuilderFacet;
+		//	x1: BarsPathBuilderFacet;
+			size: BarsPathBuilderFacet;
+		//	fill:
+		//	stroke:
 		}
 
 		export interface BarsPathBuilderOpts {
@@ -678,10 +672,7 @@ declare namespace uPlot {
 
 			size?: [factor?: number, max?: number, min?: number];
 
-			// corner radius factor of bar size (0 - 0.5)
-			radius?: number; // 0
-
-			/** fixed-size gap between bars in CSS pixels (reduces bar width) */
+			// fixed-size gap between bars in CSS pixels (reduces bar width)
 			gap?: number;
 
 			/** should return a custom [cached] layout for bars in % of plotting area (0..1) */
