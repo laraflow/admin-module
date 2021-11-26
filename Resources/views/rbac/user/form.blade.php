@@ -50,7 +50,7 @@ old('enabled', ($user->enabled ?? \Modules\Admin\Supports\DefaultValue::ENABLED_
         </div>
         <div class="col-md-6">
             {!! \Form::nImage('photo', 'Photo', false,
-                ['preview' => true, 'height' => '70',
+                ['preview' => true, 'height' => '69',
                  'default' => (isset($user))
                  ? $user->getFirstMediaUrl('avatars')
                  : asset(\Modules\Admin\Supports\DefaultValue::USER_PROFILE_IMAGE)]) !!}
