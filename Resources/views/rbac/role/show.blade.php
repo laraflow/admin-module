@@ -237,7 +237,7 @@
                     type: "POST",
                     dateType: "JSON",
                     success: function (response) {
-                        if (response.status == true) {
+                        if (response.status === true) {
                             notify(response.message, response.level, response.title);
                             setTimeout(function () {
                                 window.location.reload();
@@ -250,7 +250,7 @@
                     error: function (error) {
                         var responseObject = error.responseJSON;
 
-                        var message = "<b>" + responseObject.message + "</b>";
+                        var message = responseObject.message;
 
                         for (var field in responseObject.errors) {
                             message += "<br><ul>";
