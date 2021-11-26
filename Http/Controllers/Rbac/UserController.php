@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Kint\Kint;
 use Modules\Admin\Http\Requests\Rbac\UserRequest;
 use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Services\Rbac\RoleService;

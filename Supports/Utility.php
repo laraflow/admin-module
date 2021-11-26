@@ -3,6 +3,8 @@
 
 namespace Modules\Admin\Supports;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Excel;
@@ -101,5 +103,18 @@ class Utility
     public static function permissionDisplay(string $permission): string
     {
         return ucwords(str_replace(['.', '-', '_'], [' ', ' ', ' '], $permission));
+    }
+
+    public static function modelAudits(Model $model, string $group = 'date'): array
+    {
+        $auditCollection = [];
+
+        $audits = $model->audits()->with('user')->latest()->get();
+
+        foreach ($audits as $audit) {
+            $auditCollection[Carbon::parse($audit->created_at)->format('Y-m-d')][] = $audit;
+        }
+
+        return $auditCollection;
     }
 }

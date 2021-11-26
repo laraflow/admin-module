@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\Rbac\PermissionRequest;
 use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Services\Rbac\PermissionService;
+use Modules\Admin\Supports\Utility;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PermissionController extends Controller
@@ -93,7 +94,8 @@ class PermissionController extends Controller
     {
         if ($permission = $this->permissionService->getPermissionById($id)) {
             return view('admin::rbac.permission.show', [
-                'permission' => $permission
+                'permission' => $permission,
+                'timeline' => Utility::modelAudits($permission)
             ]);
         }
 
