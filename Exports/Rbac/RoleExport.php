@@ -3,10 +3,10 @@
 namespace Modules\Admin\Exports\Rbac;
 
 use Box\Spout\Common\Exception\InvalidArgumentException;
+use Modules\Admin\Models\Rbac\Role;
 use Modules\Admin\Exports\Export;
-use Modules\Admin\Models\Rbac\Permission;
 
-class PermissionExport extends Export
+class RoleExport extends Export
 {
     /**
      * @param null $data
@@ -20,15 +20,14 @@ class PermissionExport extends Export
     }
 
     /**
-     * @param Permission $row
+     * @param Role $row
      * @return array
      */
     public function map($row): array
     {
         $this->formatRow = [
             '#' => $row->id,
-            'Display Name' => $row->display_name,
-            'System Name' => $row->name,
+            'Display Name' => $row->name,
             'Guard' => ucfirst($row->guard_name),
             'Remarks' => $row->remarks,
             'Enabled' => ucfirst($row->enabled),

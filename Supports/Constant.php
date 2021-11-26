@@ -68,8 +68,8 @@ class Constant
         'xlsx' => 'Microsoft Excel (.xlsx)',
         'ods' => 'Open Document Spreadsheet (.ods)',
         'csv' => 'Comma Seperated Values (.csv)',
-        'pdf' => 'Portable Document Format (.pdf)',
-        'html' => 'HTML Table Document (.html)',
+/*        'pdf' => 'Portable Document Format (.pdf)',
+        'html' => 'HTML Table Document (.html)',*/
     ];
 
 

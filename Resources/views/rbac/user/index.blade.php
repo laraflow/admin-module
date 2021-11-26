@@ -31,6 +31,8 @@
 
 @section('actions')
     {!! \Html::linkButton('Add User', 'admin.users.create', [], 'mdi mdi-plus', 'success') !!}
+    {!! \Html::bulkDropdown('admin.users', 0, ['color' => 'warning']) !!}
+
 @endsection
 
 @section('content')
@@ -38,7 +40,9 @@
         <div class="card card-default">
             @if(!empty($users))
                 <div class="card-body p-0">
-                    {!! \Html::cardSearch('search', 'admin.users.index', 'Search User Name, Code, Guard, Status, etc.') !!}
+                    {!! \Html::cardSearch('search', 'admin.users.index',
+['placeholder' => 'Search Role Name, Code, Guard, Status, etc.',
+'class' => 'form-control', 'id' => 'search', 'data-target-table' => 'user-table']) !!}
                     <div class="table-responsive">
                         <table class="table table-hover mb-0" id="user-table">
                             <thead class="thead-light">
@@ -118,9 +122,5 @@
 @endpush
 
 @push('page-script')
-    <script>
-        $(function () {
-            highLightQueryString('search', 'user-table');
-        });
-    </script>
+
 @endpush

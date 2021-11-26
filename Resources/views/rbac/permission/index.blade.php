@@ -39,7 +39,9 @@
         <div class="card card-default">
             @if(!empty($permissions))
                 <div class="card-body p-0">
-                    {!! \Html::cardSearch('search', 'admin.permissions.index', 'Search Permission Display Name, Code, Guard, Status, etc.') !!}
+                    {!! \Html::cardSearch('search', 'admin.permissions.index',
+                    ['placeholder' => 'Search Permission Display Name, Code, Guard, Status, etc.',
+                    'class' => 'form-control', 'id' => 'search', 'data-target-table' => 'permission-table']) !!}
                     <div class="table-responsive">
                         <table class="table table-hover mb-0" id="permission-table">
                             <thead class="thead-light">
@@ -108,36 +110,5 @@
 @endpush
 
 @push('page-script')
-    <script>
-        $(function () {
-            highLightQueryString('search', 'permission-table');
 
-            $(".export-btn").click(function (event) {
-                //stop href to trigger
-                event.preventDefault();
-                $("#exportOptionForm").attr('action', $(this).attr('href'));
-                $("#exportConfirmModal").modal();
-            });
-
-            $("#exportOptionForm").submit(function (event) {
-                //stop href to trigger
-                event.preventDefault();
-                var form = $(this);
-                var search = window.location.search;
-
-                if (search.length === 0) {
-                    search = '?';
-                }
-
-                var formAction = form.attr('action') + search + "&format=" + $("#format").val();
-
-                var deleted = $('#exportOptionForm input[name=with_trashed]:radio');
-
-                if (deleted) {
-                    formAction += "&with_trashed=" + deleted.val();
-                }
-                window.location.href = formAction;
-            });
-        });
-    </script>
 @endpush

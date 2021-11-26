@@ -3,6 +3,8 @@
 
 namespace Modules\Admin\Supports;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Excel;
@@ -103,30 +105,16 @@ class Utility
         return ucwords(str_replace(['.', '-', '_'], [' ', ' ', ' '], $permission));
     }
 
-    /**
-     * @param string $format
-     * @return string
-     */
-    public static function getExportExt(string $format = Excel::XLSX): string
+    public static function modelAudits(Model $model, string $group = 'date'): array
     {
-        switch ($format) {
-            case 'xlsx' :
-                return Excel::XLSX;
+        $auditCollection = [];
 
-            case 'csv' :
-                return Excel::CSV;
+        $audits = $model->audits()->with('user')->latest()->get();
 
-            case 'pdf' :
-                return Excel::DOMPDF;
-
-            case 'html' :
-                return Excel::HTML;
-
-            case 'ods' :
-                return Excel::ODS;
-
-            default :
-                return Excel::XLSX;
+        foreach ($audits as $audit) {
+            $auditCollection[Carbon::parse($audit->created_at)->format('Y-m-d')][] = $audit;
         }
+
+        return $auditCollection;
     }
 }

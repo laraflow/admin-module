@@ -9,13 +9,11 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Modules\Admin\Http\Requests\Rbac\PermissionRequest;
 use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Services\Rbac\PermissionService;
-use Modules\Admin\Supports\Constant;
 use Modules\Admin\Supports\Utility;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PermissionController extends Controller
 {
@@ -96,7 +94,8 @@ class PermissionController extends Controller
     {
         if ($permission = $this->permissionService->getPermissionById($id)) {
             return view('admin::rbac.permission.show', [
-                'permission' => $permission
+                'permission' => $permission,
+                'timeline' => Utility::modelAudits($permission)
             ]);
         }
 
@@ -219,46 +218,67 @@ class PermissionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response|BinaryFileResponse
+     * @return string|StreamedResponse
      * @throws Exception
      */
     public function export(Request $request)
     {
         $filters = $request->except('page');
 
-        $exportFormat = Utility::getExportExt();
-
-        if (isset($filters['format'])) :
-            $exportFormat = Utility::getExportExt($filters['format']);
-        endif;
-
         $permissionExport = $this->permissionService->exportPermission($filters);
 
-        $exportFileName = 'Permission-' . date('Y-m-d-His') . '.' . ($filters['format'] ?? 'xlsx');
-        return $permissionExport->download($exportFileName, $exportFormat);
+        $filename = 'Permission-' . date('Ymd-His') . '.' . ($filters['format'] ?? 'xlsx');
+
+        return $permissionExport->download($filename, function ($permission) use ($permissionExport) {
+            return $permissionExport->map($permission);
+        });
 
     }
 
     /**
      * Display a detail of the resource.
      *
-     * @return Application|Factory|View
+     * @return StreamedResponse|string
      * @throws Exception
      */
-    public function print($id)
+    public function print(Request $request)
     {
-        $withTrashed = false;
 
-        if (\request()->has('with') && \request()->get('with') == Constant::PURGE_MODEL_QSA) {
-            $withTrashed = true;
-        }
+        $filters = $request->except('page');
 
-        if ($permission = $this->permissionService->getPermissionById($id, $withTrashed)) {
-            return view('admin::rbac.permission.show', [
-                'permission' => $permission
-            ]);
-        }
+        $permissionExport = $this->permissionService->exportPermission($filters);
 
-        abort(404);
+        $filename = 'Permission-' . date('Ymd-His') . '.' . ($filters['format'] ?? 'xlsx');
+
+        return $permissionExport->download($filename, function ($permission) {
+            $format = [
+                '#' => $permission->id,
+                'Display Name' => $permission->display_name,
+                'System Name' => $permission->name,
+                'Guard' => ucfirst($permission->guard_name),
+                'Remarks' => $permission->remarks,
+                'Enabled' => ucfirst($permission->enabled),
+                'Created' => $permission->created_at->format(config('app.datetime')),
+                'Updated' => $permission->updated_at->format(config('app.datetime'))
+            ];
+            if (AuthenticatedSessionService::isSuperAdmin()):
+                $format['Deleted'] = ($permission->deleted_at != null)
+                    ? $permission->deleted_at->format(config('app.datetime'))
+                    : null;
+
+                $format['Creator'] = ($permission->createdBy != null)
+                    ? $permission->createdBy->name
+                    : null;
+
+                $format['Editor'] = ($permission->updatedBy != null)
+                    ? $permission->updatedBy->name
+                    : null;
+                $format['Destructor'] = ($permission->deletedBy != null)
+                    ? $permission->deletedBy->name
+                    : null;
+            endif;
+            return $format;
+        });
+
     }
 }

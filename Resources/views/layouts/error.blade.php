@@ -33,12 +33,39 @@
     @include('admin::layouts.partials.content-header')
     <!-- Main content -->
         <section class="content">
+
+            <div class="error-page">
+                <h2 class="headline text-@yield('text-color', 'danger')">@yield('code')</h2>
+
+                <div class="error-content">
+                    <h3>
+                        <i class="fas fa-exclamation-triangle text-@yield('text-color', 'danger')"></i> @yield('message')
+                    </h3>
+
+                    <p>
+                        We could not find the page you were looking for.
+                        Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the search
+                        form.
+                    </p>
+
+                    {!! \Form::open(['link' => '#', 'method' => 'get', 'class' => 'search-form']) !!}
+                    <div class="input-group">
+                        {!! \Form::search('search', \request()->query('search'),
+                                ['class' => 'form-control', 'id' => 'search-from',
+                                'placeholder' => 'Type you search ...']) !!}
+                        <div class="input-group-append">
+                            <button type="submit" name="submit" class="btn btn-warning">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.input-group -->
+                    {!! \Form::close() !!}
+                </div>
+                <!-- /.error-content -->
+            </div>
+            <!-- /.error-page -->
             @yield('content')
-
-            @include('admin::layouts.partials.confirm-modal')
-
-            @include('admin::layouts.partials.export-modal')
-            @include('admin::layouts.partials.import-modal')
         </section>
         <!-- /.content -->
     </div>
