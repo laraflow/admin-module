@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center">
             @yield('breadcrumbs')
-            <div>
+            <div class="float-right">
                 @yield('actions')
             </div>
         </div>

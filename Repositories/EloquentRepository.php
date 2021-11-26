@@ -124,6 +124,16 @@ abstract class EloquentRepository implements RepositoryInterface
     }
 
     /**
+     * remove record from the database
+     * @param $id
+     * @return bool
+     */
+    public function restore($id): bool
+    {
+        return (bool)$this->model->withTrashed()->find($id)->restore($id);
+    }
+
+    /**
      * Get the associated model
      * @return Model
      */

@@ -46,12 +46,18 @@ class HtmlServiceProvider extends ServiceProvider
 
         //Card
         Html::component('cardHeader', 'admin::htmls.card-header', ['title', 'icon', 'short' => null]);
-        Html::component('cardSearch', 'admin::htmls.search-form', ['field', 'route', 'placeholder' => null]);
+        Html::component('cardSearch', 'admin::htmls.search-form', ['field', 'route', 'attributes' => []]);
 
         //Dropdown
-        Html::component('actionDropdown', 'admin::htmls.action-dropdowns', ['resourceRouteName', 'id', 'options' => []]);
+        Html::component('actionDropdown', 'admin::htmls.action-dropdowns', ['resourceRouteName', 'id' => 0, 'options' => []]);
+        Html::component('modelDropdown', 'admin::htmls.model-dropdown', ['resourceRouteName', 'id' => 0, 'options' => [ 'color' => 'success', 'actions' => []]]);
+        Html::component('bulkDropdown', 'admin::htmls.bulk-dropdown', ['resourceRouteName', 'id' => 0, 'options' => []]);
+
 
         //Selection
         Html::component('selection', 'admin::htmls.selection', ['target']);
+
+        //Bootstrap4 Toggle
+        Html::component('enableToggle', 'admin::htmls.enable-button', ['model' => null, 'options' => []]);
     }
 }

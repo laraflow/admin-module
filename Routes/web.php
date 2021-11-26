@@ -11,10 +11,12 @@ use Modules\Admin\Http\Controllers\Auth\PasswordResetLinkController;
 use Modules\Admin\Http\Controllers\Auth\RegisteredUserController;
 use Modules\Admin\Http\Controllers\Auth\VerifyEmailController;
 use Modules\Admin\Http\Controllers\Common\ModelEnabledController;
+use Modules\Admin\Http\Controllers\Common\ModelRestoreController;
 use Modules\Admin\Http\Controllers\Common\ModelSoftDeleteController;
 use Modules\Admin\Http\Controllers\Rbac\PermissionController;
 use Modules\Admin\Http\Controllers\Rbac\RoleController;
 use Modules\Admin\Http\Controllers\Rbac\UserController;
+use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,48 +97,41 @@ Route::prefix('admin')->name('admin.')->group(function () {
     //Common Operations
     Route::prefix('common')->name('common.')->group(function () {
         Route::get('delete/{route}/{id}', ModelSoftDeleteController::class)->name('delete');
+        Route::get('restore/{route}/{id}', ModelRestoreController::class)->name('restore');
         Route::get('enabled', ModelEnabledController::class)->name('enabled');
     });
 
-    Route::resource('permissions', PermissionController::class);
-
+    //Permission
+    Route::resource('permissions', PermissionController::class)->where(['permission' => '([0-9]+)']);
     Route::prefix('permissions')->name('permissions.')->group(function () {
-
-        Route::get('{permission}/restore', [PermissionController::class, 'restore'])->name('restore');
-
-        Route::prefix('exports')->name('exports.')->group(function () {
-            Route::get('pdf', [PermissionController::class, 'exportPdf'])->name('pdf');
-            Route::get('excel', [PermissionController::class, 'exportExcel'])->name('excel');
-            Route::get('{permission}/details', [PermissionController::class, 'exportShow'])->name('show');
-        });
+        Route::patch('{permission}/restore', [PermissionController::class, 'restore'])->name('restore');
+        Route::get('/export', [PermissionController::class, 'export'])->name('export');
+        Route::get('/import', [PermissionController::class, 'import'])->name('import');
+        Route::post('/import', [PermissionController::class, 'importBulk']);
+        Route::post('/print', [PermissionController::class, 'print'])->name('print');
     });
 
-    Route::resource('roles', RoleController::class);
-
+    //Role
+    Route::resource('roles', RoleController::class)->where(['role' => '([0-9]+)']);
     Route::prefix('roles')->name('roles.')->group(function () {
-
-        Route::get('{role}/restore', [RoleController::class, 'restore'])->name('restore');
-        Route::put('{role}/permissions', [RoleController::class, 'permission'])->name('permission');
-
-
-        Route::prefix('exports')->name('exports.')->group(function () {
-            Route::get('pdf', [RoleController::class, 'exportPdf'])->name('pdf');
-            Route::get('excel', [RoleController::class, 'exportExcel'])->name('excel');
-            Route::get('{role}/details', [RoleController::class, 'exportShow'])->name('show');
-        });
+        Route::patch('{role}/restore', [RoleController::class, 'restore'])->name('restore');
+        Route::get('permission', [RoleController::class, 'permission'])->name('permission');
+        Route::get('export', [RoleController::class, 'export'])->name('export');
+        Route::get('import', [RoleController::class, 'import'])->name('import');
+        Route::post('import', [RoleController::class, 'importBulk']);
+        Route::post('print', [RoleController::class, 'print'])->name('print');
     });
 
-    Route::resource('users', UserController::class);
-
+    //User
+    Route::resource('users', UserController::class)->where(['user' => '([0-9]+)']);
     Route::prefix('users')->name('users.')->group(function () {
-
-        Route::get('{user}/restore', [UserController::class, 'restore'])->name('restore');
-
-        Route::prefix('exports')->name('exports.')->group(function () {
-            Route::get('pdf', [UserController::class, 'exportPdf'])->name('pdf');
-            Route::get('excel', [UserController::class, 'exportExcel'])->name('excel');
-            Route::get('{user}/details', [UserController::class, 'exportShow'])->name('show');
-        });
+        Route::patch('{user}/restore', [UserController::class, 'restore'])->name('restore');
+        Route::get('export', [UserController::class, 'export'])->name('export');
+        Route::get('import', [UserController::class, 'import'])->name('import');
+        Route::post('import', [UserController::class, 'importBulk']);
+        Route::post('print', [UserController::class, 'print'])->name('print');
     });
 
+    //Log Viewer
+    Route::get('system-logs', [LogViewerController::class, 'index'])->name('system-logs');
 });

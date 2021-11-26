@@ -21,13 +21,11 @@
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                {!! \Form::open(['route' => 'admin.users.store', 'files' => true, 'id' => 'user-form']) !!}
-                @include('admin::rbac.user.form')
-                {!! \Form::close() !!}
-            </div>
+    <div class="container-fluid">
+        <div class="card">
+            {!! \Form::open(['route' => 'admin.users.store', 'files' => true, 'id' => 'user-form']) !!}
+            @include('admin::rbac.user.form')
+            {!! \Form::close() !!}
         </div>
     </div>
 @endsection

@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Admin\Models\Rbac\Role;
 use Modules\Admin\Repositories\EloquentRepository;
+use Modules\Admin\Services\Auth\AuthenticatedSessionService;
+use Modules\Admin\Supports\DefaultValue;
 
 class RoleRepository extends EloquentRepository
 {
@@ -119,8 +121,13 @@ class RoleRepository extends EloquentRepository
         endif;
 
 
-        if ($is_sortable == true)
+        if ($is_sortable == true) :
             $query->sortable();
+        endif;
+
+        if (AuthenticatedSessionService::isSuperAdmin()) :
+            $query->withTrashed();
+        endif;
 
         return $query;
     }

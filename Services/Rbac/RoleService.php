@@ -4,13 +4,17 @@
 namespace Modules\Admin\Services\Rbac;
 
 
+use Box\Spout\Common\Exception\InvalidArgumentException;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Modules\Admin\Exports\Rbac\RoleExport;
 use Modules\Admin\Models\Rbac\Role;
 use Modules\Admin\Repositories\Eloquent\Rbac\RoleRepository;
+use Modules\Admin\Services\Auth\AuthenticatedSessionService;
 use Modules\Admin\Supports\Constant;
 use Spatie\Permission\PermissionRegistrar;
+use Throwable;
 
 class RoleService
 {
@@ -60,6 +64,10 @@ class RoleService
      */
     public function getRoleById(int $id, bool $purge = false)
     {
+        if($purge == false) {
+            $purge = AuthenticatedSessionService::isSuperAdmin();
+        }
+
         return $this->roleRepository->show($id, $purge);
     }
 
@@ -191,5 +199,45 @@ class RoleService
     protected function clearPermissionCache()
     {
         return app(PermissionRegistrar::class)->forgetCachedPermissions();
+    }
+
+    /**
+     * @param $id
+     * @return array
+     * @throws Throwable
+     */
+    public function restoreRole($id): array
+    {
+        \DB::beginTransaction();
+        try {
+            if ($this->roleRepository->restore($id)) {
+                \DB::commit();
+                return ['status' => true, 'message' => __('Role is Restored'),
+                    'level' => Constant::MSG_TOASTR_SUCCESS, 'title' => 'Notification!'];
+
+            } else {
+                \DB::rollBack();
+                return ['status' => false, 'message' => __('Role is Restoration Failed'),
+                    'level' => Constant::MSG_TOASTR_ERROR, 'title' => 'Alert!'];
+            }
+        } catch (\Exception $exception) {
+            $this->roleRepository->handleException($exception);
+            \DB::rollBack();
+            return ['status' => false, 'message' => $exception->getMessage(),
+                'level' => Constant::MSG_TOASTR_WARNING, 'title' => 'Error!'];
+        }
+    }
+
+    /**
+     * Export Object for Export Download
+     *
+     * @param array $filters
+     * @return RoleExport
+     * @throws Exception
+     * @throws InvalidArgumentException
+     */
+    public function exportRole(array $filters = []): RoleExport
+    {
+        return (new RoleExport($this->roleRepository->getAllRoleWith($filters)));
     }
 }
