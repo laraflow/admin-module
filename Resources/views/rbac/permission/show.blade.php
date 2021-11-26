@@ -32,7 +32,8 @@
 
 @section('actions')
     {!! \Html::backButton('admin.permissions.index') !!}
-    {!! \Html::modelDropdown('admin.permissions', $permission->id, ['color' => 'success']) !!}
+    {!! \Html::modelDropdown('admin.permissions', $permission->id, ['color' => 'success',
+        'actions' => array_merge(['edit'], ($permission->deleted_at == null) ? ['delete'] : ['restore'])]) !!}
 @endsection
 
 @section('content')
