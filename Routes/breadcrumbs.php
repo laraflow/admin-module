@@ -14,6 +14,14 @@ Breadcrumbs::for('admin.', function (BreadcrumbTrail $trail) {
     $trail->push('Admin', route('admin.'));
 });
 
+
+/****************************************** Dashboard ******************************************/
+
+Breadcrumbs::for('admin.dashboard', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.');
+    $trail->push('Dashboard', route('admin.dashboard'));
+});
+
 /****************************************** Http Error ******************************************/
 Breadcrumbs::for('errors.401', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.');

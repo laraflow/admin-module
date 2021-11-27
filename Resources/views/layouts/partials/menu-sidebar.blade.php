@@ -4,7 +4,9 @@
         <img src="{{ asset('modules/admin/assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
              class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">
+            <strong>{{ config('app.name') }}</strong>
+        </span>
     </a>
 
     <!-- Sidebar -->
@@ -24,15 +26,23 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
-                <li class="nav-item @if(\Route::is('admin.*')) menu-open @endif">
-                    <a href="#" class="nav-link @if(\Route::is('admin.*')) active @endif ">
+                <li class="nav-item">
+                    <a href="{{ route('admin.dashboard') }}"
+                       class="nav-link  @if(\Route::is('admin.dashboard')) active @endif">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Administration
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
+                        <p>Dashboard</p>
                     </a>
-                    @canany(['admin.users.index', 'admin.roles.index', 'admin.permissions.index'])
+                </li>
+
+                @canany(['admin.users.index', 'admin.roles.index', 'admin.permissions.index'])
+                    <li class="nav-item @if(\Route::is('admin.*')) menu-open @endif">
+                        <a href="#" class="nav-link @if(\Route::is('admin.*')) active @endif ">
+                            <i class="nav-icon fas fa-user-shield"></i>
+                            <p>
+                                Administration
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
                         <ul class="nav nav-treeview">
                             @can('admin.users.index')
                                 <li class="nav-item">
@@ -62,17 +72,18 @@
                                 </li>
                             @endcan
                         </ul>
-                    @endcanany
-                </li>
-                <li class="nav-item @if(\Route::is('system.*')) menu-open @endif">
-                    <a href="#" class="nav-link @if(\Route::is('system.*')) active @endif ">
-                        <i class="nav-icon fas fa-cogs"></i>
-                        <p>
-                            Setting
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    @canany(['system.logs'])
+                    </li>
+                @endcanany
+
+                @canany(['system.logs'])
+                    <li class="nav-item @if(\Route::is('system.*')) menu-open @endif">
+                        <a href="#" class="nav-link @if(\Route::is('system.*')) active @endif ">
+                            <i class="nav-icon fas fa-cogs"></i>
+                            <p>
+                                Setting
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
                         <ul class="nav nav-treeview">
                             @can('system.logs')
                                 <li class="nav-item">
@@ -84,10 +95,12 @@
                                 </li>
                             @endcan
                         </ul>
-                    @endcanany
-                </li>
+                    </li>
+                @endcanany
+
                 <li class="nav-item">
-                    <a href="{{ route('admin.notifications.index') }}" class="nav-link  @if(\Route::is('admin.notifications.*')) active @endif">
+                    <a href="{{ route('admin.notifications.index') }}"
+                       class="nav-link  @if(\Route::is('admin.notifications.*')) active @endif">
                         <i class="nav-icon fas fa-bell"></i>
                         <p>Notifications</p>
                     </a>
