@@ -27,8 +27,8 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.dashboard') }}"
-                       class="nav-link  @if(\Route::is('admin.dashboard')) active @endif">
+                    <a href="{{ route('dashboard.dashboard') }}"
+                       class="nav-link  @if(\Route::is('dashboard.dashboard')) active @endif">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
