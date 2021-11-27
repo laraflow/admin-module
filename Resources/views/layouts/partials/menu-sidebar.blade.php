@@ -64,11 +64,27 @@
                         </ul>
                     @endcanany
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.system-logs') }}" class="nav-link @if(\Route::is('admin.system-logs')) active @endif">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>Log Viewer</p>
+                <li class="nav-item @if(\Route::is('system.*')) menu-open @endif">
+                    <a href="#" class="nav-link @if(\Route::is('system.*')) active @endif ">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <p>
+                            Setting
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
+                    @canany(['system.logs'])
+                        <ul class="nav nav-treeview">
+                            @can('system.logs')
+                                <li class="nav-item">
+                                    <a href="{{ route('system.logs') }}"
+                                       class="nav-link @if(\Route::is('system.logs')) active @endif">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Log Viewer</p>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    @endcanany
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.notifications.index') }}" class="nav-link  @if(\Route::is('admin.notifications.*')) active @endif">

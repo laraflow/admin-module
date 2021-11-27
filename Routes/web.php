@@ -17,7 +17,6 @@ use Modules\Admin\Http\Controllers\Common\NotificationController;
 use Modules\Admin\Http\Controllers\Rbac\PermissionController;
 use Modules\Admin\Http\Controllers\Rbac\RoleController;
 use Modules\Admin\Http\Controllers\Rbac\UserController;
-use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -133,8 +132,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('print', [UserController::class, 'print'])->name('print');
     });
 
-    //Log Viewer
-    Route::get('system-logs', [LogViewerController::class, 'index'])->name('system-logs');
-
-    Route::resource('notifications', NotificationController::class)->where(['notification' => '([0-9a-f]{8}\-[0-9a-f]{4})\-[0-9a-f]{4})\-[0-9a-f]{4})\-[0-9a-f]{12})']);
+    Route::resource('notifications', NotificationController::class);
 });
