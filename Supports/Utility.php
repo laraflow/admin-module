@@ -7,7 +7,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Maatwebsite\Excel\Excel;
 use Modules\Admin\Repositories\Eloquent\Rbac\UserRepository;
 
 /***
