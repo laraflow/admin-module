@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
 use InvalidArgumentException;
-use Modules\Admin\Exports\Rbac\UserExport;
+use Modules\Admin\Exports\Rbac\UserXLSImport;
 use Modules\Admin\Models\User;
 use Modules\Admin\Repositories\Eloquent\Rbac\UserRepository;
 use Modules\Admin\Services\Auth\AuthenticatedSessionService;
@@ -281,12 +281,12 @@ class UserService
      * Export Object for Export Download
      *
      * @param array $filters
-     * @return UserExport
+     * @return UserXLSImport
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    public function exportUser(array $filters = []): UserExport
+    public function exportUser(array $filters = []): UserXLSImport
     {
-        return (new UserExport($this->userRepository->getAllUserWith($filters)));
+        return (new UserXLSImport($this->userRepository->getAllUserWith($filters)));
     }
 }

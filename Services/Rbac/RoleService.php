@@ -8,7 +8,7 @@ use Box\Spout\Common\Exception\InvalidArgumentException;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Modules\Admin\Exports\Rbac\RoleExport;
+use Modules\Admin\Exports\Rbac\RoleXLSImport;
 use Modules\Admin\Models\Rbac\Role;
 use Modules\Admin\Repositories\Eloquent\Rbac\RoleRepository;
 use Modules\Admin\Services\Auth\AuthenticatedSessionService;
@@ -232,12 +232,12 @@ class RoleService
      * Export Object for Export Download
      *
      * @param array $filters
-     * @return RoleExport
+     * @return RoleXLSImport
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    public function exportRole(array $filters = []): RoleExport
+    public function exportRole(array $filters = []): RoleXLSImport
     {
-        return (new RoleExport($this->roleRepository->getAllRoleWith($filters)));
+        return (new RoleXLSImport($this->roleRepository->getAllRoleWith($filters)));
     }
 }
