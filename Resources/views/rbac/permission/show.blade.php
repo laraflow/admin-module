@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="pills-timeline" role="tabpanel" aria-labelledby="pills-timeline-tab">
-                        @include('admin::layouts.partials.timeline', $timeline)
+                        @include('admin::Core.Resources.views.layouts.partials.timeline', $timeline)
                     </div>
                 </div>
             </div>

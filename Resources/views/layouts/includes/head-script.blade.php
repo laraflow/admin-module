@@ -1,1 +1,0 @@
-@stack('head-script')

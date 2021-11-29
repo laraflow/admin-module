@@ -3,44 +3,44 @@
 <head>
     <title>{{ config('app.name', 'Laravel') }} | @yield('title')</title>
     <!-- meta Tags -->
-@include('admin::layouts.includes.meta')
+@include('admin::Core.Resources.views.layouts.includes.meta')
 <!-- Web Font-->
-@include('admin::layouts.includes.webfont')
+@include('admin::Core.Resources.views.layouts.includes.webfont')
 <!-- Icon -->
-@include('admin::layouts.includes.icon')
+@include('admin::Core.Resources.views.layouts.includes.icon')
 <!-- Plugins -->
-@include('admin::layouts.includes.plugin-style')
+@include('admin::Core.Resources.views.layouts.includes.plugin-style')
 <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('modules/admin/assets/css/adminlte.min.css') }}">
     <!-- Page Level Style -->
-@include('admin::layouts.includes.inline-style')
+@include('admin::Core.Resources.views.layouts.includes.inline-style')
 <!-- Page Level Script -->
-    @include('admin::layouts.includes.head-script')
+    @include('admin::Core.Resources.views.layouts.includes.head-script')
 </head>
 <body class="hold-transition layout-fixed @yield('body-class')">
 <div class="wrapper">
     <!-- Preloader -->
-@include('admin::layouts.includes.preloader')
+@include('admin::Core.Resources.views.layouts.includes.preloader')
 <!-- Navbar -->
-@include('admin::layouts.partials.navbar')
+@include('admin::Core.Resources.views.layouts.partials.navbar')
 
 <!-- Main Sidebar Container -->
-@include('admin::layouts.partials.menu-sidebar')
+@include('admin::Core.Resources.views.layouts.partials.menu-sidebar')
 
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-    @include('admin::layouts.partials.content-header')
+    @include('admin::Core.Resources.views.layouts.partials.content-header')
     <!-- Main content -->
         <section class="content">
-            @include('admin::layouts.includes.errors')
+            @include('admin::Core.Resources.views.layouts.includes.errors')
 
             @yield('content')
 
-            @include('admin::layouts.partials.confirm-modal')
+            @include('admin::Core.Resources.views.layouts.partials.confirm-modal')
 
-            @include('admin::layouts.partials.export-modal')
-            @include('admin::layouts.partials.import-modal')
+            @include('admin::Core.Resources.views.layouts.partials.export-modal')
+            @include('admin::Core.Resources.views.layouts.partials.import-modal')
         </section>
         <!-- /.content -->
         <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
@@ -50,23 +50,23 @@
     <!-- /.content-wrapper -->
 
     <!-- Control Sidebar -->
-@include('admin::layouts.partials.control-sidebar')
+@include('admin::Core.Resources.views.layouts.partials.control-sidebar')
 <!-- Main Footer -->
-    @include('admin::layouts.partials.main-footer')
+    @include('admin::Core.Resources.views.layouts.partials.main-footer')
 </div>
 <!-- ./wrapper -->
 <!-- JS Constants -->
-@include('admin::layouts.includes.js-constants')
+@include('admin::Core.Resources.views.layouts.includes.js-constants')
 <!-- jQuery -->
 <script src="{{ asset('modules/admin/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('modules/admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- Plugin JS -->
-@include('admin::layouts.includes.plugin-script')
+@include('admin::Core.Resources.views.layouts.includes.plugin-script')
 <!-- AdminLTE App -->
 <script src="{{ asset('modules/admin/assets/js/adminlte.min.js') }}"></script>
 <script src="{{ asset('modules/admin/assets/js/utility.min.js') }}"></script>
 <!-- inline js -->
-@include('admin::layouts.includes.page-script')
+@include('admin::Core.Resources.views.layouts.includes.page-script')
 </body>
 </html>
