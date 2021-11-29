@@ -21,10 +21,6 @@ class AdminDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call(PermissionSeeder::class);
-        $this->call(RoleSeeder::class);
-        $this->call(UserSeeder::class);
-        $this->call(RolePermissionSeeder::class);
         $this->call(UserRegisterSeeder::class);
 
         //Call This on last

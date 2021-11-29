@@ -39,8 +39,6 @@ class ObserverServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        User::observe(UserObserver::class);
-        Role::observe(RoleObserver::class);
-        Permission::observe(PermissionObserver::class);
+
     }
 }
