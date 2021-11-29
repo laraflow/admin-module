@@ -87,7 +87,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label class="d-block">Enabled</label>
-                                        <p class="fw-bolder">{{ \Modules\Admin\Supports\Constant::ENABLED_OPTIONS[$role->enabled] ?? null }}</p>
+                                        <p class="fw-bolder">{{ \Modules\Core\Supports\Constant::ENABLED_OPTIONS[$role->enabled] ?? null }}</p>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -173,7 +173,7 @@
                                         </thead>
                                         <tbody>
                                         @forelse($permissions as $permission)
-                                            <tr class="@if($permission->enabled == \Modules\Admin\Supports\DefaultValue::ENABLED_OPTION) table-success @else table-danger @endif">
+                                            <tr class="@if($permission->enabled == \Modules\Core\Supports\Constant::ENABLED_OPTION) table-success @else table-danger @endif">
                                                 <td class="p-2 text-center align-middle">
                                                     <div class="icheck-primary">
                                                         {!! Form::checkbox('permissions[]', $permission->id,
@@ -183,7 +183,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="align-middle">{{ $permission->display_name }}</td>
-                                                <td class="align-middle text-center">{{ \Modules\Admin\Supports\Constant::ENABLED_OPTIONS[$permission->enabled] }}</td>
+                                                <td class="align-middle text-center">{{ \Modules\Core\Supports\Constant::ENABLED_OPTIONS[$permission->enabled] }}</td>
                                             </tr>
                                         @empty
                                             <tr>

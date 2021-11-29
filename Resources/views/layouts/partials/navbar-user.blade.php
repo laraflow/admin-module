@@ -36,9 +36,9 @@
         </li>
         <!-- Menu Footer-->
         <li class="user-footer">
-            <a href="{{ route('admin.users.show', auth()->user()->id) }}" class="btn btn-default btn-flat">Profile</a>
-            <a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-default btn-flat float-right">Sign
-                out</a>
+            <a href="{{ route('core.users.show', (auth()->user() != null) ? auth()->user()->id : 0) }}" class="btn btn-default btn-flat">Profile</a>
+            <a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-default btn-flat float-right">
+                Sign out</a>
         </li>
     </ul>
 </li>

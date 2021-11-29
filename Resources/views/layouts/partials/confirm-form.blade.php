@@ -3,7 +3,7 @@
     <p class="mb-3 text-dark fw-bold text-center">
         {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
     </p>
-    @if(config('auth.credential_field') != \Modules\Admin\Supports\Constant::LOGIN_OTP)
+    @if(config('auth.credential_field') != \Modules\Core\Supports\Constant::LOGIN_OTP)
         <div class="mb-3">
             {!! \Form::nPassword('password', 'Password', true,
                 ['autofocus' => 'autofocus', 'minlength' => config('auth.minimum_password_length'), 'maxlength' => '250',

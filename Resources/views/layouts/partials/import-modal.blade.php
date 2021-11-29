@@ -10,7 +10,7 @@
             </div>
             <form method="get" id="importOptionForm">
             <div class="modal-body">
-                @hasrole(\Modules\Admin\Supports\DefaultValue::SUPER_ADMIN_ROLE)
+                @hasrole(\Modules\Core\Supports\Constant::SUPER_ADMIN_ROLE)
                 {!! \Form::nRadio('with_trashed', 'Include Trashed',
                      ['yes' => 'With Trashed', 'no' => 'Exclude Trashed'], 'no') !!}
                 @endhasrole

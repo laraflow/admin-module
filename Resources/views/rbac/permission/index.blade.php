@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent pb-0">
-                    {!! \Modules\Admin\Supports\CHTML::pagination($permissions) !!}
+                    {!! \Modules\Core\Supports\CHTML::pagination($permissions) !!}
                 </div>
             @else
                 <div class="card-body min-vh-100">

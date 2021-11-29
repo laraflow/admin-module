@@ -5,14 +5,14 @@
         </div>
         <div class="col-md-4">
             {!! \Form::nText('name', 'Name', old('name', $permission->name ?? null), true ,[
-            'pattern' => \Modules\Admin\Supports\Constant::PERMISSION_NAME_ALLOW_CHAR,
+            'pattern' => \Modules\Core\Supports\Constant::PERMISSION_NAME_ALLOW_CHAR,
              'onkeyup' => 'this.value = this.value.replace(/\s+/g, \'-\').toLowerCase()',
              'title' => 'Only Alphanumeric, Hyphen(-), UnderScope(_), Fullstops(.) Allowed'
              ]) !!}
         </div>
         <div class="col-md-4">
-            {!! \Form::nSelect('enabled', 'Enabled', \Modules\Admin\Supports\Constant::ENABLED_OPTIONS,
-                old('enabled', ($permission->enabled ?? \Modules\Admin\Supports\DefaultValue::ENABLED_OPTION)), true) !!}
+            {!! \Form::nSelect('enabled', 'Enabled', \Modules\Core\Supports\Constant::ENABLED_OPTIONS,
+                old('enabled', ($permission->enabled ?? \Modules\Core\Supports\Constant::ENABLED_OPTION)), true) !!}
         </div>
     </div>
     <div class="row">
@@ -43,7 +43,7 @@
                         required: true,
                         minlength: 3,
                         maxlength: 255,
-                        regex:'{{ \Modules\Admin\Supports\Constant::PERMISSION_NAME_ALLOW_CHAR }}',
+                        regex:'{{ \Modules\Core\Supports\Constant::PERMISSION_NAME_ALLOW_CHAR }}',
                     },
                     enabled: {
                         required: true

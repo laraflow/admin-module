@@ -75,7 +75,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="d-block">Enabled</label>
-                                <p class="fw-bolder">{{ \Modules\Admin\Supports\Constant::ENABLED_OPTIONS[$permission->enabled] }}</p>
+                                <p class="fw-bolder">{{ \Modules\Core\Supports\Constant::ENABLED_OPTIONS[$permission->enabled] }}</p>
                             </div>
                         </div>
                         <div class="row">

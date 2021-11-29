@@ -96,7 +96,7 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent pb-0">
-                    {!! \Modules\Admin\Supports\CHTML::pagination($roles) !!}
+                    {!! \Modules\Core\Supports\CHTML::pagination($roles) !!}
                 </div>
             @else
                 <div class="card-body min-vh-100">

@@ -46,7 +46,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                {!! \Form::open(['route' => 'admin.logout']) !!}
+                {!! \Form::open(['route' => 'auth.logout']) !!}
                 <button type="submit" class="btn btn-primary">Logout</button>
                 {!! \Form::close() !!}
             </div>
