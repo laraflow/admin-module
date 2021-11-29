@@ -34,26 +34,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/', [AdminController::class, 'index']);
 
-    //Permission
-    Route::resource('permissions', PermissionController::class)->where(['permission' => '([0-9]+)']);
-    Route::prefix('permissions')->name('permissions.')->group(function () {
-        Route::patch('{permission}/restore', [PermissionController::class, 'restore'])->name('restore');
-        Route::get('/export', [PermissionController::class, 'export'])->name('export');
-        Route::get('/import', [PermissionController::class, 'import'])->name('import');
-        Route::post('/import', [PermissionController::class, 'importBulk']);
-        Route::post('/print', [PermissionController::class, 'print'])->name('print');
-    });
-
-    //Role
-    Route::resource('roles', RoleController::class)->where(['role' => '([0-9]+)']);
-    Route::prefix('roles')->name('roles.')->group(function () {
-        Route::patch('{role}/restore', [RoleController::class, 'restore'])->name('restore');
-        Route::get('permission', [RoleController::class, 'permission'])->name('permission');
-        Route::get('export', [RoleController::class, 'export'])->name('export');
-        Route::get('import', [RoleController::class, 'import'])->name('import');
-        Route::post('import', [RoleController::class, 'importBulk']);
-        Route::post('print', [RoleController::class, 'print'])->name('print');
-    });
-
     Route::resource('notifications', NotificationController::class);
 });
