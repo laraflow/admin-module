@@ -5,10 +5,6 @@ use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 use Modules\Admin\Models\Rbac\Permission;
 use Modules\Admin\Models\Rbac\Role;
 
-Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
-    $trail->push('Home', route('home'));
-});
-
 Breadcrumbs::for('admin.', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Admin', route('admin.'));
