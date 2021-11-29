@@ -1,3 +1,3 @@
 <script>
-const TOGGLE_URL = "{{ route('admin.common.enabled') }}";
+const TOGGLE_URL = "{{ route('core.common.enabled') }}";
 </script>
