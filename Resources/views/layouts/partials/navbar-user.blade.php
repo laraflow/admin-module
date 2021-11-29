@@ -1,18 +1,19 @@
 <li class="nav-item dropdown user-menu">
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-        <img src="{{ auth()->user()->getFirstMediaUrl('avatars') }}"
+        <img src="{{ (auth()->user() != null) ? auth()->user()->getFirstMediaUrl('avatars') : asset(\Modules\Core\Supports\Constant::USER_PROFILE_IMAGE) }}"
              class="user-image img-circle mr-0" alt="User Image">
         {{--        <span class="d-none d-md-inline text-capitalize">{{ auth()->user()->name }}</span>--}}
     </a>
     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         <!-- User image -->
         <li class="user-header bg-white">
-            <img src="{{ auth()->user()->getFirstMediaUrl('avatars') }}"
-                 class="img-circle elevation-2 mr-0" alt="{{ auth()->user()->name }}">
+            <img src="{{ (auth()->user() != null) ? auth()->user()->getFirstMediaUrl('avatars') : asset(\Modules\Core\Supports\Constant::USER_PROFILE_IMAGE) }}"
+                 class="img-circle elevation-2 mr-0"
+                 alt="{{ (auth()->user() != null) ? auth()->user()->name : 'Guest User'}}">
 
             <p class="text-capitalize font-weight-bold">
-                {{ auth()->user()->name }}
-                @if(auth()->user()->roles->first() != null)
+                {{ (auth()->user() != null) ? auth()->user()->name : 'Guest User'}}
+                @if((auth()->user() != null) && (auth()->user()->roles->first() != null))
                     <br>
                     <small class="text-warning text-sm">{{ auth()->user()->roles->first()->name }}</small>
                 @endif
