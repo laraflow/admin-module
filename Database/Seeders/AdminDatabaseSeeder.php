@@ -27,8 +27,5 @@ class AdminDatabaseSeeder extends Seeder
         $this->resetPermissionCache();
     }
 
-    protected function resetPermissionCache()
-    {
-        return app(PermissionRegistrar::class)->forgetCachedPermissions();
-    }
+
 }
