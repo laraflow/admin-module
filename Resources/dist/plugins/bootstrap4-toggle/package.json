@@ -1,27 +1,31 @@
 {
-  "_from": "bootstrap4-toggle",
+  "_args": [
+    [
+      "bootstrap4-toggle@3.6.1",
+      "I:\\XAMPP\\htdocs\\boilerplate\\modules\\Admin"
+    ]
+  ],
+  "_from": "bootstrap4-toggle@3.6.1",
   "_id": "bootstrap4-toggle@3.6.1",
   "_inBundle": false,
   "_integrity": "sha512-eRejcTc9YurhZ64nHY9Ii9DQn+F9/R74H9RPoeANVM3N1+C2lZ2tUuFCx1w3orOJ1y/iG4A7iCwdDZphMDIrYg==",
   "_location": "/bootstrap4-toggle",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
+    "type": "version",
     "registry": true,
-    "raw": "bootstrap4-toggle",
+    "raw": "bootstrap4-toggle@3.6.1",
     "name": "bootstrap4-toggle",
     "escapedName": "bootstrap4-toggle",
-    "rawSpec": "",
+    "rawSpec": "3.6.1",
     "saveSpec": null,
-    "fetchSpec": "latest"
+    "fetchSpec": "3.6.1"
   },
   "_requiredBy": [
-    "#USER",
     "/"
   ],
   "_resolved": "https://registry.npmjs.org/bootstrap4-toggle/-/bootstrap4-toggle-3.6.1.tgz",
-  "_shasum": "867f2c350727022e6358ec0d43e43b7cfb609f74",
-  "_spec": "bootstrap4-toggle",
+  "_spec": "3.6.1",
   "_where": "I:\\XAMPP\\htdocs\\boilerplate\\modules\\Admin",
   "author": {
     "name": "Brent Ely",
@@ -30,8 +34,6 @@
   "bugs": {
     "url": "https://github.com/gitbrent/bootstrap4-toggle/issues"
   },
-  "bundleDependencies": false,
-  "deprecated": false,
   "description": "Bootstrap 4 Toggle is a bootstrap 4 plugin that converts checkboxes into toggles.",
   "devDependencies": {
     "grunt": "^1.0.4",

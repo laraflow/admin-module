@@ -1,4 +1,16 @@
 {
+    "/Resources/dist/plugins/mdi/css/materialdesignicons.css": "/Resources/dist/plugins/mdi/css/materialdesignicons.css",
+    "/Resources/dist/plugins/mdi/css/materialdesignicons.css.map": "/Resources/dist/plugins/mdi/css/materialdesignicons.css.map",
+    "/Resources/dist/plugins/mdi/css/materialdesignicons.min.css": "/Resources/dist/plugins/mdi/css/materialdesignicons.min.css",
+    "/Resources/dist/plugins/mdi/css/materialdesignicons.min.css.map": "/Resources/dist/plugins/mdi/css/materialdesignicons.min.css.map",
+    "/Resources/dist/plugins/mdi/fonts/materialdesignicons-webfont.eot": "/Resources/dist/plugins/mdi/fonts/materialdesignicons-webfont.eot",
+    "/Resources/dist/plugins/mdi/fonts/materialdesignicons-webfont.ttf": "/Resources/dist/plugins/mdi/fonts/materialdesignicons-webfont.ttf",
+    "/Resources/dist/plugins/mdi/fonts/materialdesignicons-webfont.woff": "/Resources/dist/plugins/mdi/fonts/materialdesignicons-webfont.woff",
+    "/Resources/dist/plugins/mdi/fonts/materialdesignicons-webfont.woff2": "/Resources/dist/plugins/mdi/fonts/materialdesignicons-webfont.woff2",
+    "/Resources/dist/plugins/bootstrap4-toggle/CHANGELOG.md": "/Resources/dist/plugins/bootstrap4-toggle/CHANGELOG.md",
+    "/Resources/dist/plugins/bootstrap4-toggle/LICENSE": "/Resources/dist/plugins/bootstrap4-toggle/LICENSE",
+    "/Resources/dist/plugins/bootstrap4-toggle/package.json": "/Resources/dist/plugins/bootstrap4-toggle/package.json",
+    "/Resources/dist/plugins/bootstrap4-toggle/README.md": "/Resources/dist/plugins/bootstrap4-toggle/README.md",
     "/Resources/dist/assets/js/utility.js": "/Resources/dist/assets/js/utility.js",
     "/Resources/dist/assets/js/utility.min.js": "/Resources/dist/assets/js/utility.min.js"
 }

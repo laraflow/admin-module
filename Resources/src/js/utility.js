@@ -332,14 +332,11 @@ $(document).ready(function () {
     //Enable Tooltip
     $('[data-toggle="tooltip"]').tooltip();
 
-    //Delete and Restore Modal Operation
+    //Delete  Modal Operation
     $("body").find(".delete-btn").each(function () {
         $(this).click(function (event) {
             //stop href to trigger
             event.preventDefault();
-
-            //Model
-            var deleteModalElement = $("#deleteModal");
             //ahref has link
             var url = this.getAttribute('href');
             if (url.length > 0 && url !== "#") {
@@ -350,7 +347,31 @@ $(document).ready(function () {
                 }).fail(function (error) {
                     $("#deleteConfirmationForm").empty().html(error.responseText);
                 }).always(function () {
-                    deleteModalElement.modal({
+                    $("#deleteModal").modal({
+                        backdrop: 'static',
+                        show: true
+                    });
+                });
+            }
+        });
+    });
+
+    //Restore  Modal Operation
+    $("body").find(".restore-btn").each(function () {
+        $(this).click(function (event) {
+            //stop href to trigger
+            event.preventDefault();
+            //ahref has link
+            var url = this.getAttribute('href');
+            if (url.length > 0 && url !== "#") {
+                //Ajax
+                $.get(url, function (response) {
+                    $("#restoreConfirmationForm").empty().html(response);
+                }, 'html').done(function () {
+                }).fail(function (error) {
+                    $("#restoreConfirmationForm").empty().html(error.responseText);
+                }).always(function () {
+                    $("#restoreModal").modal({
                         backdrop: 'static',
                         show: true
                     });
