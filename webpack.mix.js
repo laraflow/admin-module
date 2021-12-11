@@ -16,5 +16,6 @@ mix.copyDirectory(__dirname + '/node_modules/admin-lte/dist', __dirname + '/Reso
     .copyDirectory(__dirname + '/node_modules/@mdi/font/css', __dirname + '/Resources/dist/plugins/mdi/css/')
     .copyDirectory(__dirname + '/node_modules/@mdi/font/fonts', __dirname + '/Resources/dist/plugins/mdi/fonts/')
     .copyDirectory(__dirname + '/node_modules/bootstrap4-toggle', __dirname + '/Resources/dist/plugins/bootstrap4-toggle/')
+    .copyDirectory(__dirname + '/node_modules/fontawesome-iconpicker/dist', __dirname + '/Resources/dist/plugins/fontawesome-iconpicker/')
     .copy(__dirname + '/Resources/src/js/utility.js', __dirname + '/Resources/dist/assets/js/utility.js')
     .copy(__dirname + '/Resources/dist/assets/js/utility.js', __dirname + '/Resources/dist/assets/js/utility.min.js');
